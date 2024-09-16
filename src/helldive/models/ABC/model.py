@@ -1,14 +1,14 @@
 from typing import *
 
 # pylint: disable=no-name-in-module
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime, timezone, timedelta
 
 
 class BaseApiModel(BaseModel):
     """Base extended model class"""
 
-    retrieved_at: Union[datetime, timedelta]
+    retrieved_at: Optional[Union[datetime, timedelta]] = Field(alias="retrieved_at", default=None)
 
     def __init__(self, **data):
         super().__init__(**data)

@@ -66,7 +66,7 @@ test = [
     "pytest==7.3.1",
     "pytest-github-actions-annotate-failures",
     "shellcheck-py==0.9.0.2",
-    "pytest-asyncio=0.24.0"
+    "pytest-asyncio==0.24.0"
 ]
 
 [project.urls]
@@ -117,6 +117,7 @@ include = ["src"]
 exclude = [
     "**/node_modules",
     "**/__pycache__",
+    "**/statics"
 ]
 venv = "env311"
 reportReturnType = false
@@ -130,6 +131,9 @@ pythonPlatform = "Linux"
 typeCheckingMode = "basic"
 reportOptionalMemberAccess = "none"
 reportOptionalSubscript = "none"
+reportOptionalOperand ="none"
+reportOptionalIterable="none"
+reportOptionalMemberAccess ="none"
 executionEnvironments = [
   { root = "src" }
 ]

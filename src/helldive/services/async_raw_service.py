@@ -21,6 +21,7 @@ async def make_raw_api_request(
     index: Optional[int] = None,
     api_config_override: Optional[APIConfig] = None,
     path2=False,
+    params: Optional[Dict] = None,  # Added parameters for GET requests
 ) -> Union[T, List[T]]:
     """
     Get a raw api object from the Community api or
