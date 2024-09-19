@@ -36,16 +36,10 @@ class Event(BaseApiModel, HealthMixin):
 
     campaignId: Optional[int] = Field(alias="campaignId", default=None)
 
-    jointOperationIds: Optional[List[int]] = Field(
-        alias="jointOperationIds", default=None
-    )
+    jointOperationIds: Optional[List[int]] = Field(alias="jointOperationIds", default=None)
 
     def __sub__(self, other: "Event") -> "Event":
-        new_health = (
-            self.health - other.health
-            if self.health is not None and other.health is not None
-            else None
-        )
+        new_health = self.health - other.health if self.health is not None and other.health is not None else None
         event = Event(
             id=self.id,
             eventType=self.eventType,
@@ -66,16 +60,12 @@ class Event(BaseApiModel, HealthMixin):
         if count == 0:
             return Event()
 
-        avg_health = (
-            sum(event.health for event in events_list if event.health is not None)
-            // count
-        )
+        avg_health = sum(event.health for event in events_list if event.health is not None) // count
         avg_time = (
             sum(
                 event.retrieved_at.total_seconds()
                 for event in events_list
-                if event.retrieved_at is not None
-                and isinstance(event.retrieved_at, datetime.timedelta)
+                if event.retrieved_at is not None and isinstance(event.retrieved_at, datetime.timedelta)
             )
             // count
         )
@@ -137,11 +127,7 @@ class Event(BaseApiModel, HealthMixin):
             str: A formatted string with the change rate and estimated time.
         """
         change_str = f"{round(change, 5)}"
-        timeval_str = (
-            f"Est.Loss {fdt(esttime,'R')}"
-            if change > 0
-            else f"Clear {fdt(esttime,'R')}"
-        )
+        timeval_str = f"Est.Loss {fdt(esttime,'R')}" if change > 0 else f"Clear {fdt(esttime,'R')}"
 
         return f"`[{change_str} dps]`, {timeval_str}"
 

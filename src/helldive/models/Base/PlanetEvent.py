@@ -37,9 +37,7 @@ class PlanetEvent(BaseApiModel):
 
     campaignId: Optional[int] = Field(alias="campaignId", default=None)
 
-    jointOperationIds: Optional[List[int]] = Field(
-        alias="jointOperationIds", default=None
-    )
+    jointOperationIds: Optional[List[int]] = Field(alias="jointOperationIds", default=None)
 
     def long_event_details(self):
         factions = {1: "Humans", 2: "Terminids", 3: "Automaton", 4: "Illuminate"}

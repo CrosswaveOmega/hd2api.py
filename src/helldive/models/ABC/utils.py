@@ -32,7 +32,6 @@ def set_fdt(func: callable):
 
 
 def format_datetime(*args, **kwargs):
-
     if set_fdt_callable:
         return set_fdt_callable(*args, **kwargs)
     raise RuntimeError("fdt callable is not set")
@@ -76,9 +75,7 @@ def extract_timestamp(timestamp):
             timestamp_adjusted += "Z"
         # timestamp_adjusted=timestamp_adjusted
     # Convert the adjusted timestamp string to a datetime object
-    datetime_obj = datetime.datetime.strptime(
-        timestamp_adjusted, format_string
-    ).replace(tzinfo=datetime.timezone.utc)
+    datetime_obj = datetime.datetime.strptime(timestamp_adjusted, format_string).replace(tzinfo=datetime.timezone.utc)
     return datetime_obj
 
 
@@ -90,9 +87,7 @@ def human_format(num):
         magnitude += 1
         num /= 1000.0
     suffixes = ["", "K", "M", "B", "T", "Q", "Qi"]
-    return "{}{}".format(
-        "{:f}".format(num).rstrip("0").rstrip("."), suffixes[magnitude]
-    )
+    return "{}{}".format("{:f}".format(num).rstrip("0").rstrip("."), suffixes[magnitude])
 
 
 def changeformatif(value):

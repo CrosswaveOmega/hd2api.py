@@ -30,12 +30,9 @@ class EffectStatic(BaseApiModel):
     Pydantic reprersentation of all the json files pertaining to effects
     """
 
-    planetEffects: Dict[int, KnownPlanetEffect] = Field(
-        alias="planetEffects", default_factory=dict
-    )
+    planetEffects: Dict[int, KnownPlanetEffect] = Field(alias="planetEffects", default_factory=dict)
 
     def check_for_id(self, idv):
-
         if idv in self.planetEffects:
             return self.planetEffects[idv]
         return KnownPlanetEffect(
@@ -62,9 +59,7 @@ class GalaxyStatic(BaseApiModel):
 
     biomes: Optional[Dict[str, Biome]] = Field(alias="biomes", default=None)
 
-    environmentals: Optional[Dict[str, Hazard]] = Field(
-        alias="environmentals", default=None
-    )
+    environmentals: Optional[Dict[str, Hazard]] = Field(alias="environmentals", default=None)
 
     planets: Optional[Dict[int, PlanetStatic]] = Field(alias="planets", default=None)
 

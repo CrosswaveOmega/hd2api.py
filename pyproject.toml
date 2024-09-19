@@ -33,6 +33,9 @@ dependencies= [
 # By default, include-package-data is true in pyproject.toml, so you do
 # NOT have to specify this line.
 include-package-data = true
+exclude = [
+    "src/statics/**"
+]
 
 [tool.setuptools.packages.find]
 where = ["src"]
@@ -41,7 +44,7 @@ where = ["src"]
 js   = ["js/*","*.js"]
 
 [options.packages.find]
-exclude = ['tests',  'docs', 'test']
+exclude = ['tests',  'docs', 'test','src/statics']
 
 
 [project.optional-dependencies]
@@ -132,8 +135,8 @@ typeCheckingMode = "basic"
 reportOptionalMemberAccess = "none"
 reportOptionalSubscript = "none"
 reportOptionalOperand ="none"
-reportOptionalIterable="none"
-reportOptionalMemberAccess ="none"
+reportOptionalIterable = "none"
+
 executionEnvironments = [
   { root = "src" }
 ]

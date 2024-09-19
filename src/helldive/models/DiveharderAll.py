@@ -28,9 +28,7 @@ class DiveharderAll(BaseApiModel):
 
     major_order: Optional[List[Assignment]] = Field(alias="major_order", default=None)
 
-    personal_order: Optional[List[Assignment]] = Field(
-        alias="personal_order", default=None
-    )
+    personal_order: Optional[List[Assignment]] = Field(alias="personal_order", default=None)
 
     news_feed: Optional[List[NewsFeedItem]] = Field(alias="news_feed", default=None)
 

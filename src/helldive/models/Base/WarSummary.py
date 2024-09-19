@@ -16,6 +16,4 @@ class WarSummary(BaseApiModel):
 
     galaxy_stats: Optional[GalaxyStats] = Field(alias="galaxy_stats", default=None)
 
-    planets_stats: Optional[List[Optional[PlanetStats]]] = Field(
-        alias="planets_stats", default=None
-    )
+    planets_stats: Optional[List[Optional[PlanetStats]]] = Field(alias="planets_stats", default=None)

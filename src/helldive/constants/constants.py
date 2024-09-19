@@ -1,13 +1,14 @@
 """constant dictionaries."""
 
 task_types = {
-    2: "Get samples",
+    2: "Gather",
     3: "Eradicate",
     4: "Objectives",
     7: "Extract",
     11: "Liberation",
     12: "Defense",
     13: "Control",
+    15: "Conquest",
 }
 
 value_types = {
