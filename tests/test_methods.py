@@ -7,7 +7,7 @@ from __future__ import annotations
 
 import pytest
 import asyncio
-from helldive import *
+from hd2api import *
 
 
 async def test_get_raw():

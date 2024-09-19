@@ -3,7 +3,7 @@ requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name =  "Helldivers2Api.py"
+name =  "hd2api.py"
 authors = [
     {name = "Crosswave Omega", email = "taucetivse@gmail.com"},
 ]
@@ -74,8 +74,8 @@ test = [
 
 [project.urls]
 Documentation = "https://github.com/microsoft/python-package-template/tree/main#readme"
-Source = "https://github.com/microsoft/python-package-template"
-Tracker = "https://github.com/microsoft/python-package-template/issues"
+Source = "https://github.com/CrosswaveOmega/hd2api.py"
+Tracker = "https://github.com/CrosswaveOmega/hd2api.py/issues"
 
 [tool.bandit]
 exclude_dirs = ["build","dist","tests","scripts"]
