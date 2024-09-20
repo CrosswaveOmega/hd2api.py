@@ -243,7 +243,7 @@ class Planet(BaseApiModel, HealthMixin):
         outlist = [f"{players}"]
         if (not self.event) or show_hp_without_event:
             outlist.append(f"HP `{self.get_health_percent(self.health)}% {cfi(self.get_health_percent(diff.health))}`")
-            outlist.append(f"Decay:`{round(self.get_health_percent(self.regenPerSecond)*60*60,2)}`")
+            outlist.append(f"Decay:`{round((100*(self.regenPerSecond/self.maxHealth))*60*60,2)}`")  # type: ignore
         if avg:
             remaining_time = self.estimate_remaining_lib_time(avg)
             if remaining_time:
