@@ -14,6 +14,7 @@ class APIConfig(BaseModel):
     verify: Union[bool, str] = True
     client_name: str = "DefaultClientName"
     language: str = "en-US"
+    static_path: str = ""
 
     def get_access_token(self) -> Optional[str]:
         try:

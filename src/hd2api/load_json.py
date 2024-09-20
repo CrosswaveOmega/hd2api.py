@@ -1,57 +1,8 @@
 import os
-import httpx
-import zipfile
+import json
 from typing import Optional
 
-"""Attempt to fetch the latest copy of the static JSON files."""
-
-
-def get_latest_release_zip(repo_owner: str, repo_name: str, zip_file_name: str, target_dir: str) -> None:
-    """
-    Download the specified zip file from the latest release of the given repository using httpx.
-
-    Args:
-        repo_owner (str): The owner of the GitHub repository.
-        repo_name (str): The name of the GitHub repository.
-        zip_file_name (str): The name of the zip file to download from the latest release.
-        target_dir (str): The directory to extract the downloaded zip file.
-    """
-    releases_url = f"https://api.github.com/repos/{repo_owner}/{repo_name}/releases/latest"
-
-    # Get the latest release metadata
-    with httpx.Client() as client:
-        response = client.get(releases_url)
-        response.raise_for_status()
-        latest_release = response.json()
-
-    # Find the asset with the zip file
-    asset_url: Optional[str] = None
-    for asset in latest_release["assets"]:
-        print(asset, asset["name"], zip_file_name)
-        if asset["name"] == zip_file_name:
-            asset_url = asset["browser_download_url"]
-            break
-
-    if not asset_url:
-        raise FileNotFoundError(f"{zip_file_name} not found in the latest release.")
-
-    # Download the zip file
-    print(f"Downloading {zip_file_name} from the latest release...")
-    zip_path = os.path.join(target_dir, zip_file_name)
-    with httpx.Client() as client:
-        with client.stream("GET", asset_url, follow_redirects=True) as r:
-            r.raise_for_status()
-            with open(zip_path, "wb") as f:
-                for chunk in r.iter_bytes():
-                    f.write(chunk)
-
-    # Extract the zip file
-    with zipfile.ZipFile(zip_path, "r") as zip_ref:
-        zip_ref.extractall(target_dir)
-
-    # Optionally, remove the zip file after extraction
-    os.remove(zip_path)
-    print(f"Extracted {zip_file_name} to {target_dir}.")
+from hd2api.api_config import APIConfig
 
 
 def get_repo_dir() -> str:
@@ -65,19 +16,39 @@ def get_repo_dir() -> str:
     return os.path.join(library_dir, "statics")
 
 
-def download_latest_static_json():
-    repo_owner = "CrosswaveOmega"
-    repo_name = "json"
-    zip_file_name = "json-files.zip"
-    target_dir = get_repo_dir()
+def load_and_merge_json_files(json_path: str, api_config: Optional[APIConfig] = None):
+    """
+    Load all JSON files from the specified directory into a single dictionary.
 
-    # Ensure the target directory exists
-    os.makedirs(target_dir, exist_ok=True)
+    Args:
+    - directory_path (str): Path to the directory containing JSON files.
 
-    # Download and extract the latest release zip
-    get_latest_release_zip(repo_owner, repo_name, zip_file_name, target_dir)
+    Returns:
+    - dict: A dictionary where keys are file names (without extension) and values are loaded JSON data.
+    """
+    planets_data = {}
 
+    source_dir = get_repo_dir()
+    if api_config and api_config.static_path:
+        source_dir = api_config.static_path
 
-if __name__ == "__main__":
-    # Example usage
-    download_latest_static_json()
+    directory_path = os.path.join(get_repo_dir(), json_path)
+
+    # Validate directory path
+    if not os.path.isdir(directory_path):
+        raise ValueError(f"Directory '{directory_path}' does not exist.")
+
+    # Load JSON files
+    for filename in os.listdir(directory_path):
+        if filename.endswith(".json"):
+            file_path = os.path.join(directory_path, filename)
+            with open(file_path, "r", encoding="utf8") as f:
+                try:
+                    json_data = json.load(f)
+                    # Remove file extension from filename
+                    file_key = os.path.splitext(filename)[0]
+                    planets_data[file_key] = json_data
+                except json.JSONDecodeError as e:
+                    print(f"Error loading JSON from {filename}: {e}")
+
+    return planets_data

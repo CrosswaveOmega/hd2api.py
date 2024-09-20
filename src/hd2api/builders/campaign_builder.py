@@ -12,7 +12,7 @@ from ..constants import task_types, value_types, faction_names, samples
 from .effect_builder import build_planet_effect
 
 
-def build_campaign(planets: Dict[int, Planet], campaign: Campaign):
+def build_campaign(planets: Dict[int, Optional[Planet]], campaign: Campaign):
     """
     Create a new Campaign2 instance based on the given Campaign and planet data.
 
@@ -23,7 +23,8 @@ def build_campaign(planets: Dict[int, Planet], campaign: Campaign):
     Returns:
         Campaign2: A new campaign object with the associated planet and other data.
     """
-    planet = planets.get(campaign.planetIndex, None)
+
+    planet = planets.get(campaign.planetIndex, None)  # type: ignore
     camp2 = Campaign2(
         retrieved_at=campaign.retrieved_at,
         id=campaign.id,

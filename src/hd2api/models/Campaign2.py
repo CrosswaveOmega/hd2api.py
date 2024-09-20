@@ -27,8 +27,9 @@ class Campaign2(BaseApiModel):
             planet=self.planet - other.planet,  # type: ignore
             type=self.type,
             count=self.count,
+            time_delta=self.retrieved_at - other.retrieved_at,  # type: ignore
         )
-        camp.retrieved_at = self.retrieved_at - other.retrieved_at
+        # camp.retrieved_at = self.retrieved_at - other.retrieved_at
         return camp
 
     @staticmethod

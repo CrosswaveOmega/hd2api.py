@@ -99,8 +99,8 @@ class Planet(BaseApiModel, HealthMixin):
             currentOwner=self.currentOwner,
             regenPerSecond=self.regenPerSecond,
             attacking=self.attacking,
+            time_delta=self.retrieved_at - other.retrieved_at,  # type: ignore
         )
-        planet.retrieved_at = self.retrieved_at - other.retrieved_at
         return planet
 
     def calculate_change(self, diff: "Planet") -> float:
@@ -113,12 +113,12 @@ class Planet(BaseApiModel, HealthMixin):
         Returns:
             float: The rate of change in health per second.
         """
-        time_elapsed = diff.retrieved_at
+        time_elapsed = diff.time_delta
         if time_elapsed.total_seconds() == 0:
             return 0.0
         return diff.health / time_elapsed.total_seconds()
 
-    def calculate_timeval(self, change: float, is_positive: bool) -> datetime:
+    def calculate_timeval(self, change: float, is_positive: bool) -> datetime.datetime:
         """
         Calculate the future datetime when the planet's health will reach the maxHealth or zero.
 
@@ -130,7 +130,7 @@ class Planet(BaseApiModel, HealthMixin):
             datetime: The estimated future datetime.
         """
         if is_positive:
-            estimated_seconds = abs((self.maxHealth - self.health) / change)
+            estimated_seconds = abs((self.maxHealth - self.health) / change)  # type: ignore
         else:
             estimated_seconds = abs(self.health / change)
         return self.retrieved_at + datetime.timedelta(seconds=estimated_seconds)
@@ -151,7 +151,7 @@ class Planet(BaseApiModel, HealthMixin):
         Returns:
             str: A string representation of the rate of change and the estimated time of loss or gain.
         """
-        time_elapsed = diff.retrieved_at
+        time_elapsed = diff.time_delta
         if time_elapsed.total_seconds() == 0:
             return ""
 
@@ -187,8 +187,7 @@ class Planet(BaseApiModel, HealthMixin):
         avg_event = Event.average([planet.event for planet in planets_list if planet.event is not None])
 
         avg_time = (
-            sum(planet.retrieved_at.total_seconds() for planet in planets_list if planet.retrieved_at is not None)
-            // count
+            sum(planet.time_delta.total_seconds() for planet in planets_list if planet.time_delta is not None) // count
         )
         avg_planet = Planet(
             health=avg_health,
@@ -205,8 +204,9 @@ class Planet(BaseApiModel, HealthMixin):
             currentOwner=planets_list[0].currentOwner,
             regenPerSecond=planets_list[0].regenPerSecond,
             attacking=planets_list[0].attacking,
+            time_delta=datetime.timedelta(seconds=avg_time),
         )
-        avg_planet.retrieved_at = datetime.timedelta(seconds=avg_time)
+        # avg_planet.time_delta = datetime.timedelta(seconds=avg_time)
         return avg_planet
 
     def campaign_against(self) -> str:
@@ -242,10 +242,8 @@ class Planet(BaseApiModel, HealthMixin):
         players = f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
         outlist = [f"{players}"]
         if (not self.event) or show_hp_without_event:
-            outlist.append(
-                f"HP `{round((self.health/self.maxHealth)*100.0,5)}% {cfi(round((diff.health/self.maxHealth)*100.0,5))}`"
-            )
-            outlist.append(f"Decay:`{round((100*(self.regenPerSecond/self.maxHealth))*60*60,2)}`")
+            outlist.append(f"HP `{self.get_health_percent(self.health)}% {cfi(self.get_health_percent(diff.health))}`")
+            outlist.append(f"Decay:`{round(self.get_health_percent(self.regenPerSecond)*60*60,2)}`")
         if avg:
             remaining_time = self.estimate_remaining_lib_time(avg)
             if remaining_time:
@@ -257,7 +255,7 @@ class Planet(BaseApiModel, HealthMixin):
             # , {evt.health}{cfi(diff.event.health)}/{evt.maxHealth}.
             outlist.append(f"Defend from {event_fact}")
             outlist.append(
-                f"EventHP:{round((evt.health/evt.maxHealth)*100.0, 5)}% {cfi(round((diff.event.health/evt.maxHealth)*100.0, 5))}"
+                f"EventHP:{evt.get_health_percent(evt.health)}% {cfi(evt.get_health_percent(diff.event.health))}"
             )
             outlist.append(f"Deadline: [{timev}]")
             if avg:

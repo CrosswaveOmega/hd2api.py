@@ -1,4 +1,5 @@
 from typing import *
+from datetime import datetime
 
 from pydantic import Field
 from .ABC.model import BaseApiModel
@@ -43,7 +44,14 @@ class Assignment2(BaseApiModel):
 
     expiration: Optional[str] = Field(alias="expiration", default=None)
 
-    def __sub__(self, other: "Assignment2"):
+    def __sub__(self, other: "Assignment2") -> "Assignment2":
+        new_progress = [s - o for s, o in zip(self.progress, other.progress)]
+
+        retrieved_at = self.retrieved_at
+        other_retrieved_at = other.retrieved_at
+
+        time_delta = retrieved_at - other_retrieved_at  # type: ignore
+
         new_progress = [s - o for s, o in zip(self.progress, other.progress)]
         return Assignment2(
             id=self.id,
@@ -55,15 +63,18 @@ class Assignment2(BaseApiModel):
             reward=self.reward,
             rewards=self.rewards,
             expiration=self.expiration,
-            retrieved_at=self.retrieved_at - other.retrieved_at,
+            time_delta=time_delta,
+            retrieved_at=retrieved_at,
         )
 
     def get_task_planets(self) -> List[int]:
         planets = []
         for e, task in enumerate(self.tasks):
             task_type, taskdata = task.taskAdvanced()
-            if "planet_index" in taskdata:
-                planets.append(taskdata["planet_index"])
+
+            if taskdata.planet:
+                for p in taskdata.planet:
+                    planets.append(p)
         return planets
 
     def to_str(self) -> str:

@@ -115,7 +115,7 @@ class Statistics(BaseApiModel):
 
         # Format player count
         player_count = f"{emj('hdi')}: {hf(self.playerCount)}"
-        thistime = round(max(self.missionTime, 1) / max((self.missionsWon + self.missionsLost), 1), 4)
+        thistime = round(max(self.missionTime, 1) / max((self.missionsWon + self.missionsLost), 1), 4)  # type: ignore
 
         mission_stats += f"\n Time per mission: {sts(thistime)}"
         # Concatenate all formatted statistics
@@ -137,11 +137,11 @@ class Statistics(BaseApiModel):
         # Calculate differences for each statistic
 
         # Format each statistic with its difference
-        missiontotal = max(1, self.missionsWon + self.missionsLost)
-        misiontotalother = max(1, other.missionsWon + other.missionsLost)
+        missiontotal = max(1, self.missionsWon + self.missionsLost)  # type: ignore
+        misiontotalother = max(1, other.missionsWon + other.missionsLost)  # type: ignore
         mission_stats = f"W:{hf(self.missionsWon)} ({other.missionsWon}),"
         mission_stats += f"L:{hf(self.missionsLost)} ({other.missionsLost})"
-        mission_stats += f"{round(100.0*(other.missionsWon/(max(other.missionsWon+other.missionsLost,1))),1)}"
+        mission_stats += f"{round(100.0*(other.missionsWon/(max(other.missionsWon+other.missionsLost,1))),1)}"  # type: ignore
         mission_stats += f"\nTime:{sts(self.missionTime)}({sts(other.missionTime)})"
 
         thistime = round(max(self.missionTime, 1) / (missiontotal), 4)

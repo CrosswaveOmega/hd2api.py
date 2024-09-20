@@ -79,7 +79,8 @@ class Task2(BaseApiModel):
 
     def taskAdvanced(self) -> Tuple[str, TaskData]:
         """return task type, and model containing task details."""
-        task_type = task_types.get(self.type, f"Unknown Task Type {self['type']}")
+        typev = int(self.type) if self.type is not None else 0
+        task_type = task_types.get(typev, f"Unknown Task Type {typev}")
         taskdata = TaskData()
 
         for v, vt in zip(self["values"], self["valueTypes"]):
@@ -226,7 +227,7 @@ class Task2(BaseApiModel):
         rarity = ""
         if taskdata.itemID:
             rare = taskdata.itemID[0]
-            rarity = samples.get(rare, rare) + " "
+            rarity = str(samples.get(rare, rare)) + str(" ")
         taskstr += f"/{hf(goal)} {rarity}samples ({round((int(curr) / int(goal)) * 100.0, 3)}) {faction_name}"
         taskstr += self._task_display_planet(taskdata, planets)
         return taskstr

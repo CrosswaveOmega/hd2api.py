@@ -37,9 +37,9 @@ def build_planet(
     planet_base = gstatic.planets.get(index, None)
     if not planet_base:
         return None
-    biome = gstatic.biomes.get(planet_base.biome, None)
+    biome = gstatic.biomes.get(planet_base.biome, None)  # type: ignore
     env = [gstatic.environmentals.get(e, None) for e in planet_base.environmentals]
-    stats = Statistics(
+    stats_new = Statistics(
         retrieved_at=planetStatus.retrieved_at,
         playerCount=planetStatus.players,
         missionsWon=stats.missionsWon,
@@ -60,7 +60,7 @@ def build_planet(
     pos = planetInfo.position
     # print(index,planetStatus.retrieved_at)
     name = planet_base.name
-    if "en-US" in planet_base.names:
+    if "en-US" in planet_base.names:  # type: ignore
         name = planet_base.names.get("en-US", planet_base.name)
     planet = Planet(
         retrieved_at=planetStatus.retrieved_at,
@@ -75,10 +75,10 @@ def build_planet(
         maxHealth=planetInfo.maxHealth,
         health=planetStatus.health,
         disabled=planetInfo.disabled,
-        initialOwner=faction_names.get(planetInfo.initialOwner, "???"),
-        currentOwner=faction_names.get(planetStatus.owner, "???"),
+        initialOwner=faction_names.get(planetInfo.initialOwner, "???"),  # type: ignore
+        currentOwner=faction_names.get(planetStatus.owner, "???"),  # type: ignore
         regenPerSecond=planetStatus.regenPerSecond,
-        statistics=stats,
+        statistics=stats_new,
     )
     return planet
 
@@ -141,7 +141,7 @@ def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticA
 
     # Build Planet.
     planet = build_planet(statics.galaxystatic, planetIndex, planetStatus, planetInfo, planetStat)
-    planet.sector_id = planetInfo.sector
+    planet.sector_id = planetInfo.sector  # type: ignore
 
     planet_effect_list = []
     planet_attack_list = []
@@ -157,7 +157,7 @@ def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticA
             planet_attack_list.append(attack.target)
 
     # Build Events
-    event: PlanetEvent = check_compare_value("planetIndex", planetIndex, status.planetEvents)
+    event: PlanetEvent = check_compare_value("planetIndex", planetIndex, status.planetEvents)  # type: ignore
     planet.activePlanetEffects = planet_effect_list
     planet.attacking = planet_attack_list
     starttime = get_time(diveharder)
@@ -166,7 +166,7 @@ def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticA
             retrieved_at=event.retrieved_at,
             id=event.id,
             eventType=event.eventType,
-            faction=faction_names.get(event.race, "???"),
+            faction=faction_names.get(event.race, "???"),  # type: ignore
             health=event.health,
             maxHealth=event.maxHealth,
             startTime=(starttime + (dt.timedelta(seconds=event.startTime))).isoformat(),

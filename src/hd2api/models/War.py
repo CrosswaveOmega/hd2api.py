@@ -25,6 +25,8 @@ class War(BaseApiModel):
 
     impactMultiplier: Optional[float] = Field(alias="impactMultiplier", default=None)
 
+    warId: Optional[int] = Field(alias="warId", default=None)
+
     statistics: Optional[Statistics] = Field(alias="statistics", default=None)
 
     def __sub__(self, other):

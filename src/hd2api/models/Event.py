@@ -50,8 +50,8 @@ class Event(BaseApiModel, HealthMixin):
             endTime=self.endTime,
             campaignId=self.campaignId,
             jointOperationIds=self.jointOperationIds,
+            time_delta=self.retrieved_at - other.retrieved_at,  # type: ignore
         )
-        event.retrieved_at = self.retrieved_at - other.retrieved_at
         return event
 
     @staticmethod
@@ -63,9 +63,9 @@ class Event(BaseApiModel, HealthMixin):
         avg_health = sum(event.health for event in events_list if event.health is not None) // count
         avg_time = (
             sum(
-                event.retrieved_at.total_seconds()
+                event.time_delta.total_seconds()
                 for event in events_list
-                if event.retrieved_at is not None and isinstance(event.retrieved_at, datetime.timedelta)
+                if event.time_delta is not None and isinstance(event.time_delta, datetime.timedelta)
             )
             // count
         )
@@ -80,7 +80,7 @@ class Event(BaseApiModel, HealthMixin):
             campaignId=events_list[0].campaignId,
             jointOperationIds=events_list[0].jointOperationIds,
         )
-        avg_event.retrieved_at = datetime.timedelta(seconds=avg_time)
+        avg_event.time_delta = datetime.timedelta(seconds=avg_time)
         return avg_event
 
     def calculate_change(self, diff: "Event") -> float:
@@ -93,12 +93,12 @@ class Event(BaseApiModel, HealthMixin):
         Returns:
             float: The rate of change in health per second.
         """
-        time_elapsed = diff.retrieved_at
+        time_elapsed = diff.time_delta
         if time_elapsed.total_seconds() == 0:
             return 0.0
         return diff.health / time_elapsed.total_seconds()
 
-    def calculate_timeval(self, change: float, is_positive: bool) -> datetime:
+    def calculate_timeval(self, change: float, is_positive: bool) -> datetime.datetime:
         """
         Calculate the future datetime when the events's health will reach the maxHealth or zero.
 
@@ -110,7 +110,7 @@ class Event(BaseApiModel, HealthMixin):
             datetime: The estimated future datetime.
         """
         if is_positive:
-            estimated_seconds = abs((self.maxHealth - self.health) / change)
+            estimated_seconds = abs((self.maxHealth - self.health) / change)  # type: ignore
         else:
             estimated_seconds = abs(self.health / change)
         return self.retrieved_at + datetime.timedelta(seconds=estimated_seconds)
@@ -162,10 +162,11 @@ class Event(BaseApiModel, HealthMixin):
         return f"{event_fact} Event#{self.id},Type#{self.eventType}:"
 
     def long_event_details(self, diff: Optional["Event"] = None):
+        joint_ops = ", ".join(map(str, self.jointOperationIds))  # type: ignore
         event_details = (
             f"ID: {self.id}, Type: {hf(self.eventType)}, Faction: {self.faction}\n"
             f"Event Health: `{(self.health)}/{(self.maxHealth)}` (`{diff.health if diff is not None else 0}` change)\n"
             f"Start Time: {fdt(et(self.startTime),'R')}, End Time: {fdt(et(self.endTime),'R')}\n"
-            f"Campaign ID: {hf(self.campaignId)}, Joint Operation IDs: {', '.join(map(str, self.jointOperationIds))}"
+            f"Campaign ID: {hf(self.campaignId)}, Joint Operation IDs: {joint_ops}"
         )
         return event_details

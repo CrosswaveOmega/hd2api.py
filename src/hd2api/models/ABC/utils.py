@@ -1,6 +1,6 @@
 import datetime
 import re
-
+from typing import Callable
 
 status_emoji = {
     "onc": "<:checkboxon:1199756987471241346>",
@@ -26,7 +26,7 @@ def default_fdt(dt: datetime.datetime, *args, **kwargs):
 set_fdt_callable = default_fdt
 
 
-def set_fdt(func: callable):
+def set_fdt(func: Callable):
     global set_fdt_callable
     set_fdt_callable = func
 
