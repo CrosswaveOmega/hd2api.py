@@ -12,8 +12,8 @@ T = TypeVar("T", bound=BaseApiModel)
 import logging
 
 # Create a logger and set its level
-logslogger = logging.getLogger("logslogger")
-logslogger.setLevel(logging.INFO)
+hd2api_logger = logging.getLogger("hd2api_logger")
+hd2api_logger.setLevel(logging.INFO)
 
 
 async def make_direct_api_request(
@@ -47,11 +47,11 @@ async def make_direct_api_request(
                 response = await client.get(path, headers=headers)  # Added params to the request
     except httpx.ConnectError as e:
         print(e)
-        logslogger.error(str(e), exc_info=e)
+        hd2api_logger.error(str(e), exc_info=e)
         raise e
     except Exception as e:
         print(e)
-        logslogger.error(str(e), exc_info=e)
+        hd2api_logger.error(str(e), exc_info=e)
         return None
 
     if response.status_code != 200:
@@ -59,12 +59,12 @@ async def make_direct_api_request(
     now = datetime.datetime.now(tz=datetime.timezone.utc)
     data = response.json()
     if isinstance(data, dict):
-        logslogger.info(
+        hd2api_logger.info(
             "%s",
             ",".join(f"{k}:{len(json.dumps(v,default=str))}" for k, v in data.items()),
         )
     else:
-        logslogger.info("%s", "LIST")
+        hd2api_logger.info("%s", "LIST")
 
     return make_output(data, model, index)
 

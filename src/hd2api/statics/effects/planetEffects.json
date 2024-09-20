@@ -1,0 +1,32 @@
+{
+    "1177": {
+        "galacticEffectId": 1177,
+        "name": "Black Hole",
+        "description": "This planet has been turned into a black hole."
+    },
+    "1186": {
+        "galacticEffectId": 1186,
+        "name": "Light Gloom",
+        "description": "This world is lightly obscured by a gloom cloud."
+    },
+    "1187": {
+        "galacticEffectId": 1187,
+        "name": "Gloom",
+        "description": "A gloom cloud enveloped this world."
+    },
+    "1188": {
+        "galacticEffectId": 1188,
+        "name": "Dense Gloom",
+        "description": "A thick gloom cloud obscures this world from view."
+    },
+    "1190": {
+        "galacticEffectId": 1190,
+        "name": "Unreachable",
+        "description": "Our sensors can no longer monitor this planet."
+    },
+    "1193":{
+        "galacticEffectId": 1193,
+        "name": "Gloom Border",
+        "description": "This world is on the border of the interstellar wall of gloom."
+    }
+}

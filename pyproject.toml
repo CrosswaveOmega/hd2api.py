@@ -22,7 +22,7 @@ classifiers = [
 keywords=['helldivers2','api']
 requires-python = ">=3.8.1"
 
-version = '0.0.0.1'
+version = '0.0.0.2'
 dependencies= [
 "pydantic>=2.0.1",
 "httpx>=0.25.2"
@@ -119,8 +119,7 @@ ignore = [
 include = ["src"]
 exclude = [
     "**/node_modules",
-    "**/__pycache__",
-    "**/statics"
+    "**/__pycache__"
 ]
 venv = "env311"
 reportReturnType = false

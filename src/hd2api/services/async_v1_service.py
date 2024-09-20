@@ -13,26 +13,7 @@ import random
 import logging
 from logging.handlers import RotatingFileHandler
 
-logslogger = logging.getLogger("logslogger")
-DIR = "./logs/"
-# Create a rotating file handler
-log_handler = RotatingFileHandler(f"{DIR}logslogger.log", maxBytes=5 * 1024 * 1024, backupCount=5)
-log_handler.setLevel(logging.WARNING)
-formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-log_handler.setFormatter(formatter)
-
-
-log_handler2 = RotatingFileHandler("f{DIR}logsloggerinfo.log", maxBytes=5 * 1024 * 1024, backupCount=5)
-log_handler2.setLevel(logging.INFO)
-# Create a logger and set its level
-logslogger.setLevel(logging.INFO)
-
-log_handler2.setFormatter(formatter)
-
-# Set the handler to the logger
-logslogger.addHandler(log_handler)
-
-logslogger.addHandler(log_handler2)
+hd2api_logger = logging.getLogger("hd2api_logger")
 
 
 async def make_comm_api_request(
@@ -115,7 +96,7 @@ async def GetApiRawAll(api_config_override: Optional[APIConfig] = None, direct=F
     try:
         return await make_raw_api_request("all", DiveharderAll, api_config_override=api_config_override, path2=True)
     except Exception as e:
-        logslogger.error(str(e), exc_info=e)
+        hd2api_logger.error(str(e), exc_info=e)
         return await GetApiDirectAll(api_config_override=api_config_override)
 
 

@@ -12,7 +12,7 @@ T = TypeVar("T", bound=BaseApiModel)
 
 import logging
 
-logslogger = logging.getLogger("logslogger")
+hd2api_logger = logging.getLogger("hd2api_logger")
 
 
 async def make_raw_api_request(
@@ -87,5 +87,5 @@ async def GetApiRawAll(api_config_override: Optional[APIConfig] = None, direct=F
     try:
         return await make_raw_api_request("all", DiveharderAll, api_config_override=api_config_override, path2=True)
     except Exception as e:
-        logslogger.error(str(e), exc_info=e)
+        hd2api_logger.error(str(e), exc_info=e)
         return await GetApiDirectAll(api_config_override=api_config_override)
