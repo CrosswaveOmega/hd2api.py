@@ -59,24 +59,29 @@ def seconds_to_time_stamp(seconds_init):
 
 
 def extract_timestamp(timestamp):
-    # Define the format of the timestamp string (with 7-digit fractional seconds)
-    format_string = "%Y-%m-%dT%H:%M:%S.%fZ"
+    try:
+        # Attempt to parse using fromisoformat if it is an isoformat timestamp
+        return datetime.datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
+    except ValueError:
+        # Define the format of the timestamp string (with 7-digit fractional seconds)
+        format_string = "%Y-%m-%dT%H:%M:%S.%fZ"
 
-    # Extract the fractional seconds (up to 6 digits) and Z separately
-    timestamp_parts = timestamp.split(".")
-    timestamp_adjusted = timestamp
-    if len(timestamp_parts) >= 2:
-        timestamp_adjusted = timestamp_parts[0] + "." + timestamp_parts[1][:6]
-        if not timestamp_adjusted.endswith("Z"):
-            timestamp_adjusted += "Z"
-    else:
-        format_string = "%Y-%m-%dT%H:%M:%SZ"
-        if not timestamp_adjusted.endswith("Z"):
-            timestamp_adjusted += "Z"
-        # timestamp_adjusted=timestamp_adjusted
-    # Convert the adjusted timestamp string to a datetime object
-    datetime_obj = datetime.datetime.strptime(timestamp_adjusted, format_string).replace(tzinfo=datetime.timezone.utc)
-    return datetime_obj
+        # Extract the fractional seconds (up to 6 digits) and Z separately
+        timestamp_parts = timestamp.split(".")
+        timestamp_adjusted = timestamp
+        if len(timestamp_parts) >= 2:
+            timestamp_adjusted = timestamp_parts[0] + "." + timestamp_parts[1][:6]
+            if not timestamp_adjusted.endswith("Z"):
+                timestamp_adjusted += "Z"
+        else:
+            format_string = "%Y-%m-%dT%H:%M:%SZ"
+            if not timestamp_adjusted.endswith("Z"):
+                timestamp_adjusted += "Z"
+        # Convert the adjusted timestamp string to a datetime object
+        datetime_obj = datetime.datetime.strptime(timestamp_adjusted, format_string).replace(
+            tzinfo=datetime.timezone.utc
+        )
+        return datetime_obj
 
 
 def human_format(num):
