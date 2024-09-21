@@ -5,7 +5,7 @@ import httpx
 from ..api_config import APIConfig, HTTPException
 from ..models import *
 from ..models.ABC.model import BaseApiModel
-from .utils import make_output
+from .service_utils import make_output
 
 T = TypeVar("T", bound=BaseApiModel)
 
@@ -152,7 +152,7 @@ async def GetApiDirectNewsFeed(api_config_override: Optional[APIConfig] = None) 
     return result
 
 
-async def GetApiDirectAll(api_config_override: Optional[APIConfig] = None, direct=False) -> DiveharderAll:
+async def GetApiDirectAll(api_config_override: Optional[APIConfig] = None) -> DiveharderAll:
     warstatus = await GetApiDirectWarStatus(api_config_override)
     warinfo = await GetApiDirectWarInfo(api_config_override)
     summary = await GetApiDirectSummary(api_config_override)

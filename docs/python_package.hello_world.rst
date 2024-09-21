@@ -1,13 +1,13 @@
-python\_package.hello\_world package
+All services
 ====================================
 
 Submodules
 ----------
 
-python\_package.hello\_world.hello\_world module
+services
 ------------------------------------------------
 
-.. automodule:: python_package.hello_world.hello_world
+.. automodule:: hd2api.services
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ python\_package.hello\_world.hello\_world module
 Module contents
 ---------------
 
-.. automodule:: python_package.hello_world
+.. automodule:: hd2api
    :members:
    :undoc-members:
    :show-inheritance:

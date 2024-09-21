@@ -6,8 +6,7 @@ from .ABC.model import BaseApiModel
 
 class KnownPlanetEffect(BaseApiModel):
     """
-    None model
-        All known planet effects, with a name and description.
+    A known planet effect, with a name and description.
     """
 
     galacticEffectId: Optional[int] = Field(alias="galacticEffectId", default=None)

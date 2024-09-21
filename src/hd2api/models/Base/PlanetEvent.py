@@ -4,12 +4,7 @@ from pydantic import Field
 from ..ABC.model import BaseApiModel
 
 
-from ..ABC.utils import (
-    human_format as hf,
-    select_emoji as emj,
-    changeformatif as cfi,
-    extract_timestamp as et,
-)
+from ...util.utils import human_format as hf, changeformatif as cfi
 
 
 class PlanetEvent(BaseApiModel):

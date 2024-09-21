@@ -1,20 +1,19 @@
-from typing import List, Optional, Type, TypeVar, Dict
-
-import httpx
-
+from typing import List
 import datetime as dt
-from ..api_config import APIConfig, HTTPException
-from ..models import *
-from ..models.ABC.model import BaseApiModel
-
-from ..constants import task_types, value_types, faction_names, samples
-
-from .effect_builder import build_planet_effect
-
-from .planet_builder import get_time
+from ..models import Assignment, Assignment2, Reward, Reward2, Task, Task2, DiveharderAll
 
 
-def build_assignment_2(assignment: Assignment, diveharder: DiveharderAll):
+def build_assignment_2(assignment: Assignment) -> Assignment2:
+    """
+    Transforms a raw Assignment object into an easier to understand Assignment2 object.
+
+    Args:
+        assignment (Assignment): The original assignment object.
+        diveharder (DiveharderAll): Contextual object containing additional necessary information.
+
+    Returns:
+        Assignment2: The transformed assignment.
+    """
     setting = assignment.setting
     reward = setting.reward
     ret = Assignment2(
@@ -40,10 +39,20 @@ def build_assignment_2(assignment: Assignment, diveharder: DiveharderAll):
     return ret
 
 
-def build_all_assignments(assignments: List[Assignment], diveharder: DiveharderAll):
+def build_all_assignments(assignments: List[Assignment], diveharder: DiveharderAll) -> List[Assignment2]:
+    """
+    Given a list of raw Assignment objects, return a list of Assignment2.
+
+    Args:
+        assignments (List[Assignment]): A list of original assignments.
+        diveharder (DiveharderAll): Contextual object containing additional necessary information.
+
+    Returns:
+        List[Assignment2]: A list of transformed assignments.
+    """
     assignment_2 = []
     if assignments is None:
         return []
     for a in assignments:
-        assignment_2.append(build_assignment_2(a, diveharder))
+        assignment_2.append(build_assignment_2(a))
     return assignment_2

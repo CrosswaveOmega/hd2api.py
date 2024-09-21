@@ -16,7 +16,7 @@ from .Base.WarId import WarId
 
 class DiveharderAll(BaseApiModel):
     """
-    Everything returned from the api in one convienent package.
+    Everything returned from the raw api in one convienent package.
 
     """
 

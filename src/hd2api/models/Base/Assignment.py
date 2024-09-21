@@ -8,8 +8,7 @@ from .Setting import Setting
 
 class Assignment(BaseApiModel):
     """
-    None model
-        Represents an assignment given from Super Earth to the Helldivers.
+    Raw Model representing an assignment given from Super Earth to the Helldivers.
 
     """
 

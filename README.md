@@ -1,10 +1,10 @@
 # Helldivers 2 Python API Wrapper
 
-This is an asyncronous api wrapper for the Helldivers 2 API and it's community wrappers.
+This is an asyncronous api library for the Helldivers 2 API and many of it's community wrappers.
 
-Request the raw data from the api, and use the builders to create easier to understand data classes.
+Request the raw data from the api, and use the builders to create easy to understand data classes, potentially using a newer set of static json files so that in game updates can be quickly reflected across objects returned by this library.
 
-All returned objects are formatted via Pydantic Models.
+All returned objects are Pydantic Models.
 
 Requirements:
  * httpx

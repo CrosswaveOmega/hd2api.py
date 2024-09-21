@@ -1,30 +1,28 @@
-#   ---------------------------------------------------------------------------------
-#   Copyright (c) Microsoft Corporation. All rights reserved.
-#   Licensed under the MIT License. See LICENSE in project root for information.
-#   ---------------------------------------------------------------------------------
-"""This is a sample python file for testing functions from the source code."""
-from __future__ import annotations
-
 import pytest
 import asyncio
 from hd2api import *
 
 
-async def test_get_raw():
+@pytest.fixture
+def apiconfig():
+    return APIConfig()
+
+
+async def test_get_raw(apiconfig):
     """
     This defines the expected usage, which can then be used in various test cases.
     Pytest will not execute this code directly, since the function does not contain the suffex "test"
     """
-    warstatus = await GetApiRawWarStatus()
+    warstatus = await GetApiRawWarStatus(apiconfig)
     assert warstatus is not None
     print(warstatus.time)
 
 
-async def test_get_direct():
+async def test_get_direct(apiconfig):
     """
     This defines the expected usage, which can then be used in various test cases.
     Pytest will not execute this code directly, since the function does not contain the suffex "test"
     """
-    warstatus = await GetApiDirectWarStatus()
+    warstatus = await GetApiDirectWarStatus(apiconfig)
     assert warstatus is not None
     print(warstatus.time)

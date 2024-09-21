@@ -6,9 +6,8 @@ from .ABC.model import BaseApiModel
 import re
 
 
-from .ABC.utils import (
+from ..util.utils import (
     human_format as hf,
-    select_emoji as emj,
     changeformatif as cfi,
     extract_timestamp as et,
     hdml_parse,

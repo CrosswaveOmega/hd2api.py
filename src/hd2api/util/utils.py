@@ -1,8 +1,8 @@
 import datetime
 import re
-from typing import Callable
+from typing import Callable, Dict, Optional, Union
 
-status_emoji = {
+status_emoji: Dict[str, str] = {
     "onc": "<:checkboxon:1199756987471241346>",
     "noc": "<:checkboxoff:1199756988410777610>",
     "emptyc": "<:checkboxempty:1199756989887172639>",
@@ -19,26 +19,29 @@ status_emoji = {
 }
 
 
-def default_fdt(dt: datetime.datetime, *args, **kwargs):
+def default_fdt(dt: datetime.datetime, *args, **kwargs) -> str:
+    """Return the ISO 8601 string representation of a datetime object."""
     return dt.isoformat()
 
 
-set_fdt_callable = default_fdt
+set_fdt_callable: Callable = default_fdt
 
 
-def set_fdt(func: Callable):
+def set_fdt(func: Callable) -> None:
+    """Set a custom formatting function for datetime objects."""
     global set_fdt_callable
     set_fdt_callable = func
 
 
-def format_datetime(*args, **kwargs):
+def format_datetime(*args, **kwargs) -> str:
+    """Format datetime using the currently set callable."""
     if set_fdt_callable:
         return set_fdt_callable(*args, **kwargs)
     raise RuntimeError("fdt callable is not set")
 
 
-def seconds_to_time_stamp(seconds_init):
-    """return string of d:h:m:s"""
+def seconds_to_time_stamp(seconds_init: Union[int, float]) -> str:
+    """Convert seconds into a timestamp string of format d:h:m:s."""
     return_string = ""
     seconds_start = int(round(seconds_init))
     seconds = seconds_start % 60
@@ -58,7 +61,8 @@ def seconds_to_time_stamp(seconds_init):
     return return_string
 
 
-def extract_timestamp(timestamp):
+def extract_timestamp(timestamp: str) -> datetime.datetime:
+    """Extract datetime object from a given timestamp string."""
     try:
         # Attempt to parse using fromisoformat if it is an isoformat timestamp
         return datetime.datetime.fromisoformat(timestamp.replace("Z", "+00:00"))
@@ -84,8 +88,8 @@ def extract_timestamp(timestamp):
         return datetime_obj
 
 
-def human_format(num):
-    """Format a large number"""
+def human_format(num: float) -> str:
+    """Format a large number with appropriate suffixes."""
     num = float("{:.3g}".format(num))
     magnitude = 0
     while abs(num) >= 1000:
@@ -95,13 +99,15 @@ def human_format(num):
     return "{}{}".format("{:f}".format(num).rstrip("0").rstrip("."), suffixes[magnitude])
 
 
-def changeformatif(value):
+def changeformatif(value: Optional[str]) -> str:
+    """Return formatted string if value is not None or empty."""
     if value:
         return f"({value})"
     return ""
 
 
-def select_emoji(key):
+def select_emoji(key: str) -> str:
+    """Select an emoji from the status emoji dictionary."""
     if key in status_emoji:
         return status_emoji.get(key)
     return status_emoji["emptyc"]
@@ -111,7 +117,8 @@ pattern = r"<i=1>(.*?)<\/i>"
 pattern3 = r"<i=3>(.*?)<\/i>"
 
 
-def hdml_parse(input_str):
+def hdml_parse(input_str: str) -> str:
+    """Parse a given string to replace custom HTML-like tags."""
     mes = re.sub(pattern, r"**\1**", input_str)
     mes = re.sub(pattern3, r"***\1***", mes)
     return mes

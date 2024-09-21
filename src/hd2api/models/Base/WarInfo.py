@@ -9,8 +9,9 @@ from .PlanetInfo import PlanetInfo
 
 class WarInfo(BaseApiModel):
     """
-    None model
-        Represents mostly static information of the current galactic war.
+    Mostly static information on the current galactic war.
+    This includes information on each planet, homeworlds, supply lines, the current warID,
+    and more.
 
     """
 
@@ -22,10 +23,10 @@ class WarInfo(BaseApiModel):
 
     minimumClientVersion: Optional[str] = Field(alias="minimumClientVersion", default=None)
 
-    planetInfos: Optional[List[Optional[PlanetInfo]]] = Field(alias="planetInfos", default=[])
+    planetInfos: Optional[List[Optional[PlanetInfo]]] = Field(alias="planetInfos", default_factory=list)
 
-    homeWorlds: Optional[List[Optional[HomeWorld]]] = Field(alias="homeWorlds", default=[])
+    homeWorlds: Optional[List[Optional[HomeWorld]]] = Field(alias="homeWorlds", default_factory=list)
 
-    capitalInfos: Optional[List[Any]] = Field(alias="capitalInfos", default=[])
+    capitalInfos: Optional[List[Any]] = Field(alias="capitalInfos", default_factory=list)
 
-    planetPermanentEffects: Optional[List[Any]] = Field(alias="planetPermanentEffects", default=[])
+    planetPermanentEffects: Optional[List[Any]] = Field(alias="planetPermanentEffects", default_factory=list)

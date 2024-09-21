@@ -1,5 +1,5 @@
 import os
-from typing import Optional, Union
+from typing import Literal, Optional, Union
 
 # pylint: disable=no-name-in-module
 from pydantic import BaseModel, Field
@@ -11,6 +11,8 @@ class APIConfig(BaseModel):
     api_diveharder: str = "https://api.diveharder.com"
 
     api_direct: str = "https://api.live.prod.thehelldiversgame.com"
+
+    use_raw: Literal["community", "diveharder", "direct"] = "community"
     verify: Union[bool, str] = True
     client_name: str = "DefaultClientName"
     language: str = "en-US"

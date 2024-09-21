@@ -17,9 +17,8 @@ from .Effects import KnownPlanetEffect
 
 from ..constants import task_types, value_types, faction_names, samples
 
-from .ABC.utils import (
+from ..util.utils import (
     human_format as hf,
-    select_emoji as emj,
     changeformatif as cfi,
     extract_timestamp as et,
 )

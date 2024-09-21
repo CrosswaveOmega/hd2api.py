@@ -1,4 +1,4 @@
-python\_package package
+All
 =======================
 
 Subpackages
@@ -7,15 +7,15 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
-   python_package.hello_world
+   hd2api.builders
 
 Submodules
 ----------
 
-python\_package.setup module
+Constants
 ----------------------------
 
-.. automodule:: python_package.setup
+.. automodule:: hd2api.constants
    :members:
    :undoc-members:
    :show-inheritance:
@@ -23,7 +23,7 @@ python\_package.setup module
 Module contents
 ---------------
 
-.. automodule:: python_package
+.. automodule:: hd2api.load_json
    :members:
    :undoc-members:
    :show-inheritance:

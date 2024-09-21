@@ -12,7 +12,7 @@ from .Hazard import Hazard
 from .Position import Position
 from .Statistics import Statistics
 from .Effects import KnownPlanetEffect
-from .ABC.utils import (
+from ..util.utils import (
     human_format as hf,
     select_emoji as emj,
     changeformatif as cfi,
@@ -222,7 +222,7 @@ class Planet(BaseApiModel, HealthMixin):
         prev: Optional["Planet"] = None,
         avg: Optional["Planet"] = None,
         show_hp_without_event: bool = True,
-    ) -> Tuple[str, str]:
+    ) -> Tuple[str, List[str]]:
         """Return a string containing the formated state of the planet.
 
         Args:
