@@ -10,6 +10,7 @@ from .async_direct_service import (
     GetApiDirectSummary,
     GetApiDirectWarInfo,
     GetApiDirectNewsFeed,
+    GetApiDirectAll,
 )
 from .async_comm_service import (
     GetCommApiRawWarStatus,
@@ -24,6 +25,7 @@ from .async_diveh_service import (
     GetDhApiRawWarStatus,
     GetDhApiRawNewsFeed,
     GetDhApiRawSummary,
+    GetDhApiRawAll,
 )
 
 T = TypeVar("T", bound=BaseApiModel)
@@ -75,3 +77,10 @@ async def GetApiRawNewsFeed(api_config_override: APIConfig) -> List[NewsFeedItem
         return await GetDhApiRawNewsFeed(api_config_override)
     elif api_config_override.use_raw == "direct":
         return await GetApiDirectNewsFeed(api_config_override)
+
+
+async def GetApiRawAll(api_config_override: APIConfig, direct=False) -> DiveharderAll:
+    if direct:
+        return await GetApiDirectAll(api_config_override)
+    else:
+        return await GetDhApiRawAll(api_config_override)
