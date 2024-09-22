@@ -2,7 +2,7 @@ from typing import *
 import datetime
 from pydantic import Field
 from .ABC.model import BaseApiModel, HealthMixin
-
+import logging
 
 from ..util.utils import (
     human_format as hf,
@@ -11,6 +11,9 @@ from ..util.utils import (
     extract_timestamp as et,
     format_datetime as fdt,
 )
+
+
+hd2api_logger = logging.getLogger("hd2api_logger")
 
 
 class Event(BaseApiModel, HealthMixin):
@@ -94,6 +97,7 @@ class Event(BaseApiModel, HealthMixin):
             float: The rate of change in health per second.
         """
         time_elapsed = diff.time_delta
+        hd2api_logger.info("%d, %s", diff.health, diff.time_delta)
         if time_elapsed.total_seconds() == 0:
             return 0.0
         return diff.health / time_elapsed.total_seconds()
@@ -144,11 +148,13 @@ class Event(BaseApiModel, HealthMixin):
         time_elapsed = diff.time_delta
 
         if not isinstance(time_elapsed, datetime.timedelta):
+            hd2api_logger.info("No time elapsed?")
             return ""
         if time_elapsed.total_seconds() == 0:
             return "?"
         change = self.calculate_change(diff)
         if change == 0:
+            hd2api_logger.info("No change?")
             return ""
 
         timeval = self.calculate_timeval(change, change > 0)

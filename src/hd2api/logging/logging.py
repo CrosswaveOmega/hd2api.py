@@ -1,9 +1,10 @@
 import logging
 from logging.handlers import RotatingFileHandler
 
+hd2api_logger = logging.getLogger("hd2api_logger")
+
 
 def setuphd2logging(log_dir="./logs/"):
-    hd2api_logger = logging.getLogger("hd2api_logger")
     # Create a rotating file handler
     log_handler = RotatingFileHandler(f"{log_dir}hd2api_logger.log", maxBytes=5 * 1024 * 1024, backupCount=5)
     log_handler.setLevel(logging.WARNING)

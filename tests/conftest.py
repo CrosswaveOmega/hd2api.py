@@ -14,6 +14,9 @@ from typing import List
 
 import pytest
 from _pytest.nodes import Item
+import logging
+
+hd2api_logger = logging.getLogger("hd2api_logger")
 
 
 def pytest_collection_modifyitems(items: list[Item]):
@@ -28,3 +31,23 @@ def pytest_collection_modifyitems(items: list[Item]):
 def unit_test_mocks(monkeypatch: None):
     """Include Mocks here to execute all commands offline and fast."""
     pass
+
+
+def pytest_configure(config):
+    """
+    Allows plugins and conftest files to perform initial configuration.
+    This hook is called for every plugin and initial conftest
+    file after command line options have been parsed.
+    """
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+
+    # Set the formatter for the console handler
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        datefmt="%m/%d/%Y %I:%M:%S%p",
+    )
+    console_handler.setFormatter(formatter)
+
+    # Add the console handler to the logger
+    hd2api_logger.addHandler(console_handler)

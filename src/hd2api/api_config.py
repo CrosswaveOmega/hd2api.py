@@ -3,6 +3,7 @@ from typing import Literal, Optional, Union
 
 # pylint: disable=no-name-in-module
 from pydantic import BaseModel, Field
+from .models import StaticAll
 
 
 class APIConfig(BaseModel):
@@ -17,6 +18,7 @@ class APIConfig(BaseModel):
     client_name: str = "DefaultClientName"
     language: str = "en-US"
     static_path: str = ""
+    statics: Optional[StaticAll] = None
 
     def get_access_token(self) -> Optional[str]:
         try:

@@ -6,8 +6,7 @@ from ..ABC.model import BaseApiModel
 
 class PlanetActiveEffects(BaseApiModel):
     """
-    None model
-        Active Planet Effects, with the index and galacticEffectId
+    Raw Active Planet Effects, with the planet index and the galacticEffectId
 
     """
 
