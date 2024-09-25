@@ -22,7 +22,7 @@ classifiers = [
 keywords=['helldivers2','api']
 requires-python = ">=3.8.1"
 
-version = '0.0.0.6'
+version = '0.0.0.7'
 dependencies= [
 "pydantic>=2.0.1",
 "httpx>=0.25.2"

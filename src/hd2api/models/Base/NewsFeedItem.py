@@ -19,6 +19,8 @@ class NewsFeedItem(BaseApiModel):
 
     type: Optional[int] = Field(alias="type", default=None)
 
+    tagIds: Optional[List[Union[str, int]]] = Field(alias="tagIds", default_factory=list)
+
     message: Optional[str] = Field(alias="message", default=None)
 
     def to_str(self) -> Tuple[str, str]:
