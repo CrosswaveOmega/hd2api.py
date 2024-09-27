@@ -1,14 +1,26 @@
 # Helldivers 2 Python API Wrapper
 
-This is an asyncronous api library for the Helldivers 2 API and many of it's community wrappers.
+This is an asyncronous api frontend library for the Helldivers 2 API and many of it's community wrappers.
 
 Request the raw data from the api, and use the builders to create easy to understand data classes, potentially using a newer set of static json files so that in game updates can be quickly reflected across objects returned by this library.
+
+Still currently in development.
 
 All returned objects are Pydantic Models.
 
 Requirements:
  * httpx
  * pydantic
+
+This front end supports:
+
+* The community api.
+https://github.com/helldivers-2/api
+
+* The diveharder api.
+https://github.com/helldivers-2/diveharder_api.py/
+
+* Arrowhead's official API.
 
 
 ### current stable installation

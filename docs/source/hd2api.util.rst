@@ -1,13 +1,13 @@
-All services
-====================================
+hd2api.util package
+===================
 
 Submodules
 ----------
 
-services
-------------------------------------------------
+hd2api.util.utils module
+------------------------
 
-.. automodule:: hd2api.services
+.. automodule:: hd2api.util.utils
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ services
 Module contents
 ---------------
 
-.. automodule:: hd2api
+.. automodule:: hd2api.util
    :members:
    :undoc-members:
    :show-inheritance:

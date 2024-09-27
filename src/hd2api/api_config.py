@@ -7,22 +7,36 @@ from .models import StaticAll
 
 
 class APIConfig(BaseModel):
+    """Configuration object for the api wrappers.
+
+    Args:
+        BaseModel (_type_): _description_
+
+    Raises:
+        Exception: _description_
+
+    Returns:
+        _type_: _description_
+    """
+
     api_comm: str = "https://api.helldivers2.dev"
 
     api_diveharder: str = "https://api.diveharder.com"
 
     api_direct: str = "https://api.live.prod.thehelldiversgame.com"
 
-    use_raw: Literal["community", "diveharder", "direct"] = "community"
+    use_raw: Literal["community", "diveharder", "direct"] = "diveharder"
     verify: Union[bool, str] = True
     client_name: str = "DefaultClientName"
     language: str = "en-US"
     static_path: str = ""
+    access_token: Optional[str] = None
     statics: Optional[StaticAll] = None
 
     def get_access_token(self) -> Optional[str]:
+        """There really isn't an access token."""
         try:
-            return os.environ["access_token"]
+            return self.access_token
         except KeyError:
             return None
 
@@ -33,9 +47,7 @@ class APIConfig(BaseModel):
             return None
 
     def set_access_token(self, value: str):
-        raise Exception(
-            "This client was generated with an environment variable for the access token. Please set the environment variable 'access_token' to the access token."
-        )
+        self.access_token = value
 
 
 class HTTPException(Exception):

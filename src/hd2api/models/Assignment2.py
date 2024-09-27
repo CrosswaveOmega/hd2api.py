@@ -56,6 +56,7 @@ class Assignment2(BaseApiModel):
             id=self.id,
             progress=new_progress,
             title=self.title,
+            flags=self.flags,
             briefing=self.briefing,
             description=self.description,
             tasks=self.tasks,

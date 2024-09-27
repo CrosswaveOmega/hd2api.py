@@ -39,13 +39,12 @@ def build_assignment_2(assignment: Assignment) -> Assignment2:
     return ret
 
 
-def build_all_assignments(assignments: List[Assignment], diveharder: DiveharderAll) -> List[Assignment2]:
+def build_all_assignments(assignments: List[Assignment]) -> List[Assignment2]:
     """
     Given a list of raw Assignment objects, return a list of Assignment2.
 
     Args:
-        assignments (List[Assignment]): A list of original assignments.
-        diveharder (DiveharderAll): Contextual object containing additional necessary information.
+        assignments (List[Assignment]):List of raw Assignment objects.
 
     Returns:
         List[Assignment2]: A list of transformed assignments.

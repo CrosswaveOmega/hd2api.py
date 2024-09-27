@@ -41,7 +41,7 @@ def build_all_campaigns(planets: Dict[int, Planet], warstatus: WarStatus):
 
     Args:
         planets (Dict[int, Planet]): A dictionary mapping planet IDs to Planet objects.
-        warstatus (WarStatus): The Current WarStatus.
+        warstatus (WarStatus): The current WarStatus.
     Returns:
         List[Campaign2]: A list of Campaign2 objects built from the warstatus campaigns.
     """

@@ -1,5 +1,5 @@
-src
-===
+hd2api
+======
 
 .. toctree::
    :maxdepth: 4

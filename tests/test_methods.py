@@ -39,6 +39,16 @@ async def test_get_direct(apiconfig):
     print(warstatus.time)
 
 
+async def test_get_direct_all(apiconfig):
+    """
+    This defines the expected usage, which can then be used in various test cases.
+    Pytest will not execute this code directly, since the function does not contain the suffex "test"
+    """
+    warstatus = await GetApiRawAll(apiconfig)
+    assert warstatus is not None
+    timea = get_time(warstatus.status, warstatus.war_info)
+
+
 async def test_get_event_avg(apiconfig):
     """Test averaging for planet"""
     warall = await GetApiRawAll(apiconfig)

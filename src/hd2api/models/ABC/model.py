@@ -6,7 +6,7 @@ from datetime import datetime, timezone, timedelta
 
 
 class BaseApiModel(BaseModel):
-    """Base extended model class"""
+    """Base model class for everything returend by the api.  Features the retrieved_at and time_delta fields."""
 
     retrieved_at: Optional[datetime] = Field(alias="retrieved_at", default=None)
     time_delta: Optional[timedelta] = Field(alias="time_delta", default=None)

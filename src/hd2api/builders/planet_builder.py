@@ -12,7 +12,7 @@ from ..constants import task_types, value_types, faction_names, samples
 from .effect_builder import build_planet_effect
 
 
-def build_planet(
+def build_planet_basic(
     gstatic: GalaxyStatic,
     index: int,
     planetStatus: PlanetStatus,
@@ -24,11 +24,12 @@ def build_planet(
     PlanetStatus, PlanetInfo, and PlanetStats fields.
 
     Args:
-        gstatic (GalaxyStatic): Static information about the galaxy.
+        gstatic (GalaxyStatic): The static information about planets, enviornmental effects, and biomes
+            in the galaxy
         index (int): Index of the planet within the galaxy.
-        planetStatus (PlanetStatus): Current status information of the planet.
-        planetInfo (PlanetInfo): Static information about the planet.
-        stats (PlanetStats): Statistical data related to the planet.
+        planetStatus (PlanetStatus): The Raw PlanetStatus object with a matching index.
+        planetInfo (PlanetInfo): The raw PlanetInfo object with a matching index
+        stats (PlanetStats): The Game Statistics for the planet.
 
     Returns:
         Planet: The newly constructed Planet object or None if the planet
@@ -96,15 +97,13 @@ def check_compare_value_list(keys: List[str], values: List[Any], target: List[Di
         if all(s[key] == value for key, value in zip(keys, values)):
             values.append(s)
     return values
-    return None
 
 
-def get_time(diveharder: DiveharderAll) -> dt.datetime:
-    status = diveharder.status
-    info = diveharder.war_info
+def get_time(status: WarStatus, info: WarInfo) -> dt.datetime:
+    """get the relative start of the war according the game's internal "time" value"""
 
     # Get datetime diveharder object was retrieved at
-    now = diveharder.retrieved_at
+    now = status.retrieved_at
     gametime = dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + dt.timedelta(seconds=status.time)
     deviation = now - gametime
     # print(deviation)
@@ -112,9 +111,19 @@ def get_time(diveharder: DiveharderAll) -> dt.datetime:
     return relative_game_start
 
 
-def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticAll):
+def get_time_dh(diveharder: DiveharderAll) -> dt.datetime:
+    """get the relative start of the war according the game's internal "time" value using DiveharderAll"""
+
+    status = diveharder.status
+    info = diveharder.war_info
+    return get_time(status, info)
+
+
+def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticAll) -> Planet:
     """
-    Builds a Planet object for the specified planetIndex using data
+    Builds a Planet object for the specified planetIndex, by matching the correspoding
+    PlanetStatus, PlanetInfo, PlanetStats, PlanetEffects, PlanetAttacks, and
+    PlanetEvents from the objects within the DiveharderAll object.
     from the diveharder status and static galaxy information.
 
     Args:
@@ -125,42 +134,46 @@ def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticA
     Returns:
         Planet: The constructed planet for the given index.
     """
-    status = diveharder.status
-    info = diveharder.war_info
+    status: WarStatus = diveharder.status  # type: ignore
+    info: WarInfo = diveharder.war_info  # type: ignore
     if diveharder.planet_stats is not None:
-        stat = diveharder.planet_stats.planets_stats
-    # print('index is', planetIndex)
+        stat: WarSummary = diveharder.planet_stats
+    # Get planet status & planet info
     planetStatus = check_compare_value("index", planetIndex, status.planetStatus)
     planetInfo = check_compare_value("index", planetIndex, info.planetInfos)
-    if stat is not None:
-        planetStat = check_compare_value("planetIndex", planetIndex, stat)
-        if not planetStat:
-            planetStat = PlanetStats(planetIndex=planetIndex)
+    if stat.planets_stats is not None:
+        planetStatistics = check_compare_value("planetIndex", planetIndex, stat.planets_stats)
+        if not planetStatistics:
+            planetStatistics = PlanetStats(planetIndex=planetIndex)
     else:
-        planetStat = PlanetStats(planetIndex=planetIndex)
+        planetStatistics = PlanetStats(planetIndex=planetIndex)
 
     # Build Planet.
-    planet = build_planet(statics.galaxystatic, planetIndex, planetStatus, planetInfo, planetStat)
+    planet = build_planet_basic(statics.galaxystatic, planetIndex, planetStatus, planetInfo, planetStatistics)
     planet.sector_id = planetInfo.sector  # type: ignore
 
     planet_effect_list = []
     planet_attack_list = []
+
     # Build Effects
     for effect in status.planetActiveEffects:
         if effect.index == planetIndex:
             effects = build_planet_effect(statics.effectstatic, effect.galacticEffectId)
             planet_effect_list.append(effects)
 
+    planet.activePlanetEffects = planet_effect_list
+
     # Build Attacks
     for attack in status.planetAttacks:
         if attack.source == planetIndex:
             planet_attack_list.append(attack.target)
 
+    planet.attacking = planet_attack_list
+
     # Build Events
     event: PlanetEvent = check_compare_value("planetIndex", planetIndex, status.planetEvents)  # type: ignore
-    planet.activePlanetEffects = planet_effect_list
-    planet.attacking = planet_attack_list
-    starttime = get_time(diveharder)
+
+    starttime = get_time(status, info)
     if event:
         newevent = Event(
             retrieved_at=event.retrieved_at,
@@ -176,13 +189,11 @@ def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticA
         )
         planet.event = newevent
     return planet
-    pass
-    pass
 
 
 def build_all_planets(warall: DiveharderAll, statics: StaticAll) -> Dict[int, Planet]:
     """
-    Builds a list of all planets by iterating over the galaxy's static planet data
+    Builds a dictionary of all planets by iterating over the galaxy's static planet data
     and invoking build_planet_2 for each planet.
 
     Args:
