@@ -1,3 +1,4 @@
+import datetime
 from typing import *
 
 from pydantic import Field
@@ -15,7 +16,7 @@ from ..util.utils import (
 class Statistics(BaseApiModel):
     """
     None model
-        Contains statistics of missions, kills, success rate etc.
+        Contains statistics of missions, kills, success rate etc for the galaxy as a whole OR a single planet.
 
     """
 
@@ -50,7 +51,7 @@ class Statistics(BaseApiModel):
     playerCount: Optional[int] = Field(alias="playerCount", default=None)
 
     def __sub__(self, other: "Statistics") -> "Statistics":
-        return Statistics(
+        sub = Statistics(
             missionsWon=(self.missionsWon or 0) - (other.missionsWon or 0),
             missionsLost=(self.missionsLost or 0) - (other.missionsLost or 0),
             missionTime=(self.missionTime or 0) - (other.missionTime or 0),
@@ -66,14 +67,22 @@ class Statistics(BaseApiModel):
             missionSuccessRate=(self.missionSuccessRate or 0) - (other.missionSuccessRate or 0),
             accuracy=(self.accuracy or 0) - (other.accuracy or 0),
             playerCount=(self.playerCount or 0) - (other.playerCount or 0),
+            time_delta=self.retrieved_at - other.retrieved_at,  # type: ignore
         )
 
     @staticmethod
     def average(stats_list: List["Statistics"]) -> "Statistics":
+        """
+        Average together a list of calculated Statistic Deltas.
+
+        """
         count = len(stats_list)
         if count == 0:
             return Statistics()
 
+        avg_time = (
+            sum(stats.time_delta.total_seconds() for stats in stats_list if stats.time_delta is not None) // count
+        )
         avg_stats = Statistics(
             missionsWon=sum(stat.missionsWon for stat in stats_list if stat.missionsWon is not None) // count,
             missionsLost=sum(stat.missionsLost for stat in stats_list if stat.missionsLost is not None) // count,
@@ -94,6 +103,7 @@ class Statistics(BaseApiModel):
             // count,
             accuracy=sum(stat.accuracy for stat in stats_list if stat.accuracy is not None) // count,
             playerCount=sum(stat.playerCount for stat in stats_list if stat.playerCount is not None) // count,
+            time_delta=datetime.timedelta(seconds=avg_time),
         )
 
         return avg_stats

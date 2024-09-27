@@ -44,6 +44,14 @@ hd2api.builders.sector\_state\_builder module
    :undoc-members:
    :show-inheritance:
 
+hd2api.builders.statistics\_builder module
+-----------------------------------
+
+.. automodule:: hd2api.builders.statistics_builder
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 hd2api.builders.war\_builder module
 -----------------------------------
 

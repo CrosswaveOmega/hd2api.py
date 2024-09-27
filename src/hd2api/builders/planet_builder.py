@@ -10,6 +10,7 @@ from ..models.ABC.model import BaseApiModel
 from ..constants import task_types, value_types, faction_names, samples
 
 from .effect_builder import build_planet_effect
+from .statistics_builder import statistics_builder
 
 
 def build_planet_basic(
@@ -40,26 +41,9 @@ def build_planet_basic(
         return None
     biome = gstatic.biomes.get(planet_base.biome, None)  # type: ignore
     env = [gstatic.environmentals.get(e, None) for e in planet_base.environmentals]
-    stats_new = Statistics(
-        retrieved_at=planetStatus.retrieved_at,
-        playerCount=planetStatus.players,
-        missionsWon=stats.missionsWon,
-        missionsLost=stats.missionsLost,
-        missionTime=stats.missionTime,
-        terminidKills=stats.bugKills,
-        automatonKills=stats.automatonKills,
-        illuminateKills=stats.illuminateKills,
-        bulletsFired=stats.bulletsFired,
-        bulletsHit=stats.bulletsHit,
-        timePlayed=stats.timePlayed,
-        deaths=stats.deaths,
-        revives=stats.revives,
-        friendlies=stats.friendlies,
-        missionSuccessRate=stats.missionSuccessRate,
-        accuracy=stats.accurracy,
-    )
+    # Build Statistics
+    stats_new = statistics_builder(stats, planetStatus.players, planetStatus.retrieved_at)
     pos = planetInfo.position
-    # print(index,planetStatus.retrieved_at)
     name = planet_base.name
     if "en-US" in planet_base.names:  # type: ignore
         name = planet_base.names.get("en-US", planet_base.name)

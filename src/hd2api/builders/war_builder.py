@@ -12,6 +12,7 @@ from ..constants import task_types, value_types, faction_names, samples
 from .effect_builder import build_planet_effect
 
 from .planet_builder import get_time
+from .statistics_builder import statistics_builder
 
 
 def build_war(diveharder: DiveharderAll) -> War:
@@ -20,24 +21,7 @@ def build_war(diveharder: DiveharderAll) -> War:
 
     player_count = sum(st.players for st in diveharder.status.planetStatus if st.players is not None)
 
-    stats_build = Statistics(
-        retrieved_at=stats.retrieved_at,
-        playerCount=player_count,
-        missionsWon=stats.missionsWon,
-        missionsLost=stats.missionsLost,
-        missionTime=stats.missionTime,
-        terminidKills=stats.bugKills,
-        automatonKills=stats.automatonKills,
-        illuminateKills=stats.illuminateKills,
-        bulletsFired=stats.bulletsFired,
-        bulletsHit=stats.bulletsHit,
-        timePlayed=stats.timePlayed,
-        deaths=stats.deaths,
-        revives=stats.revives,
-        friendlies=stats.friendlies,
-        missionSuccessRate=stats.missionSuccessRate,
-        accuracy=stats.accurracy,
-    )
+    stats_build = statistics_builder(stats, player_count)
     war = War(
         retrieved_at=diveharder.status.retrieved_at,
         warId=diveharder.status.warId,
