@@ -2,8 +2,6 @@ import os
 import json
 from typing import Optional
 
-from hd2api.api_config import APIConfig
-
 
 def get_repo_dir() -> str:
     """
@@ -16,7 +14,7 @@ def get_repo_dir() -> str:
     return os.path.join(library_dir, "statics")
 
 
-def load_and_merge_json_files(json_path: str, api_config: Optional[APIConfig] = None):
+def load_and_merge_json_files(json_path: str, static_dir: Optional[str] = None):
     """
     Load all JSON files from the specified directory into a single dictionary.
 
@@ -29,8 +27,8 @@ def load_and_merge_json_files(json_path: str, api_config: Optional[APIConfig] = 
     planets_data = {}
 
     source_dir = get_repo_dir()
-    if api_config and api_config.static_path:
-        source_dir = api_config.static_path
+    if static_dir:
+        source_dir = static_dir
 
     directory_path = os.path.join(get_repo_dir(), json_path)
 

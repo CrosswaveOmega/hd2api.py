@@ -10,12 +10,8 @@ hd2api_logger = logging.getLogger("hd2api_logger")
 @pytest.fixture
 def apiconfig():
     config = APIConfig()
-    planetjson = load_and_merge_json_files("planets", config)
-    effectjson = load_and_merge_json_files("effects", config)
-    config.statics = StaticAll(
-        galaxystatic=GalaxyStatic(**planetjson),
-        effectstatic=EffectStatic(**effectjson),
-    )
+    config.staticdata()
+
     return config
 
 
