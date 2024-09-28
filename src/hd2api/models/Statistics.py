@@ -69,6 +69,7 @@ class Statistics(BaseApiModel):
             playerCount=(self.playerCount or 0) - (other.playerCount or 0),
             time_delta=self.retrieved_at - other.retrieved_at,  # type: ignore
         )
+        return sub
 
     @staticmethod
     def average(stats_list: List["Statistics"]) -> "Statistics":
@@ -81,28 +82,56 @@ class Statistics(BaseApiModel):
             return Statistics()
 
         avg_time = (
-            sum(stats.time_delta.total_seconds() for stats in stats_list if stats.time_delta is not None) // count
+            sum(
+                stats.time_delta.total_seconds()
+                for stats in stats_list
+                if stats.time_delta is not None
+            )
+            // count
         )
         avg_stats = Statistics(
-            missionsWon=sum(stat.missionsWon for stat in stats_list if stat.missionsWon is not None) // count,
-            missionsLost=sum(stat.missionsLost for stat in stats_list if stat.missionsLost is not None) // count,
-            missionTime=sum(stat.missionTime for stat in stats_list if stat.missionTime is not None) // count,
-            terminidKills=sum(stat.terminidKills for stat in stats_list if stat.terminidKills is not None) // count,
-            automatonKills=sum(stat.automatonKills for stat in stats_list if stat.automatonKills is not None) // count,
-            illuminateKills=sum(stat.illuminateKills for stat in stats_list if stat.illuminateKills is not None)
+            missionsWon=sum(stat.missionsWon for stat in stats_list if stat.missionsWon is not None)
             // count,
-            bulletsFired=sum(stat.bulletsFired for stat in stats_list if stat.bulletsFired is not None) // count,
-            bulletsHit=sum(stat.bulletsHit for stat in stats_list if stat.bulletsHit is not None) // count,
-            timePlayed=sum(stat.timePlayed for stat in stats_list if stat.timePlayed is not None) // count,
-            deaths=sum(stat.deaths for stat in stats_list if stat.deaths is not None) // count,
-            revives=sum(stat.revives for stat in stats_list if stat.revives is not None) // count,
-            friendlies=sum(stat.friendlies for stat in stats_list if stat.friendlies is not None) // count,
-            missionSuccessRate=sum(
-                stat.missionSuccessRate for stat in stats_list if stat.missionSuccessRate is not None
+            missionsLost=sum(
+                stat.missionsLost for stat in stats_list if stat.missionsLost is not None
             )
             // count,
-            accuracy=sum(stat.accuracy for stat in stats_list if stat.accuracy is not None) // count,
-            playerCount=sum(stat.playerCount for stat in stats_list if stat.playerCount is not None) // count,
+            missionTime=sum(stat.missionTime for stat in stats_list if stat.missionTime is not None)
+            // count,
+            terminidKills=sum(
+                stat.terminidKills for stat in stats_list if stat.terminidKills is not None
+            )
+            // count,
+            automatonKills=sum(
+                stat.automatonKills for stat in stats_list if stat.automatonKills is not None
+            )
+            // count,
+            illuminateKills=sum(
+                stat.illuminateKills for stat in stats_list if stat.illuminateKills is not None
+            )
+            // count,
+            bulletsFired=sum(
+                stat.bulletsFired for stat in stats_list if stat.bulletsFired is not None
+            )
+            // count,
+            bulletsHit=sum(stat.bulletsHit for stat in stats_list if stat.bulletsHit is not None)
+            // count,
+            timePlayed=sum(stat.timePlayed for stat in stats_list if stat.timePlayed is not None)
+            // count,
+            deaths=sum(stat.deaths for stat in stats_list if stat.deaths is not None) // count,
+            revives=sum(stat.revives for stat in stats_list if stat.revives is not None) // count,
+            friendlies=sum(stat.friendlies for stat in stats_list if stat.friendlies is not None)
+            // count,
+            missionSuccessRate=sum(
+                stat.missionSuccessRate
+                for stat in stats_list
+                if stat.missionSuccessRate is not None
+            )
+            // count,
+            accuracy=sum(stat.accuracy for stat in stats_list if stat.accuracy is not None)
+            // count,
+            playerCount=sum(stat.playerCount for stat in stats_list if stat.playerCount is not None)
+            // count,
             time_delta=datetime.timedelta(seconds=avg_time),
         )
 
@@ -117,7 +146,9 @@ class Statistics(BaseApiModel):
         missiontime = f"Time:{sts(self.missionTime)} sec"
 
         # Format kill statistics
-        kill_stats = f"T:{hf(self.terminidKills)}, " f"A:{hf(self.automatonKills)}, " f"DATA EXPUNGED"
+        kill_stats = (
+            f"T:{hf(self.terminidKills)}, " f"A:{hf(self.automatonKills)}, " f"DATA EXPUNGED"
+        )
         #             f"I: {hf(self.illuminateKills)}"
 
         # Format deaths and friendlies statistics
@@ -161,9 +192,7 @@ class Statistics(BaseApiModel):
         kill_stats += f"A:{hf(self.automatonKills)} ({other.automatonKills}),"
         kill_stats += "DATA EXPUNGED"
         bullets_stats = f"Bullets Hit/Fired: {hf(self.bulletsHit)}/{hf(self.bulletsFired)} ({other.bulletsHit}/{other.bulletsFired})"
-        deaths_and_friendlies = (
-            f"Deaths/Friendlies: {hf(self.deaths)}/{hf(self.friendlies)} ({other.deaths}/{other.friendlies})"
-        )
+        deaths_and_friendlies = f"Deaths/Friendlies: {hf(self.deaths)}/{hf(self.friendlies)} ({other.deaths}/{other.friendlies})"
 
         player_count = f"{emj('hdi')}: {hf(self.playerCount)} ({other.playerCount})"
 

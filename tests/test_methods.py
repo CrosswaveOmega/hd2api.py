@@ -45,6 +45,14 @@ async def test_get_direct_all(apiconfig):
     timea = get_time(warstatus.status, warstatus.war_info)
 
 
+async def test_planet(apiconfig):
+    allval = await GetApiRawAll(apiconfig)
+    hd2api_logger.info(allval.status)
+    planet = build_planet_2(64, allval, apiconfig.staticdata())
+    hd2api_logger.info(planet)
+    assert planet.name.upper() == "MERIDIA"
+
+
 async def test_get_event_avg(apiconfig):
     """Test averaging for planet"""
     warall = await GetApiRawAll(apiconfig)

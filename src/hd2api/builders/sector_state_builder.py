@@ -22,7 +22,9 @@ def sector_states(war_status: WarStatus, statics: StaticAll) -> List[SectorState
                 continue
             sector = planet.sector
             if not sector in sect:
-                sect[sector] = SectorStates(retrieved_at=war_status.retrieved_at, name=sector, sector=sector)
+                sect[sector] = SectorStates(
+                    retrieved_at=war_status.retrieved_at, name=sector, sector=sector
+                )
             sect[sector].planetStatus.append(s)
             sect[sector].check_common_owner()
     return list(sect.values())

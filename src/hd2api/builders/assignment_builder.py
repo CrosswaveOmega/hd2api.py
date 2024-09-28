@@ -20,7 +20,9 @@ def build_assignment_2(assignment: Assignment) -> Assignment2:
         retrieved_at=assignment.retrieved_at,
         id=assignment.id32,
         progress=assignment.progress,
-        expiration=(assignment.retrieved_at + dt.timedelta(seconds=assignment.expiresIn)).isoformat(),
+        expiration=(
+            assignment.retrieved_at + dt.timedelta(seconds=assignment.expiresIn)
+        ).isoformat(),
         briefing=setting.overrideBrief,
         title=setting.overrideTitle,
         description=setting.taskDescription,

@@ -27,6 +27,7 @@ extensions = [
     "sphinx.ext.intersphinx",
     "sphinx.ext.extlinks",
     "sphinx.ext.autosummary",  # Create neat summary tables
+    "sphinxcontrib.autodoc_pydantic",
 ]
 
 autosummary_generate = True  # Turn on sphinx.ext.autosummary

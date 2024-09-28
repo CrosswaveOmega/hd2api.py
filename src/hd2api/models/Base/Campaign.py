@@ -11,10 +11,24 @@ class Campaign(BaseApiModel):
 
     """
 
-    id: Optional[int] = Field(alias="id", default=None)
+    id: Optional[int] = Field(
+        alias="id", default=None, description="The identifier of this campaign."
+    )
 
-    planetIndex: Optional[int] = Field(alias="planetIndex", default=None)
+    planetIndex: Optional[int] = Field(
+        alias="planetIndex",
+        default=None,
+        description="The Index of the planet this campaign refers to.",
+    )
 
-    type: Optional[int] = Field(alias="type", default=None)
+    type: Optional[int] = Field(
+        alias="type",
+        default=None,
+        description="A numerical type, indicates the type of campaign (see helldivers-2/json).",
+    )
 
-    count: Optional[int] = Field(alias="count", default=None)
+    count: Optional[int] = Field(
+        alias="count",
+        default=None,
+        description="A numerical count, the amount of campaigns the planet has seen.",
+    )

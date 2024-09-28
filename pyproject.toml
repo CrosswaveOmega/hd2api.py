@@ -22,7 +22,7 @@ classifiers = [
 keywords=['helldivers2','api']
 requires-python = ">=3.8.1"
 
-version = '0.0.0.8'
+version = '0.0.0.9'
 dependencies= [
 "pydantic>=2.0.1",
 "httpx>=0.25.2"
@@ -84,7 +84,7 @@ recursive = true
 targets = "src"
 
 [tool.black]
-line-length = 120
+line-length = 100
 fast = true
 
 [tool.coverage.run]
@@ -94,7 +94,7 @@ branch = true
 fail_under = 100
 
 [tool.flake8]
-max-line-length = 120
+max-line-length = 100
 select = "F,E,W,B,B901,B902,B903"
 exclude = [
     ".eggs",
@@ -253,7 +253,7 @@ variable-naming-style="snake_case"
 ignore-long-lines="^\\s*(# )?.*['\"]?<?https?://\\S+>?"
 indent-after-paren=4
 indent-string='    '
-max-line-length=120
+max-line-length=100
 max-module-lines=1000
 single-line-class-stmt="no"
 single-line-if-stmt="no"

@@ -61,7 +61,9 @@ class Planet(BaseApiModel, HealthMixin):
 
     regenPerSecond: Optional[float] = Field(alias="regenPerSecond", default=None)
 
-    activePlanetEffects: Optional[List[KnownPlanetEffect]] = Field(alias="activePlanetEffects", default=None)
+    activePlanetEffects: Optional[List[KnownPlanetEffect]] = Field(
+        alias="activePlanetEffects", default=None
+    )
 
     event: Optional[Event] = Field(alias="event", default=None)
 
@@ -74,11 +76,21 @@ class Planet(BaseApiModel, HealthMixin):
         Subtract values from another planet.
         """
         # Calculate the values for health, statistics, and event based on subtraction
-        new_health = self.health - other.health if self.health is not None and other.health is not None else None
-        new_statistics = (
-            self.statistics - other.statistics if self.statistics is not None and other.statistics is not None else None
+        new_health = (
+            self.health - other.health
+            if self.health is not None and other.health is not None
+            else None
         )
-        new_event = self.event - other.event if self.event is not None and other.event is not None else self.event
+        if self.statistics is not None and other.statistics is not None:
+            new_statistics = self.statistics - other.statistics
+        else:
+            new_statistics = None
+
+        new_event = (
+            self.event - other.event
+            if self.event is not None and other.event is not None
+            else self.event
+        )
 
         # Create a new instance of the Planet class with calculated values
         planet = Planet(
@@ -146,7 +158,7 @@ class Planet(BaseApiModel, HealthMixin):
         Estimate the remaining life time of the planet based on the current rate of health change.
 
         Args:
-            diff (Planet): A Planet object representing the difference in health and time.
+            diff (Planet): A Planet object with difference in health and time.
 
         Returns:
             str: A string representation of the rate of change and the estimated time of loss or gain.
@@ -180,14 +192,28 @@ class Planet(BaseApiModel, HealthMixin):
         if count == 0:
             return Planet()
 
-        avg_health = sum(planet.health for planet in planets_list if planet.health is not None) // count
-        avg_statistics = Statistics.average(
-            [planet.statistics for planet in planets_list if planet.statistics is not None]
+        avg_health = (
+            sum(planet.health for planet in planets_list if planet.health is not None) // count
         )
-        avg_event = Event.average([planet.event for planet in planets_list if planet.event is not None])
+
+        stats = []
+        for planet in planets_list:
+            if planet.statistics is not None:
+                stats.append(planet.statistics)
+
+        avg_statistics = Statistics.average(stats)
+        print("avgstat", avg_statistics)
+        avg_event = Event.average(
+            [planet.event for planet in planets_list if planet.event is not None]
+        )
 
         avg_time = (
-            sum(planet.time_delta.total_seconds() for planet in planets_list if planet.time_delta is not None) // count
+            sum(
+                planet.time_delta.total_seconds()
+                for planet in planets_list
+                if planet.time_delta is not None
+            )
+            // count
         )
         avg_planet = Planet(
             health=avg_health,
@@ -239,10 +265,14 @@ class Planet(BaseApiModel, HealthMixin):
         faction = emj(self.currentOwner.lower())
 
         name = f"{faction}P#{self.index}: {self.name}"
-        players = f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
+        players = (
+            f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
+        )
         outlist = [f"{players}"]
         if (not self.event) or show_hp_without_event:
-            outlist.append(f"HP `{self.get_health_percent(self.health)}% {cfi(self.get_health_percent(diff.health))}`")
+            outlist.append(
+                f"HP `{self.get_health_percent(self.health)}% {cfi(self.get_health_percent(diff.health))}`"
+            )
             outlist.append(f"Decay:`{round((100*(self.regenPerSecond/self.maxHealth))*60*60,2)}`")  # type: ignore
         if avg:
             remaining_time = self.estimate_remaining_lib_time(avg)

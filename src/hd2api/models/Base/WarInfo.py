@@ -15,18 +15,56 @@ class WarInfo(BaseApiModel):
 
     """
 
-    warId: Optional[int] = Field(alias="warId", default=None)
+    warId: Optional[int] = Field(
+        alias="warId",
+        default=None,
+        description="The identifier of the war season this WarInfo represents.",
+    )
 
-    startDate: Optional[int] = Field(alias="startDate", default=None)
+    startDate: Optional[int] = Field(
+        alias="startDate",
+        default=None,
+        description="A unix timestamp (in seconds) when this season started.",
+    )
 
-    endDate: Optional[int] = Field(alias="endDate", default=None)
+    endDate: Optional[int] = Field(
+        alias="endDate",
+        default=None,
+        description="A unix timestamp (in seconds) when this season will end.",
+    )
 
-    minimumClientVersion: Optional[str] = Field(alias="minimumClientVersion", default=None)
+    layoutVersion: Optional[int] = Field(
+        alias="layoutVersion",
+        default=None,
+        description="Use unknown. Value tends to increase whenever the waypoints change.",
+    )
 
-    planetInfos: Optional[List[Optional[PlanetInfo]]] = Field(alias="planetInfos", default_factory=list)
+    minimumClientVersion: Optional[str] = Field(
+        alias="minimumClientVersion",
+        default=None,
+        description="A version string indicating the minimum game client version the API supports.",
+    )
 
-    homeWorlds: Optional[List[Optional[HomeWorld]]] = Field(alias="homeWorlds", default_factory=list)
+    planetInfos: Optional[List[Optional[PlanetInfo]]] = Field(
+        alias="planetInfos",
+        default_factory=list,
+        description="A list of planets involved in this season's war.",
+    )
 
-    capitalInfos: Optional[List[Any]] = Field(alias="capitalInfos", default_factory=list)
+    homeWorlds: Optional[List[Optional[HomeWorld]]] = Field(
+        alias="homeWorlds",
+        default_factory=list,
+        description="A list of homeworlds for the races (factions) involved in this war.",
+    )
 
-    planetPermanentEffects: Optional[List[Any]] = Field(alias="planetPermanentEffects", default_factory=list)
+    capitalInfos: Optional[List[Any]] = Field(
+        alias="capitalInfos",
+        default_factory=list,
+        description="Capital information related to the war.  Unused.",
+    )
+
+    planetPermanentEffects: Optional[List[Any]] = Field(
+        alias="planetPermanentEffects",
+        default_factory=list,
+        description="List of permanent effects on planets.  Unused.",
+    )

@@ -45,7 +45,7 @@ hd2api.builders.sector\_state\_builder module
    :show-inheritance:
 
 hd2api.builders.statistics\_builder module
------------------------------------
+------------------------------------------
 
 .. automodule:: hd2api.builders.statistics_builder
    :members:

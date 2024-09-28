@@ -9,30 +9,50 @@ from ...util.utils import human_format as hf, changeformatif as cfi
 
 class PlanetEvent(BaseApiModel):
     """
-    None model
-        An ongoing event on a planet.
+    Raw model representing An ongoing event on a planet, such as defense campaigns.
 
     """
 
-    id: Optional[int] = Field(alias="id", default=None)
+    id: Optional[int] = Field(default=None, description="The unique identifier of this event.")
 
-    planetIndex: Optional[int] = Field(alias="planetIndex", default=None)
+    planetIndex: Optional[int] = Field(
+        default=None, description="The planetIndex of the planet where this event is."
+    )
 
-    eventType: Optional[int] = Field(alias="eventType", default=None)
+    eventType: Optional[int] = Field(
+        default=None,
+        description="A numerical identifier that indicates what type of event this is."
+        + "Only one type is known so far, that being event type 1.",
+    )
 
-    race: Optional[int] = Field(alias="race", default=None)
+    race: Optional[int] = Field(
+        default=None, description="The identifier of the faction that owns the planet currently."
+    )
 
-    health: Optional[int] = Field(alias="health", default=None)
+    health: Optional[int] = Field(default=None, description="The current health of the event.")
 
-    maxHealth: Optional[int] = Field(alias="maxHealth", default=None)
+    maxHealth: Optional[int] = Field(
+        default=None, description="The current maximum health of the event."
+    )
 
-    startTime: Optional[int] = Field(alias="startTime", default=None)
+    startTime: Optional[int] = Field(
+        default=None,
+        description="When this event started, in arrowhead's internal 'wartime' format.",
+    )
 
-    expireTime: Optional[int] = Field(alias="expireTime", default=None)
+    expireTime: Optional[int] = Field(
+        default=None,
+        description="When the event will end, in arrowhead's internal 'wartime' format.",
+    )
 
-    campaignId: Optional[int] = Field(alias="campaignId", default=None)
+    campaignId: Optional[int] = Field(
+        default=None,
+        description="For defense campaign events, this is the unique identifier pointing to a campaign object.",
+    )
 
-    jointOperationIds: Optional[List[int]] = Field(alias="jointOperationIds", default=None)
+    jointOperationIds: Optional[List[int]] = Field(
+        default=None, description="A list of identifiers of related joint operations."
+    )
 
     def long_event_details(self):
         factions = {1: "Humans", 2: "Terminids", 3: "Automaton", 4: "Illuminate"}

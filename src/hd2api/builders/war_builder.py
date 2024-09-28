@@ -19,7 +19,9 @@ def build_war(diveharder: DiveharderAll) -> War:
     info = diveharder.war_info
     stats = diveharder.planet_stats.galaxy_stats
 
-    player_count = sum(st.players for st in diveharder.status.planetStatus if st.players is not None)
+    player_count = sum(
+        st.players for st in diveharder.status.planetStatus if st.players is not None
+    )
 
     stats_build = statistics_builder(stats, player_count)
     war = War(

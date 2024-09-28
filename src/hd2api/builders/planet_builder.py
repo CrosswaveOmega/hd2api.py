@@ -88,7 +88,9 @@ def get_time(status: WarStatus, info: WarInfo) -> dt.datetime:
 
     # Get datetime diveharder object was retrieved at
     now = status.retrieved_at
-    gametime = dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + dt.timedelta(seconds=status.time)
+    gametime = dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + dt.timedelta(
+        seconds=status.time
+    )
     deviation = now - gametime
     # print(deviation)
     relative_game_start = dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + deviation
@@ -133,7 +135,9 @@ def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticA
         planetStatistics = PlanetStats(planetIndex=planetIndex)
 
     # Build Planet.
-    planet = build_planet_basic(statics.galaxystatic, planetIndex, planetStatus, planetInfo, planetStatistics)
+    planet = build_planet_basic(
+        statics.galaxystatic, planetIndex, planetStatus, planetInfo, planetStatistics
+    )
     planet.sector_id = planetInfo.sector  # type: ignore
 
     planet_effect_list = []

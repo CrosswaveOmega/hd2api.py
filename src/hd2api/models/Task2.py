@@ -158,11 +158,11 @@ class Task2(BaseApiModel):
             return taskstr
         faction_name = ""
         if taskdata.faction:
-            faction_name = " to " + faction_names.get(taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}")
+            faction_name = " to " + faction_names.get(
+                taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}"
+            )
         goal = taskdata.goal[0]
-        taskstr = (
-            f"{e}. Conquest.  Liberate more planets than are lost{faction_name} until the order ends. `{curr}/{goal}`"
-        )
+        taskstr = f"{e}. Conquest.  Liberate more planets than are lost{faction_name} until the order ends. `{curr}/{goal}`"
         taskstr += self._task_display_planet(taskdata, planets)
         return taskstr
 
@@ -198,10 +198,14 @@ class Task2(BaseApiModel):
             planet_name = planet.get_name()
             health = planet.health_percent()
         task_mode = "Liberate" if self.type == 11 else "Control"
-        taskstr = f"{e}. {task_mode} {planet_name}. Status: `{'ok' if curr == 1 else f'{health},{curr}'}`"
+        taskstr = (
+            f"{e}. {task_mode} {planet_name}. Status: `{'ok' if curr == 1 else f'{health},{curr}'}`"
+        )
         return taskstr
 
-    def _task_get_samples(self, taskstr: str, taskdata: TaskData, curr: int, planets: Dict[int, Planet]):
+    def _task_get_samples(
+        self, taskstr: str, taskdata: TaskData, curr: int, planets: Dict[int, Planet]
+    ):
         """
         Handle task string formatting for "get samples" tasks.
 
@@ -220,7 +224,9 @@ class Task2(BaseApiModel):
         faction_name = ""
         if taskdata.faction:
             faction_name = (
-                "(" + faction_names.get(taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}") + " type)"
+                "("
+                + faction_names.get(taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}")
+                + " type)"
             )
         goal = taskdata.goal[0]
         rarity = ""
@@ -257,7 +263,9 @@ class Task2(BaseApiModel):
             return taskstr
         faction_name = ""
         if taskdata.faction:
-            faction_name = " from " + faction_names.get(taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}")
+            faction_name = " from " + faction_names.get(
+                taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}"
+            )
         goal = taskdata.goal[0]
         taskstr = f"{e}. Defend {hf(curr)}/{hf(goal)} planets{faction_name}"
         taskstr += self._task_display_planet(taskdata, planets)
@@ -298,7 +306,9 @@ class Task2(BaseApiModel):
         if not (taskdata.goal and taskdata.faction):
             taskstr += json.dumps(taskdata.__dict__, default=str)[:258]
             return taskstr
-        faction_name = faction_names.get(taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}")
+        faction_name = faction_names.get(
+            taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}"
+        )
         goal = taskdata.goal[0]
         enemy = ""
         if taskdata.enemyID:

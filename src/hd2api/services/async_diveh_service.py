@@ -37,11 +37,15 @@ async def make_raw_api_request(
         "X-Super-Client": f"{api_config.get_client_name()}",
         # "Authorization": f"Bearer {api_config.get_access_token()}",
     }
-    async with httpx.AsyncClient(base_url=base_path, verify=api_config.verify, timeout=8.0) as client:
+    async with httpx.AsyncClient(
+        base_url=base_path, verify=api_config.verify, timeout=8.0
+    ) as client:
         response = await client.get(path, headers=headers)
 
     if response.status_code != 200:
-        raise HTTPException(response.status_code, f"Failed with status code: {response.status_code}")
+        raise HTTPException(
+            response.status_code, f"Failed with status code: {response.status_code}"
+        )
 
     data = response.json()
     return make_output(data, model, None)
@@ -56,14 +60,20 @@ async def GetDhApiRawWarInfo(api_config_override: Optional[APIConfig] = None) ->
 
 
 async def GetDhApiRawSummary(api_config_override: Optional[APIConfig] = None) -> WarSummary:
-    return await make_raw_api_request("planet_stats", WarSummary, api_config_override=api_config_override)
+    return await make_raw_api_request(
+        "planet_stats", WarSummary, api_config_override=api_config_override
+    )
 
 
 async def GetDhApiRawAssignment(api_config_override: Optional[APIConfig] = None) -> Assignment:
-    return await make_raw_api_request("major_order", Assignment, api_config_override=api_config_override)
+    return await make_raw_api_request(
+        "major_order", Assignment, api_config_override=api_config_override
+    )
 
 
-async def GetDhApiRawNewsFeed(api_config_override: Optional[APIConfig] = None) -> List[NewsFeedItem]:
+async def GetDhApiRawNewsFeed(
+    api_config_override: Optional[APIConfig] = None,
+) -> List[NewsFeedItem]:
     return await make_raw_api_request(
         "news_feed",
         NewsFeedItem,
@@ -73,4 +83,6 @@ async def GetDhApiRawNewsFeed(api_config_override: Optional[APIConfig] = None) -
 
 
 async def GetDhApiRawAll(api_config_override: Optional[APIConfig] = None) -> DiveharderAll:
-    return await make_raw_api_request("all", DiveharderAll, api_config_override=api_config_override, path2=True)
+    return await make_raw_api_request(
+        "all", DiveharderAll, api_config_override=api_config_override, path2=True
+    )

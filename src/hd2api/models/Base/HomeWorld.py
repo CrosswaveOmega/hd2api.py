@@ -11,6 +11,14 @@ class HomeWorld(BaseApiModel):
 
     """
 
-    race: Optional[int] = Field(alias="race", default=None)
+    race: Optional[int] = Field(
+        alias="race",
+        default=None,
+        description="The identifier of the race (faction) this describes the homeworld of.",
+    )
 
-    planetIndices: Optional[List[int]] = Field(alias="planetIndices", default=None)
+    planetIndices: Optional[List[int]] = Field(
+        alias="planetIndices",
+        default=None,
+        description="A list of planet ids for the homeworlds for the given race.",
+    )

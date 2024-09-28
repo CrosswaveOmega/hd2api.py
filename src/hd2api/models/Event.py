@@ -42,7 +42,11 @@ class Event(BaseApiModel, HealthMixin):
     jointOperationIds: Optional[List[int]] = Field(alias="jointOperationIds", default=None)
 
     def __sub__(self, other: "Event") -> "Event":
-        new_health = self.health - other.health if self.health is not None and other.health is not None else None
+        new_health = (
+            self.health - other.health
+            if self.health is not None and other.health is not None
+            else None
+        )
         event = Event(
             id=self.id,
             eventType=self.eventType,

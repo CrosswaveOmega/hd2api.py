@@ -6,9 +6,12 @@ from ..ABC.model import BaseApiModel
 
 class WarId(BaseApiModel):
     """
-    None model
-        Represents the ID returned from the WarID endpoint.
+    Raw model Representing the ID of the current war returned from the WarID endpoint.
 
     """
 
-    id: Optional[int] = Field(alias="id", default=None)
+    id: Optional[int] = Field(
+        alias="id",
+        default=None,
+        description="The internal identifier for the current galactic war iteration.",
+    )

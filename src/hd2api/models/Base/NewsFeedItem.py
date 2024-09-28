@@ -13,15 +13,29 @@ class NewsFeedItem(BaseApiModel):
 
     """
 
-    id: Optional[int] = Field(alias="id", default=None)
+    id: Optional[int] = Field(
+        alias="id", default=None, description="The identifier of this newsfeed item."
+    )
 
-    published: Optional[int] = Field(alias="published", default=None)
+    published: Optional[int] = Field(
+        alias="published",
+        default=None,
+        description="A unix timestamp (in seconds) when this item was published.",
+    )
 
-    type: Optional[int] = Field(alias="type", default=None)
+    type: Optional[int] = Field(
+        alias="type", default=None, description="A numerical type, purpose unknown."
+    )
 
-    tagIds: Optional[List[Union[str, int]]] = Field(alias="tagIds", default_factory=list)
+    tagIds: Optional[List[Union[str, int]]] = Field(
+        alias="tagIds",
+        default_factory=list,
+        description="Use unknown, a list of tags attached to each news_feed item.",
+    )
 
-    message: Optional[str] = Field(alias="message", default=None)
+    message: Optional[str] = Field(
+        alias="message", default=None, description="The message containing a human readable text."
+    )
 
     def to_str(self) -> Tuple[str, str]:
         # message=self.# Replace the matched patterns with markdown bold syntax

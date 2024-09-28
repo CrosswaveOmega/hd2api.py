@@ -40,9 +40,13 @@ async def make_direct_api_request(
         # "Authorization": f"Bearer {api_config.get_access_token()}",
     }
     try:
-        async with httpx.AsyncClient(base_url=base_path, verify=api_config.verify, timeout=8.0) as client:
+        async with httpx.AsyncClient(
+            base_url=base_path, verify=api_config.verify, timeout=8.0
+        ) as client:
             if params:
-                response = await client.get(path, headers=headers, params=params)  # Added params to the request
+                response = await client.get(
+                    path, headers=headers, params=params
+                )  # Added params to the request
             else:
                 response = await client.get(path, headers=headers)  # Added params to the request
     except httpx.ConnectError as e:
@@ -55,7 +59,9 @@ async def make_direct_api_request(
         return None
 
     if response.status_code != 200:
-        raise HTTPException(response.status_code, f"Failed with status code: {response.status_code}")
+        raise HTTPException(
+            response.status_code, f"Failed with status code: {response.status_code}"
+        )
     now = datetime.datetime.now(tz=datetime.timezone.utc)
     data = response.json()
     if isinstance(data, dict):
@@ -69,7 +75,9 @@ async def make_direct_api_request(
     return make_output(data, model, index)
 
 
-async def GetApiDirectWarStatus(api_config_override: Optional[APIConfig] = None) -> Optional[WarStatus]:
+async def GetApiDirectWarStatus(
+    api_config_override: Optional[APIConfig] = None,
+) -> Optional[WarStatus]:
     result = await make_direct_api_request(
         "WarSeason/801/Status",
         WarStatus,
@@ -118,7 +126,9 @@ async def GetApiDirectSummary(api_config_override: Optional[APIConfig] = None) -
     return result  # Here, result is guaranteed to be WarSummary
 
 
-async def GetApiDirectAssignment(api_config_override: Optional[APIConfig] = None) -> List[Assignment]:
+async def GetApiDirectAssignment(
+    api_config_override: Optional[APIConfig] = None,
+) -> List[Assignment]:
     result = await make_direct_api_request(
         "v2/Assignment/War/801",
         Assignment,
@@ -135,7 +145,9 @@ async def GetApiDirectAssignment(api_config_override: Optional[APIConfig] = None
     return result  # Here, result is guaranteed to be List[Assignment]
 
 
-async def GetApiDirectNewsFeed(api_config_override: Optional[APIConfig] = None) -> List[NewsFeedItem]:
+async def GetApiDirectNewsFeed(
+    api_config_override: Optional[APIConfig] = None,
+) -> List[NewsFeedItem]:
     result = await make_direct_api_request(
         "NewsFeed/801",
         NewsFeedItem,

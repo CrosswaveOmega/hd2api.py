@@ -30,6 +30,8 @@ async def Get(api_config_override: Optional[APIConfig] = None) -> str:
         )
 
     if response.status_code != 200:
-        raise HTTPException(response.status_code, f" failed with status code: {response.status_code}")
+        raise HTTPException(
+            response.status_code, f" failed with status code: {response.status_code}"
+        )
 
     return response.json()

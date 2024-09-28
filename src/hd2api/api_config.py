@@ -8,43 +8,32 @@ from .load_json import load_and_merge_json_files
 
 
 class APIConfig(BaseModel):
-    """Configuration object for the api wrappers.
-
-    Attributes:
-        api_comm (str): Base path for the community API.
-
-        api_diveharder (str): Base path for the Diveharder API.
-
-        api_direct (str): Base path for the game's direct API.
-
-        use_raw (Literal["community", "diveharder", "direct"]): The source to use, default is "diveharder".
-
-        verify (Union[bool, str]): Unused.
-
-        client_name (str): Name sent to the client, default is "DefaultClientName".
-
-        language (str): The accept-language sent to the client, default is "en-US".
-
-        static_path (str): Path for static files.
-
-        access_token (Optional[str]): Unused.
-
-        statics (Optional[StaticAll]): Static files.
+    """
+    Configuration object for the API wrappers.
     """
 
-    api_comm: str = "https://api.helldivers2.dev"  # Base path for the community API
-
-    api_diveharder: str = "https://api.diveharder.com"  # Base path for the Diveharder API
-
-    api_direct: str = "https://api.live.prod.thehelldiversgame.com"  # Base path for the game's API directly
-
-    use_raw: Literal["community", "diveharder", "direct"] = "diveharder"
-    verify: Union[bool, str] = True  # Unused
-    client_name: str = "DefaultClientName"  # Name sent to the client
-    language: str = "en-US"  # The accept-language sent to the client
-    static_path: str = ""  # Path for static files
-    access_token: Optional[str] = None  # Unused
-    statics: Optional[StaticAll] = None  # Static files
+    api_comm: str = Field(
+        default="https://api.helldivers2.dev", description="Base path for the community API"
+    )
+    api_diveharder: str = Field(
+        default="https://api.diveharder.com", description="Base path for the Diveharder API"
+    )
+    api_direct: str = Field(
+        default="https://api.live.prod.thehelldiversgame.com",
+        description="Base path for the game's API directly",
+    )
+    use_raw: Literal["community", "diveharder", "direct"] = Field(
+        default="diveharder", description="The source to use, default is 'diveharder'"
+    )
+    verify: Union[bool, str] = Field(default=True, description="Unused")
+    client_name: str = Field(default="DefaultClientName", description="Name sent to the client")
+    language: str = Field(default="en-US", description="The accept-language sent to the client")
+    static_path: str = Field(
+        default="",
+        description="Override Path for the static json files used by this library's builders",
+    )
+    access_token: Optional[str] = Field(default=None, description="Unused")
+    statics: Optional[StaticAll] = Field(default=None, description="Cached static files")
 
     def staticdata(self):
         planetjson = load_and_merge_json_files("planets", self.static_path)

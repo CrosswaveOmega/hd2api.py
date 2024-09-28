@@ -20,18 +20,46 @@ class DiveharderAll(BaseApiModel):
 
     """
 
-    status: Optional[WarStatus] = Field(alias="status", default=None)
+    status: Optional[WarStatus] = Field(
+        alias="status",
+        default=None,
+        description="snapshot of the current status of the galactic war at the time of retrieval.",
+    )
 
-    war_info: Optional[WarInfo] = Field(alias="war_info", default=None)
+    war_info: Optional[WarInfo] = Field(
+        alias="war_info",
+        default=None,
+        description="Mostly static information on the current galactic war.",
+    )
 
-    planet_stats: Optional[WarSummary] = Field(alias="planet_stats", default=None)
+    planet_stats: Optional[WarSummary] = Field(
+        alias="planet_stats",
+        default=None,
+        description="general statistics about the galaxy and specific planets",
+    )
 
-    major_order: Optional[List[Assignment]] = Field(alias="major_order", default=None)
+    major_order: Optional[List[Assignment]] = Field(
+        alias="major_order",
+        default=None,
+        description="List of major assignments given from Super Earth to the Helldivers.",
+    )
 
-    personal_order: Optional[List[Assignment]] = Field(alias="personal_order", default=None)
+    personal_order: Optional[List[Assignment]] = Field(
+        alias="personal_order",
+        default=None,
+        description="List of smaller sub-assignments given to the Helldivers by Super Earth",
+    )
 
-    news_feed: Optional[List[NewsFeedItem]] = Field(alias="news_feed", default=None)
+    news_feed: Optional[List[NewsFeedItem]] = Field(
+        alias="news_feed", default=None, description="All items within the newsfeed of Super Earth."
+    )
 
-    updates: Optional[List[SteamNewsRaw]] = Field(alias="updates", default=None)
+    updates: Optional[List[SteamNewsRaw]] = Field(
+        alias="updates",
+        default=None,
+        description="List of news articles from a new article from Steam's news feed.",
+    )
 
-    war_id: Optional[WarId] = Field(alias="war_id", default=None)
+    war_id: Optional[WarId] = Field(
+        alias="war_id", default=None, description="the ID of the current galactic war."
+    )

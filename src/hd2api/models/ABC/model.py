@@ -17,7 +17,9 @@ class BaseApiModel(BaseModel):
             self.retrieved_at = datetime.now(tz=timezone.utc)
         else:
             if isinstance(data["retrieved_at"], str):
-                self.retrieved_at = datetime.fromisoformat(data["retrieved_at"]).replace(tzinfo=timezone.utc)
+                self.retrieved_at = datetime.fromisoformat(data["retrieved_at"]).replace(
+                    tzinfo=timezone.utc
+                )
             elif isinstance(data["retrieved_at"], datetime):
                 self.retrieved_at = data["retrieved_at"]
 
