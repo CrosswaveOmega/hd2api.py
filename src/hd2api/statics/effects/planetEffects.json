@@ -24,9 +24,19 @@
         "name": "Unreachable",
         "description": "Our sensors can no longer monitor this planet."
     },
-    "1193":{
+    "1193": {
         "galacticEffectId": 1193,
         "name": "Gloom Border",
         "description": "This world is on the border of the interstellar wall of gloom."
+    },
+    "1195": {
+        "galacticEffectId": 1195,
+        "name": "DSS Construction Site- Phase 1",
+        "description": "Construction has began on the Democracy Space Station.  The local populace is honored to host thousands of construction crews for this historic event."
+    },
+    "1196": {
+        "galacticEffectId": 1196,
+        "name": "DSS Logistics Hub",
+        "description": "Parts for the Democracy Space Station are prefabricated all over the Galaxy, then shipped here to await assembly."
     }
 }
