@@ -26,10 +26,15 @@ from ..util.utils import (
 
 class EffectStatic(BaseApiModel):
     """
-    Pydantic reprersentation of all the json files pertaining to effects
+    Pydantic reprersentation of all the json files pertaining to effects,
+    generated from statics/effects/planetEffects
     """
 
-    planetEffects: Dict[int, KnownPlanetEffect] = Field(alias="planetEffects", default_factory=dict)
+    planetEffects: Dict[int, KnownPlanetEffect] = Field(
+        alias="planetEffects",
+        default_factory=dict,
+        description="Dictionary of all known planet effects, where the key is the galacticEffectId",
+    )
 
     def check_for_id(self, idv):
         if idv in self.planetEffects:
@@ -42,25 +47,48 @@ class EffectStatic(BaseApiModel):
 
 
 class PlanetStatic(BaseApiModel):
-    """All static data reguarding each planet"""
+    """All static data reguarding each planet, generated from statics/planets/planets.json"""
 
-    name: Optional[str] = Field(alias="name", default=None)
-    sector: Optional[str] = Field(alias="sector", default=None)
-    biome: Optional[str] = Field(alias="biome", default=None)
-    environmentals: Optional[List[str]] = Field(alias="environmentals", default=None)
-    names: Optional[Dict[str, str]] = Field(alias="names", default=None)
+    name: Optional[str] = Field(
+        alias="name", default=None, description="English name of the planet."
+    )
+    sector: Optional[str] = Field(
+        alias="sector", default=None, description="The name of the planet's sector."
+    )
+    biome: Optional[str] = Field(
+        alias="biome", default=None, description="The 'slug' for the planet's biome."
+    )
+    environmentals: Optional[List[str]] = Field(
+        alias="environmentals",
+        default=None,
+        description="List of all enviormental effects on this planet.",
+    )
+    names: Optional[Dict[str, str]] = Field(
+        alias="names", default=None, description="All known localized names for this planet."
+    )
 
 
 class GalaxyStatic(BaseApiModel):
     """
-    Pydantic reprersentation of all the json files pertaining to planets.
+    Pydantic reprersentation of all the json files pertaining to planets,
+    generated from everything inside statics/planets/**
     """
 
-    biomes: Optional[Dict[str, Biome]] = Field(alias="biomes", default=None)
+    biomes: Optional[Dict[str, Biome]] = Field(
+        alias="biomes",
+        default=None,
+        description="fan names and descriptions of all known biomes effects.",
+    )
 
-    environmentals: Optional[Dict[str, Hazard]] = Field(alias="environmentals", default=None)
+    environmentals: Optional[Dict[str, Hazard]] = Field(
+        alias="environmentals",
+        default=None,
+        description="Names and descriptions of all known enviornmental effects.",
+    )
 
-    planets: Optional[Dict[int, PlanetStatic]] = Field(alias="planets", default=None)
+    planets: Optional[Dict[int, PlanetStatic]] = Field(
+        alias="planets", default=None, description="All static planet data."
+    )
 
 
 class StaticAll(BaseApiModel):

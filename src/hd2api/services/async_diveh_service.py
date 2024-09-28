@@ -23,8 +23,7 @@ async def make_raw_api_request(
     params: Optional[Dict] = None,  # Added parameters for GET requests
 ) -> Union[T, List[T]]:
     """
-    Get a raw api object from the Community api or
-    diveharder.
+    Get a raw api object from diveharder.
     """
     api_config = api_config_override or APIConfig()
 
@@ -35,7 +34,6 @@ async def make_raw_api_request(
         "Content-Type": "application/json",
         "Accept": "application/json",
         "X-Super-Client": f"{api_config.get_client_name()}",
-        # "Authorization": f"Bearer {api_config.get_access_token()}",
     }
     async with httpx.AsyncClient(
         base_url=base_path, verify=api_config.verify, timeout=8.0

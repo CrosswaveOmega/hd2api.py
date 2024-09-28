@@ -23,23 +23,51 @@ class Event(BaseApiModel, HealthMixin):
 
     """
 
-    id: Optional[int] = Field(alias="id", default=None)
+    id: Optional[int] = Field(
+        alias="id", default=None, description="The unique identifier of this event."
+    )
 
-    eventType: Optional[int] = Field(alias="eventType", default=None)
+    eventType: Optional[int] = Field(
+        alias="eventType", default=None, description="The type of event."
+    )
 
-    faction: Optional[str] = Field(alias="faction", default=None)
+    faction: Optional[str] = Field(
+        alias="faction", default=None, description="The faction that initiated the event."
+    )
 
-    health: Optional[int] = Field(alias="health", default=None)
+    health: Optional[int] = Field(
+        alias="health", default=None, description="The health of the Event at the time of snapshot."
+    )
 
-    maxHealth: Optional[int] = Field(alias="maxHealth", default=None)
+    maxHealth: Optional[int] = Field(
+        alias="maxHealth",
+        default=None,
+        description="The maximum health of the Event at the time of snapshot.",
+    )
 
-    startTime: Optional[str] = Field(alias="startTime", default=None)
+    startTime: Optional[str] = Field(
+        alias="startTime",
+        default=None,
+        description="Datetime for the event was roughly started, based on wartime.",
+    )
 
-    endTime: Optional[str] = Field(alias="endTime", default=None)
+    endTime: Optional[str] = Field(
+        alias="endTime",
+        default=None,
+        description="Datetime for when the event will roughly end, based on wartime.",
+    )
 
-    campaignId: Optional[int] = Field(alias="campaignId", default=None)
+    campaignId: Optional[int] = Field(
+        alias="campaignId",
+        default=None,
+        description="The identifier for a Campaign linked to this event.",
+    )
 
-    jointOperationIds: Optional[List[int]] = Field(alias="jointOperationIds", default=None)
+    jointOperationIds: Optional[List[int]] = Field(
+        alias="jointOperationIds",
+        default=None,
+        description="A list of joint operation identifiers linked to this event.",
+    )
 
     def __sub__(self, other: "Event") -> "Event":
         new_health = (

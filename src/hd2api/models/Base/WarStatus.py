@@ -22,7 +22,9 @@ class WarStatus(BaseApiModel):
     """
 
     warId: Optional[int] = Field(
-        alias="warId", default=None, description="The identifier season this snapshot refers to."
+        alias="warId",
+        default=None,
+        description="The identifier for the warSeason this snapshot refers to.",
     )
 
     time: Optional[int] = Field(

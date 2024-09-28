@@ -37,7 +37,6 @@ async def make_direct_api_request(
         "Accept": "application/json",
         "X-Super-Client": f"{api_config.get_client_name()}",
         "Accept-Language": api_config.language,
-        # "Authorization": f"Bearer {api_config.get_access_token()}",
     }
     try:
         async with httpx.AsyncClient(

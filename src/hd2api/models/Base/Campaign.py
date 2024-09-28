@@ -6,8 +6,7 @@ from ..ABC.model import BaseApiModel
 
 class Campaign(BaseApiModel):
     """
-    None model
-        Contains information of ongoing campaigns.
+    Raw model reguarding an ongoing campaign on a specific planetindex.
 
     """
 
@@ -24,7 +23,7 @@ class Campaign(BaseApiModel):
     type: Optional[int] = Field(
         alias="type",
         default=None,
-        description="A numerical type, indicates the type of campaign (see helldivers-2/json).",
+        description="A numerical type, indicates the type of campaign.",
     )
 
     count: Optional[int] = Field(

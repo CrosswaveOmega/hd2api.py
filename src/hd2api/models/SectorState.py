@@ -10,10 +10,14 @@ from .Base import PlanetStatus
 class SectorStates(BaseApiModel):
     """A in game sector with all planets."""
 
-    name: Optional[str] = Field(alias="name", default=None)
-    planetStatus: Optional[List[Optional[PlanetStatus]]] = Field(alias="planetStatus", default=[])
-    sector: Optional[str] = Field(alias="name", default=None)
-    owner: Optional[int] = Field(alias="owner", default=0)
+    name: Optional[str] = Field(alias="name", default=None, description="The name of the sector")
+    planetStatus: Optional[List[Optional[PlanetStatus]]] = Field(
+        alias="planetStatus", default=[], description="List of planet statuses"
+    )
+    sector: Optional[str] = Field(
+        alias="name", default=None, description="The sector name or identifier"
+    )
+    owner: Optional[int] = Field(alias="owner", default=0, description="The ID of the sector owner")
 
     def __init__(self, **data):
         super().__init__(**data)

@@ -11,43 +11,10 @@ from ..util.utils import human_format as hf
 
 from ..constants import task_types, value_types, faction_names, samples, enemies
 
-"""
-task_types = {
-    2: "Get samples",
-    3: "Eradicate",
-    4: "Objectives",
-    7: "Extract",
-    11: "Liberation",
-    12: "Defense",
-    13: "Control",
-}
-value_types = {
-    1: "faction",
-    2: "hasCount",
-    3: "goal",
-    4: "enemyID",
-    5: "itemID",
-    6: "hasItem",
-    7: "objective",
-    8: "unknown5",
-    9: "unknown6",
-    10: "unknown7",
-    11: "hasPlanet",
-    12: "planet",
-}
-faction_names = {
-    0: "Anything",
-    1: "Humans",
-    2: "Terminids",
-    3: "Automaton",
-    4: "Illuminate",
-    5: "ERR",
-    15: "ERR",
-}
-"""
-
 
 class TaskData(BaseApiModel):
+    """Model that collates each value array and value_types array together."""
+
     faction: Optional[List[int]] = Field(alias="faction", default=None)
     hasCount: Optional[List[int]] = Field(alias="hasCount", default=None)
     goal: Optional[List[int]] = Field(alias="goal", default=None)
@@ -64,17 +31,31 @@ class TaskData(BaseApiModel):
 
 class Task2(BaseApiModel):
     """
-        None model
-            Represents a task in an Assignment that needs to be completed
+    Represents a task in an Assignment that needs to be completed
     to finish the assignment.
 
     """
 
-    type: Optional[int] = Field(alias="type", default=None)
+    type: Optional[int] = Field(
+        alias="type",
+        default=None,
+        description="A numerical value pertaining to the type of task to be completed."
+        + "  Only the Task types the community has seen before are known.",
+    )
 
-    values: Optional[List[int]] = Field(alias="values", default=None)
+    values: Optional[List[int]] = Field(
+        alias="values",
+        default=None,
+        description="A list of numerical values pertaining to the settings of this task.  ",
+    )
 
-    valueTypes: Optional[List[int]] = Field(alias="valueTypes", default=None)
+    valueTypes: Optional[List[int]] = Field(
+        alias="valueTypes",
+        default=None,
+        description="A list of numerical values pertaining to what each value in values reprsents."
+        + " Entire list of known value types is unknown, only the values from Assignments"
+        + " already recieved by the community are known.",
+    )
 
     def taskAdvanced(self) -> Tuple[str, TaskData]:
         """return task type, and model containing task details."""

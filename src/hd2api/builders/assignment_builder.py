@@ -32,7 +32,7 @@ def build_assignment_2(assignment: Assignment) -> Assignment2:
             amount=reward.amount,
             id32=reward.id32,
         ),
-        rewards=[Reward(**r.model_dump()) for r in setting.rewards],
+        rewards=[Reward2(**r.model_dump()) for r in setting.rewards],
         tasks=[Task2(**t.model_dump()) for t in setting.tasks],
         type=setting.type,
         flags=setting.flags,

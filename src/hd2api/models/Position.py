@@ -6,11 +6,9 @@ from .ABC.model import BaseApiModel
 
 class Position(BaseApiModel):
     """
-    None model
-        Represents a position on the galactic war map.
+    A position on the galactic war map, relative to Super Earth.
 
     """
 
-    x: Optional[float] = Field(alias="x", default=None)
-
-    y: Optional[float] = Field(alias="y", default=None)
+    x: Optional[float] = Field(alias="x", default=None, description="The X coordinate.")
+    y: Optional[float] = Field(alias="y", default=None, description="The Y coordinate.")

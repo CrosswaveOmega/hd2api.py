@@ -17,7 +17,7 @@ class Reward(BaseApiModel):
     type: Optional[int] = Field(
         alias="type",
         default=None,
-        description="Initially thought to be the type of reward."
+        description="Use Unknown. Initially thought to be the type of reward."
         + "Initally thought to be 1 for medals, recent mos have disproved"
         + "this by returning requisition which uses the same type.",
     )

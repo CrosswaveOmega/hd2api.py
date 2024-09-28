@@ -6,11 +6,17 @@ from .ABC.model import BaseApiModel
 
 class Hazard(BaseApiModel):
     """
-    None model
-        Describes an environmental hazard that can be present on a Planet.
+
+    Static information about an environmental hazard that can be present on a Planet.
 
     """
 
-    name: Optional[str] = Field(alias="name", default=None)
+    name: Optional[str] = Field(
+        alias="name", default=None, description="Official or fan name for environmental hazard"
+    )
 
-    description: Optional[str] = Field(alias="description", default=None)
+    description: Optional[str] = Field(
+        alias="description",
+        default=None,
+        description="Official description of the environmental hazard's effects",
+    )

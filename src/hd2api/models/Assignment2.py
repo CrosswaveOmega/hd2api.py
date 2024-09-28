@@ -15,33 +15,71 @@ from ..util.utils import human_format as hf
 
 class Assignment2(BaseApiModel):
     """
-        None model
-            Represents an assignment given by Super Earth to the community.
-    This is also known as &#39;Major Order&#39;s in the game.
+    An assignment given by Super Earth to the community. This is also known as Major Orders game.
 
     """
 
-    type: Optional[int] = Field(alias="type", default=None)
+    type: Optional[int] = Field(
+        alias="type",
+        default=None,
+        description="The type of assignment, values unknown at the moment.",
+    )
 
-    flags: Optional[int] = Field(alias="flags", default=None)
+    flags: Optional[int] = Field(
+        alias="flags",
+        default=None,
+        description="Flags, suspected to be a binary OR'd value, purpose unknown.",
+    )
 
-    id: Optional[int] = Field(alias="id", default=None)
+    id: Optional[int] = Field(
+        alias="id", default=None, description="The unique identifier of this assignment."
+    )
 
-    progress: Optional[List[int]] = Field(alias="progress", default_factory=list)
+    progress: Optional[List[int]] = Field(
+        alias="progress",
+        default_factory=list,
+        description="A list of numbers representing progress in the assignment, pertaining to each task.",
+    )
 
-    title: Optional[Union[str, Dict[str, Any]]] = Field(alias="title", default=None)
+    title: Optional[Union[str, Dict[str, Any]]] = Field(
+        alias="title",
+        default=None,
+        description="The title of the assignment.  Usually just 'MAJOR ORDER' in all caps.",
+    )
 
-    briefing: Optional[Union[str, Dict[str, Any]]] = Field(alias="briefing", default=None)
+    briefing: Optional[Union[str, Dict[str, Any]]] = Field(
+        alias="briefing",
+        default=None,
+        description="A long form description of the assignment, usually contains context.",
+    )
 
-    description: Optional[Union[str, Dict[str, Any]]] = Field(alias="description", default=None)
+    description: Optional[Union[str, Dict[str, Any]]] = Field(
+        alias="description", default=None, description="A very short summary of the description."
+    )
 
-    tasks: Optional[List[Task2]] = Field(alias="tasks", default_factory=list)
+    tasks: Optional[List[Task2]] = Field(
+        alias="tasks",
+        default_factory=list,
+        description="A list of tasks that need to be completed for this assignment.",
+    )
 
-    reward: Optional[Reward2] = Field(alias="reward", default=None)
+    reward: Optional[Reward2] = Field(
+        alias="reward",
+        default=None,
+        description="The primary reward for completing the assignment.",
+    )
 
-    rewards: Optional[List[Optional[Reward]]] = Field(alias="rewards", default=None)
+    rewards: Optional[List[Optional[Reward2]]] = Field(
+        alias="rewards",
+        default=None,
+        description="A list of rewards for completing the assignment.",
+    )
 
-    expiration: Optional[str] = Field(alias="expiration", default=None)
+    expiration: Optional[str] = Field(
+        alias="expiration",
+        default=None,
+        description="The estimated date when the assignment will expire.",
+    )
 
     def __sub__(self, other: "Assignment2") -> "Assignment2":
         new_progress = [s - o for s, o in zip(self.progress, other.progress)]

@@ -8,8 +8,7 @@ import re
 
 class NewsFeedItem(BaseApiModel):
     """
-    None model
-        Represents an item in the newsfeed of Super Earth.
+    Represents an item in the newsfeed of Super Earth.
 
     """
 
@@ -20,11 +19,13 @@ class NewsFeedItem(BaseApiModel):
     published: Optional[int] = Field(
         alias="published",
         default=None,
-        description="A unix timestamp (in seconds) when this item was published.",
+        description="The internal game wartime (See WarStatus) when this NewsFeedItem  ",
     )
 
     type: Optional[int] = Field(
-        alias="type", default=None, description="A numerical type, purpose unknown."
+        alias="type",
+        default=None,
+        description="A numerical type supposedly for the type of NewsFeed item, purpose unknown.",
     )
 
     tagIds: Optional[List[Union[str, int]]] = Field(
@@ -34,7 +35,9 @@ class NewsFeedItem(BaseApiModel):
     )
 
     message: Optional[str] = Field(
-        alias="message", default=None, description="The message containing a human readable text."
+        alias="message",
+        default=None,
+        description="A message containing areadable text, formatted in a special 'helldives markup language' used by the game.",
     )
 
     def to_str(self) -> Tuple[str, str]:

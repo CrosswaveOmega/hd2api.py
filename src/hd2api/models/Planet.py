@@ -24,52 +24,112 @@ from .Base.PlanetStatus import PlanetStatus
 
 class Planet(BaseApiModel, HealthMixin):
     """
-    None model
-        Contains all aggregated information AH has about a planet.
+    All aggregated information the community has on a planet.
+    Combines PlanetStatus, PlanetInfo, PlanetStats, and the
+    static information from the statics/planets files
 
     """
 
-    index: Optional[int] = Field(alias="index", default=None)
-
-    name: Optional[Union[str, Dict[str, Any]]] = Field(alias="name", default=None)
-
-    owner: Optional[int] = Field(alias="owner", default=0)
-
-    sector: Optional[str] = Field(alias="sector", default=None)
-
-    sector_id: Optional[int] = Field(alias="sector_id", default=None)
-
-    biome: Optional[Biome] = Field(alias="biome", default=None)
-
-    hazards: Optional[List[Optional[Hazard]]] = Field(alias="hazards", default=None)
-
-    hash: Optional[int] = Field(alias="hash", default=None)
-
-    position: Optional[Position] = Field(alias="position", default=None)
-
-    waypoints: Optional[List[int]] = Field(alias="waypoints", default=None)
-
-    maxHealth: Optional[int] = Field(alias="maxHealth", default=None)
-
-    health: Optional[int] = Field(alias="health", default=None)
-
-    disabled: Optional[bool] = Field(alias="disabled", default=None)
-
-    initialOwner: Optional[str] = Field(alias="initialOwner", default=None)
-
-    currentOwner: Optional[str] = Field(alias="currentOwner", default=None)
-
-    regenPerSecond: Optional[float] = Field(alias="regenPerSecond", default=None)
-
-    activePlanetEffects: Optional[List[KnownPlanetEffect]] = Field(
-        alias="activePlanetEffects", default=None
+    index: Optional[int] = Field(
+        alias="index",
+        default=None,
+        description="The unique identifier ArrowHead assigned to this planet.",
     )
 
-    event: Optional[Event] = Field(alias="event", default=None)
+    name: Optional[Union[str, Dict[str, Any]]] = Field(
+        alias="name", default=None, description="The name of the planet, as shown in game."
+    )
 
-    statistics: Optional[Statistics] = Field(alias="statistics", default=None)
+    sector: Optional[str] = Field(
+        alias="sector",
+        default=None,
+        description="The name of the sector the planet is in, as shown in game.",
+    )
 
-    attacking: Optional[List[int]] = Field(alias="attacking", default=None)
+    sector_id: Optional[int] = Field(
+        alias="sector_id",
+        default=None,
+        description="The identifier of the sector this planet is located in as returned from planet info.  For reasons unknown, it does not always match up with the .",
+    )
+
+    biome: Optional[Biome] = Field(
+        alias="biome", default=None, description="The biome this planet has."
+    )
+
+    hazards: Optional[List[Optional[Hazard]]] = Field(
+        alias="hazards", default=None, description="All Hazards that are applicable to this planet."
+    )
+
+    hash: Optional[int] = Field(
+        alias="hash",
+        default=None,
+        description="A hash assigned to the planet pointing to the internal planet settings for this world.",
+    )
+
+    position: Optional[Position] = Field(
+        alias="position",
+        default=None,
+        description="The coordinates of this planet on the galactic war map.",
+    )
+
+    waypoints: Optional[List[int]] = Field(
+        alias="waypoints",
+        default=None,
+        description="A list of Index of all the planets to which this planet is connected.",
+    )
+
+    maxHealth: Optional[int] = Field(
+        alias="maxHealth", default=None, description="The maximum health pool of this planet."
+    )
+
+    health: Optional[int] = Field(
+        alias="health", default=None, description="The current planet this planet has."
+    )
+
+    disabled: Optional[bool] = Field(
+        alias="disabled",
+        default=None,
+        description="Whether or not this planet is disabled, as assigned by ArrowHead.",
+    )
+
+    initialOwner: Optional[str] = Field(
+        alias="initialOwner",
+        default=None,
+        description="The faction that originally owned the planet.",
+    )
+
+    currentOwner: Optional[str] = Field(
+        alias="currentOwner",
+        default=None,
+        description="The faction that currently controls the planet.",
+    )
+
+    regenPerSecond: Optional[float] = Field(
+        alias="regenPerSecond",
+        default=None,
+        description="How much the planet regenerates per second if left alone.",
+    )
+
+    event: Optional[Event] = Field(
+        alias="event",
+        default=None,
+        description="Information on the active event ongoing on this planet, if one is active.",
+    )
+
+    statistics: Optional[Statistics] = Field(
+        alias="statistics", default=None, description="A set of statistics scoped to this planet."
+    )
+
+    attacking: Optional[List[int]] = Field(
+        alias="attacking",
+        default=None,
+        description="A list of Index integers that this planet is currently attacking.",
+    )
+    activePlanetEffects: Optional[List[KnownPlanetEffect]] = Field(
+        alias="activePlanetEffects",
+        default=None,
+        description="List of any active planet effects that happen to be assigned to this planet, such as the black hole in the place of Meridia",
+    )
 
     def __sub__(self, other: "Planet") -> "Planet":
         """

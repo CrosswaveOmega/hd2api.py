@@ -16,16 +16,29 @@ from ..constants import rewards
 
 class Reward2(BaseApiModel):
     """
-    None model
-        The reward for completing an Assignment.
+    The reward for completing an Assignment.
 
     """
 
-    type: Optional[int] = Field(alias="type", default=None)
+    type: Optional[int] = Field(
+        alias="type",
+        default=None,
+        description="Use Unknown. Initially thought to be the type of reward."
+        + "Initally thought to be 1 for medals, recent mos have disproved"
+        + "this by returning requisition which uses the same type.",
+    )
 
-    id32: Optional[int] = Field(alias="id32", default=None)
+    id32: Optional[int] = Field(
+        alias="id32",
+        default=None,
+        description="Internal identifier of the resource this reward represents. 897894480 is medals.",
+    )
 
-    amount: Optional[int] = Field(alias="amount", default=None)
+    amount: Optional[int] = Field(
+        alias="amount",
+        default=None,
+        description="The amount of the given resource players will receive upon completion.",
+    )
 
     def format(self):
         """Return the string representation of any reward."""

@@ -15,40 +15,87 @@ from ..util.utils import (
 
 class Statistics(BaseApiModel):
     """
-    None model
-        Contains statistics of missions, kills, success rate etc for the galaxy as a whole OR a single planet.
+    Contains statistics of missions, kills, success rate etc for the galaxy as a whole OR a single planet.
 
     """
 
-    missionsWon: Optional[int] = Field(alias="missionsWon", default=None)
+    missionsWon: Optional[int] = Field(
+        alias="missionsWon", default=None, description="The amount of missions won."
+    )
 
-    missionsLost: Optional[int] = Field(alias="missionsLost", default=None)
+    missionsLost: Optional[int] = Field(
+        alias="missionsLost", default=None, description="The amount of missions lost."
+    )
 
-    missionTime: Optional[int] = Field(alias="missionTime", default=None)
+    missionTime: Optional[int] = Field(
+        alias="missionTime",
+        default=None,
+        description="The total amount of time spent planetside (in seconds).",
+    )
 
-    terminidKills: Optional[int] = Field(alias="terminidKills", default=None)
+    terminidKills: Optional[int] = Field(
+        alias="terminidKills",
+        default=None,
+        description="The total amount of bugs killed since start of the season.",
+    )
 
-    automatonKills: Optional[int] = Field(alias="automatonKills", default=None)
+    automatonKills: Optional[int] = Field(
+        alias="automatonKills",
+        default=None,
+        description="The total amount of automatons killed since start of the season.",
+    )
 
-    illuminateKills: Optional[int] = Field(alias="illuminateKills", default=None)
+    illuminateKills: Optional[int] = Field(
+        alias="illuminateKills",
+        default=None,
+        description="The total amount of Illuminate killed since start of the season.",
+    )
 
-    bulletsFired: Optional[int] = Field(alias="bulletsFired", default=None)
+    bulletsFired: Optional[int] = Field(
+        alias="bulletsFired", default=None, description="The total amount of bullets fired"
+    )
 
-    bulletsHit: Optional[int] = Field(alias="bulletsHit", default=None)
+    bulletsHit: Optional[int] = Field(
+        alias="bulletsHit", default=None, description="The total amount of bullets hit"
+    )
 
-    timePlayed: Optional[int] = Field(alias="timePlayed", default=None)
+    timePlayed: Optional[int] = Field(
+        alias="timePlayed",
+        default=None,
+        description="The total amount of time played (including off-planet) in seconds.",
+    )
 
-    deaths: Optional[int] = Field(alias="deaths", default=None)
+    deaths: Optional[int] = Field(
+        alias="deaths",
+        default=None,
+        description="The amount of casualties on the side of humanity.",
+    )
 
-    revives: Optional[int] = Field(alias="revives", default=None)
+    revives: Optional[int] = Field(
+        alias="revives", default=None, description="The amount of revives(?)."
+    )
 
-    friendlies: Optional[int] = Field(alias="friendlies", default=None)
+    friendlies: Optional[int] = Field(
+        alias="friendlies", default=None, description="The amount of friendly fire casualties."
+    )
 
-    missionSuccessRate: Optional[int] = Field(alias="missionSuccessRate", default=None)
+    missionSuccessRate: Optional[int] = Field(
+        alias="missionSuccessRate",
+        default=None,
+        description="A percentage indicating how many started missions end in success.",
+    )
 
-    accuracy: Optional[int] = Field(alias="accuracy", default=None)
+    accuracy: Optional[int] = Field(
+        alias="accuracy",
+        default=None,
+        description="A percentage indicating average accuracy of Helldivers.",
+    )
 
-    playerCount: Optional[int] = Field(alias="playerCount", default=None)
+    playerCount: Optional[int] = Field(
+        alias="playerCount",
+        default=None,
+        description="The total amount of players present (at the time of the snapshot).",
+    )
 
     def __sub__(self, other: "Statistics") -> "Statistics":
         sub = Statistics(
