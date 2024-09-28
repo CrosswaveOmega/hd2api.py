@@ -2,11 +2,22 @@
 
 This is an asyncronous api frontend library for the Helldivers 2 API and many of it's community wrappers.
 
-Request the raw data from the api, and use the builders to create easy to understand data classes, potentially using a newer set of static json files so that in game updates can be quickly reflected across objects returned by this library.
+Get the latest game state from Helldivers 2,
+and transform the raw data into collated
+data objects complete with important planet effects,
+the latest biome and enviornmental hazards,
+and more.
 
-Still currently in development.
+Still currently in development, expect frequent updates
+as the static data required by the package to
+build the collated objects can change in between patches to Helldivers 2.
 
-All returned objects are Pydantic Models.
+All returned objects are Pydantic Models,
+which allow them to be quickly dumped and loaded
+from/to json strings.
+
+Please note, this API Wrapper was designed to 
+primarily work with the asyncio module.  
 
 Requirements:
  * httpx
@@ -36,11 +47,13 @@ https://github.com/helldivers-2/diveharder_api.py/
 ### Basic usage
 ```python
 import asyncio
-from hd2api import GetApiRawAll, ApiConfig
+from hd2api import GetApiRawAll, ApiConfig, build_planet_2
 async def main():
     apiconfig=ApiConfig()
     allval=await GetApiRawAll(apiconfig)
     print(allval.status)
+    planet=build_planet_2(64,allval, apiconfig.staticdata())
+    print(planet)
 
 
 asyncio.run(main)
