@@ -70,13 +70,14 @@ test = [
     "pytest-github-actions-annotate-failures",
     "shellcheck-py==0.10.0.1",
     "pytest-asyncio==0.24.0",
+]
+docs = [
     "sphinx>=7.0.0",
     "autodoc_pydantic==2.2.0",
-
 ]
 
 [project.urls]
-Documentation = "https://github.com/microsoft/python-package-template/tree/main#readme"
+Documentation = "https://github.com/CrosswaveOmega/hd2api.py/tree/main#readme"
 Source = "https://github.com/CrosswaveOmega/hd2api.py"
 Tracker = "https://github.com/CrosswaveOmega/hd2api.py/issues"
 
