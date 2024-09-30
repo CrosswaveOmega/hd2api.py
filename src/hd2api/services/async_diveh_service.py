@@ -36,7 +36,7 @@ async def make_raw_api_request(
         "X-Super-Client": f"{api_config.get_client_name()}",
     }
     async with httpx.AsyncClient(
-        base_url=base_path, verify=api_config.verify, timeout=8.0
+        base_url=base_path, verify=api_config.verify, timeout=api_config.timeout
     ) as client:
         response = await client.get(path, headers=headers)
 

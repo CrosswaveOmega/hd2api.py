@@ -25,17 +25,19 @@ class APIConfig(BaseModel):
     use_raw: Literal["community", "diveharder", "direct"] = Field(
         default="diveharder", description="The source to use, default is 'diveharder'"
     )
-    verify: Union[bool, str] = Field(default=True, description="Unused")
+    # verify: Union[bool, str] = Field(default=True, description="Unused")
     client_name: str = Field(default="DefaultClientName", description="Name sent to the client")
     language: str = Field(default="en-US", description="The accept-language sent to the client")
     static_path: str = Field(
         default="",
-        description="Override Path for the static json files used by this library's builders",
+        description="Override path for the static json files used by this library's builders",
     )
-    access_token: Optional[str] = Field(default=None, description="Unused")
+    # __access_token: Optional[str] = None# Field(default=None, description="Unused")
+    timeout: float = Field(default=8, description="Request timeout value for the endpoints.")
     statics: Optional[StaticAll] = Field(default=None, description="Cached static files")
 
-    def staticdata(self):
+    def staticdata(self) -> StaticAll:
+        """If not already present, build up the model of static data."""
         planetjson = load_and_merge_json_files("planets", self.static_path)
         effectjson = load_and_merge_json_files("effects", self.static_path)
         self.statics = StaticAll(
@@ -44,21 +46,22 @@ class APIConfig(BaseModel):
         )
         return self.statics
 
-    def get_access_token(self) -> Optional[str]:
-        """There really isn't an access token."""
+    def __get_access_token(self) -> Optional[str]:
+        """There really isn't an access token, this is just in case."""
         try:
-            return self.access_token
+            return self.__access_token
         except KeyError:
             return None
 
-    def get_client_name(self):
+    def get_client_name(self) -> str:
+        """Get the client name."""
         try:
             return self.client_name
         except KeyError:
             return None
 
-    def set_access_token(self, value: str):
-        self.access_token = value
+    def __set_access_token(self, value: str):
+        self.__access_token = value
 
 
 class HTTPException(Exception):

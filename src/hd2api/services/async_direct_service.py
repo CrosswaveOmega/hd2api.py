@@ -40,7 +40,7 @@ async def make_direct_api_request(
     }
     try:
         async with httpx.AsyncClient(
-            base_url=base_path, verify=api_config.verify, timeout=8.0
+            base_url=base_path, verify=api_config.verify, timeout=api_config.timeout
         ) as client:
             if params:
                 response = await client.get(

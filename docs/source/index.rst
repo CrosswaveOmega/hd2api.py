@@ -6,13 +6,17 @@
 Helldivers2Api.py documentation
 ===============================
 
-Add your content using ``reStructuredText`` syntax. See the
-`reStructuredText <https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html>`_
-documentation for details.
+This is an all in one library for the Helldivers 2 API as well as the diveharder and community API wrappers, for use with asyncio python applications.
+
+Fetch raw data from the official API, and collate the api's raw data together
+into 'built' objects with optional up to date static files.
 
 
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+   intro
+   guide_status
    hd2api
 

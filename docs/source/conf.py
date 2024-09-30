@@ -29,6 +29,7 @@ extensions = [
     "sphinx.ext.autosummary",  # Create neat summary tables
     "sphinxcontrib.autodoc_pydantic",
 ]
+autodoc_pydantic_model_show_config_summary = False
 
 autosummary_generate = True  # Turn on sphinx.ext.autosummary
 

@@ -61,5 +61,5 @@ class DiveharderAll(BaseApiModel):
     )
 
     war_id: Optional[WarId] = Field(
-        alias="war_id", default=None, description="the ID of the current galactic war."
+        alias="war_id", default=801, description="The ID of the current galactic war season."
     )

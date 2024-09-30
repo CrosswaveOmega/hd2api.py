@@ -36,7 +36,7 @@ async def make_comm_v1_api_request(
         "X-Super-Client": f"{api_config.get_client_name()}",
     }
     async with httpx.AsyncClient(
-        base_url=base_path, verify=api_config.verify, timeout=20.0
+        base_url=base_path, verify=api_config.verify, timeout=api_config.timeout
     ) as client:
         response = await client.get(path, headers=headers)
 
@@ -55,8 +55,7 @@ async def make_comm_raw_api_request(
     api_config_override: Optional[APIConfig] = None,
 ) -> Union[T, List[T]]:
     """
-    Get a raw api object from the Community api or
-    diveharder.
+    Get a raw api object from the Community api.
     """
     api_config = api_config_override or APIConfig()
 
@@ -69,10 +68,9 @@ async def make_comm_raw_api_request(
         "Content-Type": "application/json",
         "Accept": "application/json",
         "X-Super-Client": f"{api_config.get_client_name()}",
-        # "Authorization": f"Bearer {api_config.get_access_token()}",
     }
     async with httpx.AsyncClient(
-        base_url=base_path, verify=api_config.verify, timeout=8.0
+        base_url=base_path, verify=api_config.verify, timeout=api_config.timeout
     ) as client:
         response = await client.get(path, headers=headers)
 
@@ -80,7 +78,7 @@ async def make_comm_raw_api_request(
         raise HTTPException(
             response.status_code, f"Failed with status code: {response.status_code}"
         )
-    now = datetime.datetime.now(tz=datetime.timezone.utc)
+
     data = response.json()
     return make_output(data, model, index)
 
