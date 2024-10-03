@@ -105,30 +105,31 @@ def get_time_dh(diveharder: DiveharderAll) -> dt.datetime:
     return get_time(status, info)
 
 
-def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticAll) -> Planet:
+def build_planet_full(
+    planetIndex: int, status: WarStatus, info: WarInfo, summary: WarSummary, statics: StaticAll
+) -> Planet:
     """
-    Builds a Planet object for the specified planetIndex, by matching the correspoding
+    Constructs a Planet object for a given planetIndex by associating the respective
     PlanetStatus, PlanetInfo, PlanetStats, PlanetEffects, PlanetAttacks, and
-    PlanetEvents from the objects within the DiveharderAll object.
-    from the diveharder status and static galaxy information.
+    PlanetEvents from the WarStatus, WarInfo, and WarSummary data obtained from the API,
+    along with the static galaxy details.
 
     Args:
-        planetIndex (int): The index of the planet to build.
-        diveharder (DiveharderAll): Operational game state and status data.
-        statics (StaticAll): Static information about the game's universe.
+        planetIndex (int): The index of the planet to be constructed.
+        status (WarStatus): Current state and status of the war.
+        info (WarInfo): Information related to the ongoing war.
+        summary (WarSummary): Summary statistics and data associated with the war.
+        statics (StaticAll): Static game universe information.
 
     Returns:
-        Planet: The constructed planet for the given index.
+        Planet: The constructed Planet object for the specified index.
     """
-    status: WarStatus = diveharder.status  # type: ignore
-    info: WarInfo = diveharder.war_info  # type: ignore
-    if diveharder.planet_stats is not None:
-        stat: WarSummary = diveharder.planet_stats
+
     # Get planet status & planet info
     planetStatus = check_compare_value("index", planetIndex, status.planetStatus)
     planetInfo = check_compare_value("index", planetIndex, info.planetInfos)
-    if stat.planets_stats is not None:
-        planetStatistics = check_compare_value("planetIndex", planetIndex, stat.planets_stats)
+    if summary.planets_stats is not None:
+        planetStatistics = check_compare_value("planetIndex", planetIndex, summary.planets_stats)
         if not planetStatistics:
             planetStatistics = PlanetStats(planetIndex=planetIndex)
     else:
@@ -179,6 +180,27 @@ def build_planet_2(planetIndex: int, diveharder: DiveharderAll, statics: StaticA
     return planet
 
 
+def build_planet_2(planetIndex: int, warall: DiveharderAll, statics: StaticAll):
+    """
+    Constructs a Planet object for a given planetIndex by associating the respective
+    PlanetStatus, PlanetInfo, PlanetStats, PlanetEffects, PlanetAttacks, and
+    PlanetEvents from a DiveharderAll object and the static galaxy details.
+
+    Args:
+        planetIndex (int): The index of the planet to be constructed.
+        warall (DiveharderAll): Operational game state and status data.
+        statics (StaticAll): Static game universe information.
+
+    Returns:
+        Planet: The constructed Planet object for the specified index.
+    """
+    status: WarStatus = warall.status  # type: ignore
+    info: WarInfo = warall.war_info  # type: ignore
+    summary: Optional[WarSummary] = warall.planet_stats
+    planet = build_planet_full(planetIndex, status, info, summary, statics)
+    return planet
+
+
 def build_all_planets(warall: DiveharderAll, statics: StaticAll) -> Dict[int, Planet]:
     """
     Builds a dictionary of all planets by iterating over the galaxy's static planet data
@@ -193,6 +215,9 @@ def build_all_planets(warall: DiveharderAll, statics: StaticAll) -> Dict[int, Pl
     """
     planet_data = {}
     for i, v in statics.galaxystatic.planets.items():
-        planet = build_planet_2(i, warall, statics)
+        status: WarStatus = warall.status  # type: ignore
+        info: WarInfo = warall.war_info  # type: ignore
+        summary: Optional[WarSummary] = warall.planet_stats
+        planet = build_planet_full(i, status, info, summary, statics)
         planet_data[i] = planet
     return planet_data

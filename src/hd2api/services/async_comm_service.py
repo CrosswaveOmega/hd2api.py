@@ -8,6 +8,8 @@ from ..models.ABC.model import BaseApiModel
 from .async_direct_service import GetApiDirectAll
 from .service_utils import make_output
 
+from .service_base import make_async_api_request
+
 T = TypeVar("T", bound=BaseApiModel)
 import random
 import logging
@@ -30,21 +32,8 @@ async def make_comm_v1_api_request(
     if index is not None:
         path += f"/{index}"
 
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "X-Super-Client": f"{api_config.get_client_name()}",
-    }
-    async with httpx.AsyncClient(
-        base_url=base_path, verify=api_config.verify, timeout=api_config.timeout
-    ) as client:
-        response = await client.get(path, headers=headers)
+    data = await make_async_api_request(base_path, path, api_config)
 
-    if response.status_code != 200:
-        raise HTTPException(
-            response.status_code, f"Failed with status code: {response.status_code}"
-        )
-    data = response.json()
     return make_output(data, model, index)
 
 
@@ -64,22 +53,7 @@ async def make_comm_raw_api_request(
     if index is not None:
         path += f"/{index}"
 
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "X-Super-Client": f"{api_config.get_client_name()}",
-    }
-    async with httpx.AsyncClient(
-        base_url=base_path, verify=api_config.verify, timeout=api_config.timeout
-    ) as client:
-        response = await client.get(path, headers=headers)
-
-    if response.status_code != 200:
-        raise HTTPException(
-            response.status_code, f"Failed with status code: {response.status_code}"
-        )
-
-    data = response.json()
+    data = await make_async_api_request(base_path, path, api_config)
     return make_output(data, model, index)
 
 

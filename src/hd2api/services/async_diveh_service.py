@@ -7,6 +7,7 @@ from ..models import *
 from ..models.ABC.model import BaseApiModel
 from .async_direct_service import GetApiDirectAll
 from .service_utils import make_output
+from .service_base import make_async_api_request
 
 T = TypeVar("T", bound=BaseApiModel)
 
@@ -29,23 +30,8 @@ async def make_raw_api_request(
 
     base_path = api_config.api_diveharder
     path = f"/raw/{endpoint}"
+    data = await make_async_api_request(base_path, path, api_config, params)
 
-    headers = {
-        "Content-Type": "application/json",
-        "Accept": "application/json",
-        "X-Super-Client": f"{api_config.get_client_name()}",
-    }
-    async with httpx.AsyncClient(
-        base_url=base_path, verify=api_config.verify, timeout=api_config.timeout
-    ) as client:
-        response = await client.get(path, headers=headers)
-
-    if response.status_code != 200:
-        raise HTTPException(
-            response.status_code, f"Failed with status code: {response.status_code}"
-        )
-
-    data = response.json()
     return make_output(data, model, None)
 
 

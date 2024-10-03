@@ -35,20 +35,32 @@ ServiceEndpoints
 
 There are 5 important raw endpoints from the game's api to consider, each returns an import game object.
 
+
+
+War Status is the current state of the galactic war
 .. autofunction:: hd2api.services.async_raw_service.GetApiRawWarStatus
    :no-index:
 
+WarInfo is additional infomation on the galactic war's planets, including their supply lines
 .. autofunction:: hd2api.services.async_raw_service.GetApiRawWarInfo
    :no-index:
 
-
+WarSummary is the statistics gathered during the galactic war
 .. autofunction:: hd2api.services.async_raw_service.GetApiRawSummary
    :no-index:
 
+Assignment is the major order, if there currently is one.
 .. autofunction:: hd2api.services.async_raw_service.GetApiRawAssignment
    :no-index:
 
+The NewsFeed is the list of dispatches.
 .. autofunction:: hd2api.services.async_raw_service.GetApiRawNewsFeed
    :no-index:
 
 
+Of course, if you want to get every raw object at once, it's recommended to use the
+GetApiRawAll function, which will return everything within a self contained
+"DiveharderAll" class.
+
+.. autofunction:: hd2api.services.async_raw_service.GetApiRawAll
+   :no-index:

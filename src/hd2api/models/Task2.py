@@ -252,7 +252,7 @@ class Task2(BaseApiModel):
         taskstr += self._task_display_planet(taskdata, planets)
         return taskstr
 
-    def _task_display_planet(self, taskdata, planets):
+    def _task_display_planet(self, taskdata: TaskData, planets: Dict[int, Planet]):
         taskstr = ""
         if taskdata.hasPlanet and taskdata.planet:
             if not taskdata.hasPlanet[0]:
