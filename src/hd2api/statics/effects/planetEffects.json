@@ -38,5 +38,10 @@
         "galacticEffectId": 1196,
         "name": "DSS Logistics Hub",
         "description": "Parts for the Democracy Space Station are prefabricated all over the Galaxy, then shipped here to await assembly."
+    },
+    "1197": {
+        "galacticEffectId": 1197,
+        "name": "Xenoentomology Center",
+        "description": "Those who study Terminid behavior, ecology and E-710 potential gather here for cross-disciplinary research."
     }
 }
