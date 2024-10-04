@@ -33,11 +33,6 @@ async def make_direct_api_request(
     path = f"/api/{endpoint}"
     if index is not None:
         path += f"/{index}"
-
-    api_config = api_config_override or APIConfig()
-
-    base_path = api_config.api_diveharder
-    path = f"/raw/{endpoint}"
     data = await make_async_api_request(base_path, path, api_config, params)
 
     return make_output(data, model, index)
