@@ -22,7 +22,7 @@ classifiers = [
 keywords=['helldivers2','api']
 requires-python = ">=3.8.1"
 
-version = '0.0.0.12'
+version = '0.0.0.13'
 dependencies= [
 "pydantic>=2.9.2",
 "httpx>=0.27.2"
@@ -42,6 +42,7 @@ where = ["src"]
 
 [tool.setuptools.package-data]
 js   = ["js/*","*.js"]
+json = ["*.json", "statics/*"]
 
 [options.packages.find]
 exclude = ['tests',  'docs', 'test']
