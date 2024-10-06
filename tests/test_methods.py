@@ -4,6 +4,8 @@ from hd2api import *
 
 import logging
 
+from hd2api.util.find import get_item
+
 hd2api_logger = logging.getLogger("hd2api_logger")
 
 
@@ -106,3 +108,12 @@ async def test_get_event_avg(apiconfig):
     hd2api_logger.info(str(est))
 
     print(planeta)
+
+
+async def test_get_planet_name(apiconfig):
+    allval = await GetApiRawAll(apiconfig)
+    planets = build_all_planets(allval, apiconfig.staticdata())
+    item = get_item(planets.values(), name="MERIDIA")
+    print(allval)
+    assert item.name == "MERIDIA"
+    return planets

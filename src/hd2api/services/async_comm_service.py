@@ -1,19 +1,15 @@
 from typing import List, Optional, Type, TypeVar
 
-import httpx
 
-from ..api_config import APIConfig, HTTPException
+from ..api_config import APIConfig
 from ..models import *
 from ..models.ABC.model import BaseApiModel
-from .async_direct_service import GetApiDirectAll
 from .service_utils import make_output
 
 from .service_base import make_async_api_request
 
 T = TypeVar("T", bound=BaseApiModel)
-import random
 import logging
-from logging.handlers import RotatingFileHandler
 
 hd2api_logger = logging.getLogger("hd2api_logger")
 

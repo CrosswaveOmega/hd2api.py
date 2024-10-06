@@ -39,7 +39,8 @@ Example usage
 build_all_planets will automatically add in any active planet effects
 which are found within the ApiConfig.effects folder.
 
-
+Please note, while the community api does return built objects,
+they don't contain certain newer fields, such as the active planet effects.
 
 Building up campaigns
 ^^^^^^^^^^^^^^^^^^^^^

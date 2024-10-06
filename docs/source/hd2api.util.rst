@@ -12,6 +12,15 @@ hd2api.util.utils module
    :undoc-members:
    :show-inheritance:
 
+hd2api.util.find module
+------------------------
+
+.. automodule:: hd2api.util.find
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 Module contents
 ---------------
 

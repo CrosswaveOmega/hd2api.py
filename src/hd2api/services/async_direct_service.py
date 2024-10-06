@@ -21,9 +21,7 @@ hd2api_logger.setLevel(logging.INFO)
 async def make_direct_api_request(
     endpoint: str,
     model: Type[T],
-    index: Optional[int] = None,
     api_config_override: Optional[APIConfig] = None,
-    path2=False,
     params: Optional[dict] = None,  # Added parameters for GET requests
 ) -> Optional[Union[T, List[T]]]:
     """Get a raw api object directly from arrowhead's api."""
@@ -31,11 +29,10 @@ async def make_direct_api_request(
 
     base_path = api_config.api_direct
     path = f"/api/{endpoint}"
-    if index is not None:
-        path += f"/{index}"
+
     data = await make_async_api_request(base_path, path, api_config, params)
 
-    return make_output(data, model, index)
+    return make_output(data, model, None)
 
 
 async def GetApiDirectWarStatus(

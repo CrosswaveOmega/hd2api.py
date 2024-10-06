@@ -12,6 +12,8 @@ from ..constants import task_types, value_types, faction_names, samples
 from .effect_builder import build_planet_effect
 from .statistics_builder import statistics_builder
 
+from ..util import get_item
+
 
 def build_planet_basic(
     gstatic: GalaxyStatic,
@@ -126,10 +128,13 @@ def build_planet_full(
     """
 
     # Get planet status & planet info
-    planetStatus = check_compare_value("index", planetIndex, status.planetStatus)
-    planetInfo = check_compare_value("index", planetIndex, info.planetInfos)
+    planetStatus = get_item(status.planetStatus, index=planetIndex)
+    planetInfo = get_item(info.planetInfos, index=planetIndex)
     if summary.planets_stats is not None:
-        planetStatistics = check_compare_value("planetIndex", planetIndex, summary.planets_stats)
+        planetStatistics = get_item(
+            summary.planets_stats,
+            planetIndex=planetIndex,
+        )
         if not planetStatistics:
             planetStatistics = PlanetStats(planetIndex=planetIndex)
     else:
@@ -160,7 +165,7 @@ def build_planet_full(
     planet.attacking = planet_attack_list
 
     # Build Events
-    event: PlanetEvent = check_compare_value("planetIndex", planetIndex, status.planetEvents)  # type: ignore
+    event: PlanetEvent = get_item(status.planetEvents, planetIndex=planetIndex)  # type: ignore
 
     starttime = get_time(status, info)
     if event:
