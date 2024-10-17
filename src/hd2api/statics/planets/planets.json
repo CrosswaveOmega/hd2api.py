@@ -1662,7 +1662,7 @@
     "64": {
         "name": "Meridia",
         "sector": "Umlaut",
-        "biome": "blackhole",
+        "biome": "primordial_bug",
         "environmentals": [
             "none"
         ],

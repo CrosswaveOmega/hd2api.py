@@ -179,9 +179,10 @@ class Task2(BaseApiModel):
             planet_name = planet.get_name()
             health = planet.health_percent()
         task_mode = "Liberate" if self.type == 11 else "Control"
-        taskstr = (
-            f"{e}. {task_mode} {planet_name}. Status: `{'ok' if curr == 1 else f'{health},{curr}'}`"
-        )
+        if self.type == 13:
+            taskstr = f"{e}.`{'ok' if curr == 1 else f'{health},{curr}'}` Hold {planet_name} until the order expires."
+        else:
+            taskstr = f"{e}. {task_mode} {planet_name}. Status: `{'ok' if curr == 1 else f'{health},{curr}'}`"
         return taskstr
 
     def _task_get_samples(

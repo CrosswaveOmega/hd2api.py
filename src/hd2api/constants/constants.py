@@ -34,6 +34,15 @@ faction_names = {
     5: "ERR",
     15: "ERR",
 }
+faction_names_plural = {
+    0: "Anything",
+    1: "Humans",
+    2: "the Terminids",
+    3: "the Automatons",
+    4: "the Illuminate",
+    5: "ERR",
+    15: "ERR",
+}
 
 rewards = {897894480: 1, 3608481516: 2, 3481751602: 3}
 
