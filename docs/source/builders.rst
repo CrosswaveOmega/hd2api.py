@@ -129,6 +129,7 @@ Example usage
       progress = data.progress
       task_description = data.description
       tasks = []
+      type_and_flag=f"{data.task}, {data.flags}"
       for e, task in enumerate(data.tasks):
          chg, projected = None, None
          prog = ""
@@ -145,4 +146,9 @@ Example usage
             rewards.append(("Reward {e}", value=d.format())
       else:
          rewards.append(("Reward", value=data.reward.format())
-      return assigment_num,title,briefing,task_description,tasks,rewards
+      return assigment_num,title,briefing,task_description,tasks,rewards, type_and_flag
+
+
+The usage of the "type" and "flag" fields in the Assignment object are still currently unknown.
+It has been observed that Assignments with a flag of 2 only require one Task out of the
+many listed to be completed.
