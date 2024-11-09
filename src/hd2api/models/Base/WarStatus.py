@@ -88,6 +88,16 @@ class WarStatus(BaseApiModel):
         default=[],
         description="All current global events, including major orders",
     )
+    spaceStations: Optional[List[Any]] = Field(
+        alias="spaceStations",
+        default=[],
+        description="A list of 'spaceStations', which has not been used yet by ArrowHead.",
+    )
+    globalResources: Optional[List[Any]] = Field(
+        alias="globalResources",
+        default=[],
+        description="A list of 'global resources', which has not been used yet by ArrowHead.",
+    )
 
     superEarthWarResults: Optional[List[Any]] = Field(
         alias="superEarthWarResults",

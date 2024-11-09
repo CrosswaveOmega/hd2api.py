@@ -1,6 +1,8 @@
 from typing import *
 
 from pydantic import Field
+
+from .PlanetCoordinates import PlanetCoordinates
 from ..ABC.model import BaseApiModel
 
 
@@ -34,6 +36,12 @@ class PlanetStatus(BaseApiModel):
         alias="players",
         default=None,
         description="The amount of helldivers currently active on this planet.",
+    )
+
+    position: Optional[PlanetCoordinates] = Field(
+        alias="position",
+        default=None,
+        description="A set of X/Y coordinates specifying the position of this planet on the galaxy map.",
     )
 
     def __str__(self):
