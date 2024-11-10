@@ -16,12 +16,12 @@
         "description": "The planet is gone, the ultimate price to pay in the war for humanity's survival."
     },
     "sandy_base": {
-        "name": "Rolling Dunes [Sandy]",
-        "description": "A blazing-hot desert planet, it's rocky mesas are the sole interruptions to the endless sea of dunes.",
+        "name": "Desert Dunes [Sandy]",
+        "description": "A blazing-hot desert planet, its rocky mesas are the sole interruptions to the endless sea of dunes.",
         "old_slug": "mesa"
     },
     "sandy_acid": {
-        "name": "Acid [Sandy]",
+        "name": "Acidic Badlands [Sandy]",
         "description": "Dense, toxic fumes from deep within the planet's crust seep out of cracks in the earth and coat the ground in a sickly haze.",
         "old_slug": "toxic"
     },
@@ -36,8 +36,8 @@
         "old_slug": "canyon"
     },
     "sandy_spiky": {
-        "name": "Mesa Desert [Sandy]",
-        "description": "A desert planet prone to unpredictable and dangerous,sand twisters.",
+        "name": "Desert Cliffs [Sandy]",
+        "description": "A desert planet prone to unpredictable and dangerous sand twisters.",
         "old_slug": "desert"
     },
     "primordial_base": {
@@ -56,7 +56,7 @@
         "old_slug": "ethereal"
     },
     "primordial_blue": {
-        "name": "Ion Rainforest [Primordial]",
+        "name": "Ionic Jungle [Primordial]",
         "description": "The strange subversion of photosynthesis that sustains the oddly-hued flora that flourishes on this planet remains an intriguing mystery to Super Earth's greatest exo-biologists.",
         "old_slug": "rainforest"
     },
@@ -82,7 +82,7 @@
     },
     "moor_tundra": {
         "name": "Tundra [Moor]",
-        "description": "A perenially chilly climate has allowed short, colourful shrubs to flourish across this planet's surface.",
+        "description": "A perennially chilly climate has allowed short, colorful shrubs to flourish across this planet's surface.",
         "old_slug": "tundra"
     },
     "moor_arid": {
@@ -91,12 +91,12 @@
         "old_slug": "desolate"
     },
     "moor_red": {
-        "name": "Ion Fields [Moor] ",
+        "name": "Ionic Crimson [Moor] ",
         "description": "A crimson algae has propagated wildly across this entire planet, coating its rocky hills with a constant red that masks the spilt blood of the heroes who defend it from tyranny.",
         "old_slug": "crimsonmoor"
     },
     "swamp_base": {
-        "name": "Green Swamp [Swamp]",
+        "name": "Basic Swamp [Swamp]",
         "description": "Tall, gnarled trees flourish across the surface of this forested world. Sunlight filters past dangling vines, to the saturated undergrowth below.",
         "old_slug": "swamp"
     },

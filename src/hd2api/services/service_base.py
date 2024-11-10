@@ -51,6 +51,7 @@ async def make_async_api_request(
     data = response.json()
     return data
 
+
 def make_sync_api_request(
     base_path: str, path: str, api_config: APIConfig, params: Optional[dict] = None
 ) -> Any:
@@ -64,7 +65,9 @@ def make_sync_api_request(
     }
 
     try:
-        with httpx.Client(base_url=base_path, verify=api_config.verify, timeout=api_config.timeout) as client:
+        with httpx.Client(
+            base_url=base_path, verify=api_config.verify, timeout=api_config.timeout
+        ) as client:
             if params:
                 response = client.get(path, headers=headers, params=params)
             else:
