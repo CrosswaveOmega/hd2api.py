@@ -110,8 +110,9 @@ Example usage
    async def get_assignments():
         apiconfig=APIConfig()
         assignment=await GetApiRawAssignment(apiconfig)
-        assignments=get_assignments(assignment)
-        return assignment
+        assignments=build_all_assignments(assignment)
+        print(assignments[0])
+        return assignments
 
 `Assignment2` may require some front end code to display what you need, though.
 
