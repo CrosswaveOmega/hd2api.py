@@ -9,8 +9,27 @@ Building Frontend Objects from Raw Data
    hd2api
 
 In order to turn the raw objects returned by the api into something that
-your python applications would have an easier time parsing, this library
+applications would have an easier time parsing, this library
 provides access to a set of "Builder" functions which handle much of the collating.
+
+
+On static json files
+^^^^^^^^^^^^^^^^^^^^
+The builder functions utilize a separate "statics" directory of json
+files to map infomation returned by the api with additional fields
+that are not, such as the planet name.
+
+The library has it's own internal statics directory that's updated regularly, however
+the `APIConfig` can be set to a separate directory for modified json files if needed.
+
+.. code-block:: python3
+
+    # Retrieve the war status
+    import asyncio
+    from hd2api import APIConfig
+
+    apiconfig=APIConfig(static_path='./separate/json/directory/for/project')
+
 
 Build dictionary of all planets
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -26,18 +45,18 @@ Example usage
 
     # Retrieve the war status
     import asyncio
-    from hd2api import GetApiRawAll, ApiConfig, DiveharderAll
+    from hd2api import GetApiRawAll, APIConfig, DiveharderAll
     from hd2api.builders import build_all_planets
 
-    apiconfig=ApiConfig()
+    apiconfig=APIConfig()
     async def get_planets():
         allval=await GetApiRawAll(apiconfig)
         planets=build_all_planets(allval, apiconfig.staticdata())
         print(allval)
         return planets
 
-build_all_planets will automatically add in any active planet effects
-which are found within the ApiConfig.effects folder.
+`build_all_planets` will automatically add in any active planet effects.
+which are found within the APIConfig.effects folder.
 
 Please note, while the community api does return built objects,
 they don't contain certain newer fields, such as the active planet effects.
@@ -56,10 +75,10 @@ Example usage
 
    from hd2api.builders import build_all_campaigns
 
-   from hd2api import GetApiRawAll, ApiConfig, DiveharderAll
+   from hd2api import GetApiRawAll, APIConfig, DiveharderAll
 
    async def get_campaigns():
-        apiconfig=ApiConfig()
+        apiconfig=APIConfig()
         allval=await GetApiRawAll(apiconfig)
         planets=build_all_planets(allval, allval.war_status)
         print(allval)
@@ -86,10 +105,10 @@ Example usage
 
    from hd2api.builders import build_all_assignments
 
-   from hd2api import GetApiRawAssignment, ApiConfig
+   from hd2api import GetApiRawAssignment, APIConfig
 
    async def get_assignments():
-        apiconfig=ApiConfig()
+        apiconfig=APIConfig()
         assignment=await GetApiRawAssignment(apiconfig)
         assignments=get_assignments(assignment)
         return assignment

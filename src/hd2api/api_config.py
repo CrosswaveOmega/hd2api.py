@@ -9,7 +9,7 @@ from .load_json import load_and_merge_json_files
 
 class APIConfig(BaseModel):
     """
-    Configuration object for the API wrappers.
+    Primary configuration object used for the API service functions.
     """
 
     api_comm: str = Field(
@@ -23,7 +23,8 @@ class APIConfig(BaseModel):
         description="Base path for the game's API directly",
     )
     use_raw: Literal["community", "diveharder", "direct"] = Field(
-        default="diveharder", description="The source to use, default is 'diveharder'"
+        default="diveharder",
+        description="The source to use when calling raw endpoints, default is 'diveharder'",
     )
     verify: Union[bool, str] = Field(default=True, description="Unused")
     client_name: str = Field(default="DefaultClientName", description="Name sent to the client")

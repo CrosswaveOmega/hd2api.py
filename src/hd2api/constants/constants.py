@@ -122,3 +122,22 @@ stratagems = {
     202236804: "Spear",
     295440526: "Railgun",
 }
+
+lines = {
+    2: {
+        "A": "Successfully extract with **#COUNT #ITEM_PRE#ITEM#ITEM_POST**#LOCATION_PRE#LOCATION#LOCATION_POST."
+    },
+    3: {"A": "Kill **#COUNT #ENEMY**#LOCATION_PRE#LOCATION#LOCATION_POST."},
+    11: {"L": "Liberate **#LOCATION**", "R": "Liberate **#COUNT** planets from **#RACE**"},
+    12: {
+        "C": "Defend against **#COUNT** attacks on any planet",
+        "R": "Defend against **#COUNT** attacks from the **#RACE**",
+    },
+    13: {
+        "L": "Hold **#LOCATION** when the order expires",
+    },
+    15: {
+        "A": "Liberate more planets than are lost during the order duration",
+        "R": "Liberate more planets than are lost to **#RACE** during the order duration",
+    },
+}

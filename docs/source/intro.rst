@@ -32,11 +32,15 @@ BASIC USAGE
 
     # Retrieve the war status
     import asyncio
-    from hd2api import GetApiRawWarStatus, ApiConfig
+    from hd2api import GetApiRawWarStatus, APIConfig
     async def main():
-        apiconfig=ApiConfig()
+        apiconfig=APIConfig()
         allval=await GetApiRawWarStatus(apiconfig)
         print(allval)
 
     asyncio.run(main)
+
+This library is primarly asyncronous, meaning that all calls to the apis must be made within an `asyncio` coroutine.
+
+See the documentation for the `asyncio` library here. `Asyncio <https://docs.python.org/3/library/asyncio.html>`_
 

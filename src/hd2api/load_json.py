@@ -5,7 +5,7 @@ from typing import Optional
 
 def get_repo_dir() -> str:
     """
-    Get the directory path for storing static files in the library.
+    Get the directory path for the static json file directory.
 
     Returns:
         str: The target directory path.

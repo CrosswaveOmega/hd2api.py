@@ -21,7 +21,7 @@ have used to create their own third party applications, such as the
 But before anything else, you need to define a new APIConfig.
 
 
-ApiConfig
+APIConfig
 ^^^^^^^^^
 .. autopydantic_model::  hd2api.api_config.APIConfig
     :no-index:

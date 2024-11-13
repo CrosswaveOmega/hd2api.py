@@ -9,7 +9,7 @@ from ..util.utils import changeformatif as cfi
 from ..util.utils import extract_timestamp as et
 from ..util.utils import human_format as hf
 
-from ..constants import task_types, value_types, faction_names, samples, enemies
+from ..constants import task_types, value_types, faction_names, samples, enemies, lines
 
 
 class TaskData(BaseApiModel):
@@ -27,6 +27,40 @@ class TaskData(BaseApiModel):
     unknown7: Optional[List[int]] = Field(alias="unknown7", default=None)
     hasPlanet: Optional[List[int]] = Field(alias="hasPlanet", default=None)
     planet: Optional[List[int]] = Field(alias="planet", default=None)
+
+    def make_params(self, planets):
+        faction_name = faction_names.get(self.faction[0], f"Unknown Faction {self.faction[0]}")
+        params = {
+            "#LOCATION_PRE": "",
+            "#LOCATION": "",
+            "#LOCATION_POST": "",
+        }
+        if self.hasCount and self.hasCount[0]:
+            params["#COUNT"] = self.goal[0]
+        if self.hasPlanet and self.hasPlanet[0]:
+            planet_name = planets[self.planet[0]]
+            params["#LOCATION"] = planet_name
+            params["#PLANET"] = planet_name
+            params["#LOCATION_PRE"] = " on "
+            params["#LOCATION_POST"] = ""
+        if self.hasItem and self.itemID[0]:
+            params["#ITEM_PRE"] = " on "
+            params["#ITEM"] = samples.get(self.itemID[0], "UNKNOWN")
+            params["#ITEM_POST"] = ""
+        if self.enemyID and self.enemyID[0]:
+            enemy_id = self.enemyID[0]
+            params["#ENEMY"] = enemies.get(enemy_id, f"UNKNOWN {enemy_id}")
+        else:
+            params["#ENEMY"] = faction_name + ""
+        params["#RACE"] = faction_name
+        return params
+
+
+def makeline(line: str, params: Dict[str, str]):
+    """Format a line"""
+    for i, v in params.items():
+        line = line.replace(i, v)
+    return line
 
 
 class Task2(BaseApiModel):
@@ -70,6 +104,29 @@ class Task2(BaseApiModel):
                 taskdata.set(attr_name, [])
             taskdata[attr_name].append(v)
         return task_type, taskdata
+
+    def format_task_str(self, curr_progress: int, e: int = 0, planets: Dict[int, Planet] = {}):
+        task_type, taskdata = self.taskAdvanced()
+        curr = curr_progress
+        params = taskdata.make_params(planets)
+        if self.type == 11:
+            if "#COUNT" in params and "#RACE" in params:
+                return makeline(lines[11]["R"], params)
+            elif params["#LOCATION"]:
+                return makeline(lines[11]["L"], params)
+        elif self.type == 13:
+            if params["#LOCATION"]:
+                return makeline(lines[13]["L"], params)
+        elif self.type == 12:
+            if "#COUNT" in params and "#RACE" in params:
+                if params["#RACE"] == "Anything":
+                    return makeline(lines[12]["C"], params)
+                return makeline(lines[12]["R"], params)
+        elif self.type == 3:
+            return makeline(lines[3]["A"], params)
+        elif self.type == 2:
+            return makeline(lines[2]["A"], params)
+        return self.task_str(curr_progress, e, planets)
 
     def task_str(
         self,
