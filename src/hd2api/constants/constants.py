@@ -52,6 +52,8 @@ samples = {
     2985106497: "Rare",
 }
 
+items = {3992382197: "Common Sample", 2985106497: "Rare Sample", 3608481516: "Requisition Slips"}
+
 enemies = {
     20706814: "Scout Strider",
     2664856027: "Shredder Tank",
