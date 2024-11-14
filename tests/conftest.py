@@ -49,13 +49,3 @@ def pytest_configure(config):
         datefmt="%m/%d/%Y %I:%M:%S%p",
     )
     console_handler.setFormatter(formatter)
-
-    # Add the console handler to the logger
-    hd2api_logger.addHandler(console_handler)
-    log_handler = RotatingFileHandler(
-        f"./logs/hd2api_logger.log", maxBytes=5 * 1024 * 1024, backupCount=5
-    )
-
-    log_handler.setLevel(logging.INFO)
-
-    hd2api_logger.addHandler(log_handler)

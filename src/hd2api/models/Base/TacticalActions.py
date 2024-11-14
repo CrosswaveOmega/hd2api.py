@@ -49,12 +49,6 @@ class TacticalAction(BaseApiModel):
         description="War time when the tactical action will expire",
     )
 
-    expiration: Optional[str] = Field(
-        alias="expiration",
-        default=None,
-        description="The estimated date when the current voting period will expire.",
-    )
-
     cost: Optional[List[Cost]] = Field(
         alias="cost", default_factory=list, description="List of costs."
     )
