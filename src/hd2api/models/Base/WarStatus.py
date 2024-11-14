@@ -2,6 +2,8 @@ import json
 from typing import *
 
 from pydantic import Field
+
+from .SpaceStation import SpaceStationStatus
 from ..ABC.model import BaseApiModel
 
 from .Campaign import Campaign
@@ -88,9 +90,9 @@ class WarStatus(BaseApiModel):
         default=[],
         description="All current global events, including major orders",
     )
-    spaceStations: Optional[List[Any]] = Field(
+    spaceStations: Optional[List[SpaceStationStatus]] = Field(
         alias="spaceStations",
-        default=[],
+        default_factory=list,
         description="A list of 'spaceStations', which has not been used yet by ArrowHead.",
     )
     globalResources: Optional[List[Any]] = Field(

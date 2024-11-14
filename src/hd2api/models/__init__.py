@@ -1,5 +1,6 @@
 from .Assignment2 import *
 from .Biome import *
+from .SpaceStation2 import *
 from .Campaign2 import *
 from .Dispatch import *
 from .Event import *

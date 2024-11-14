@@ -6,6 +6,7 @@ from ..models import *
 from ..models.ABC.model import BaseApiModel
 from .async_direct_service import (
     GetApiDirectAssignment,
+    GetApiDirectSpaceStation,
     GetApiDirectWarStatus,
     GetApiDirectSummary,
     GetApiDirectWarInfo,
@@ -13,6 +14,7 @@ from .async_direct_service import (
     GetApiDirectAll,
 )
 from .async_comm_service import (
+    GetCommApiRawSpaceStation,
     GetCommApiRawWarStatus,
     GetCommApiRawWarInfo,
     GetCommApiRawSummary,
@@ -21,6 +23,7 @@ from .async_comm_service import (
 )
 from .async_diveh_service import (
     GetDhApiRawAssignment,
+    GetDhApiRawSpaceStation,
     GetDhApiRawWarInfo,
     GetDhApiRawWarStatus,
     GetDhApiRawNewsFeed,
@@ -82,6 +85,18 @@ async def GetApiRawNewsFeed(api_config_override: APIConfig) -> List[NewsFeedItem
         return await GetDhApiRawNewsFeed(api_config_override)
     elif api_config_override.use_raw == "direct":
         return await GetApiDirectNewsFeed(api_config_override)
+
+
+async def GetApiRawSpaceStation(
+    station_id: int, api_config_override: APIConfig
+) -> List[NewsFeedItem]:
+    """Retrieve the raw news feed from the default raw api."""
+    if api_config_override.use_raw == "community":
+        return await GetCommApiRawSpaceStation(station_id, api_config_override)
+    elif api_config_override.use_raw == "diveharder":
+        return await GetDhApiRawSpaceStation(station_id, api_config_override)
+    elif api_config_override.use_raw == "direct":
+        return await GetApiDirectSpaceStation(station_id, api_config_override)
 
 
 async def GetApiRawAll(api_config_override: APIConfig, direct=False) -> DiveharderAll:

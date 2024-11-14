@@ -111,6 +111,19 @@ async def GetApiDirectNewsFeed(
     return result
 
 
+async def GetApiDirectSpaceStation(
+    station_id: int,
+    api_config_override: Optional[APIConfig] = None,
+) -> SpaceStation:
+    result = await make_direct_api_request(
+        f"SpaceStation/801/{station_id}", SpaceStation, api_config_override=api_config_override
+    )
+    if result is None:
+        raise ValueError("Failed to retrieve Space Station.")
+
+    return result
+
+
 async def GetApiDirectAll(api_config_override: Optional[APIConfig] = None) -> DiveharderAll:
     warstatus = await GetApiDirectWarStatus(api_config_override)
     warinfo = await GetApiDirectWarInfo(api_config_override)

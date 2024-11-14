@@ -88,6 +88,19 @@ async def GetCommApiRawNewsFeed(
     )
 
 
+async def GetCommApiRawSpaceStation(
+    station_id: int,
+    api_config_override: Optional[APIConfig] = None,
+) -> SpaceStation:
+    result = await make_comm_raw_api_request(
+        f"SpaceStation/801/{station_id}", SpaceStation, api_config_override=api_config_override
+    )
+    if result is None:
+        raise ValueError("Failed to retrieve Space Station.")
+
+    return result
+
+
 # V1 Community API Endpoints
 
 

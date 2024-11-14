@@ -117,3 +117,13 @@ async def test_get_planet_name(apiconfig):
     print(allval)
     assert item.name == "MERIDIA"
     return planets
+
+
+async def test_station_get(apiconfig):
+    apiconfig.use_raw = "direct"
+    allval = await GetApiRawWarStatus(apiconfig)
+
+    for i in allval.spaceStations:
+        station = await GetApiRawSpaceStation(i.id32, apiconfig)
+        hd2api_logger.info(str(station))
+    # print(allval)

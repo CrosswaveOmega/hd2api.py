@@ -1,5 +1,6 @@
 from .Assignment import *
 from .Campaign import *
+from .Cost import *
 from .Effects import *
 from .GalaxyStats import *
 from .GlobalEvent import *
@@ -14,6 +15,7 @@ from .PlanetStats import *
 from .PlanetStatus import *
 from .Reward import *
 from .Setting import *
+from .SpaceStation import *
 from .SteamNewsRaw import *
 from .Task import *
 from .WarId import *

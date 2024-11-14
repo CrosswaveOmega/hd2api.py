@@ -66,6 +66,19 @@ async def GetDhApiRawNewsFeed(
     )
 
 
+async def GetDhApiRawSpaceStation(
+    station_id: int,
+    api_config_override: Optional[APIConfig] = None,
+) -> SpaceStation:
+    result = await make_raw_api_request(
+        f"dss", SpaceStation, api_config_override=api_config_override
+    )
+    if result is None:
+        raise ValueError("Failed to retrieve Space Station.")
+
+    return result
+
+
 async def GetDhApiRawAll(api_config_override: Optional[APIConfig] = None) -> DiveharderAll:
     return await make_raw_api_request(
         "all", DiveharderAll, api_config_override=api_config_override, path2=True
