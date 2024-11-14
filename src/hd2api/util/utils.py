@@ -97,7 +97,7 @@ def changeformatif(value: Optional[str]) -> str:
     return ""
 
 
-def select_emoji(key: str, status_emoji) -> str:
+def select_emoji(key: str) -> str:
     """Select an emoji from the status emoji dictionary."""
     if key in status_emoji:
         return status_emoji.get(key)
