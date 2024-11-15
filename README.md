@@ -1,4 +1,6 @@
 # Helldivers 2 Python API Wrapper
+[![PyPI](https://img.shields.io/pypi/v/hd2api.py)](https://pypi.org/project/hd2api.py/)
+[![Documentation Status](https://readthedocs.org/projects/hd2apipy/badge/?version=latest)](https://hd2apipy.readthedocs.io/?badge=latest)
 
 This is an asyncronous api frontend library for the Helldivers 2 API and many of it's community wrappers.
 
