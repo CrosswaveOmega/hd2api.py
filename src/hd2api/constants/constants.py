@@ -52,7 +52,13 @@ samples = {
     2985106497: "Rare",
 }
 
-items = {3992382197: "Common Sample", 2985106497: "Rare Sample", 3608481516: "Requisition Slips"}
+items = {
+    3992382197: "Common Sample",
+    2985106497: "Rare Sample",
+    3608481516: "Requisition Slips",
+    897894480: "Metal",
+    3481751602: "Super Credits",
+}
 
 enemies = {
     20706814: "Scout Strider",

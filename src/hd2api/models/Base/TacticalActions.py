@@ -18,7 +18,7 @@ class TacticalAction(BaseApiModel):
     mediaId32: Optional[int] = Field(
         alias="id32",
         default=None,
-        description="Internal identifier of this tactical action's media",
+        description="Internal identifier of this tactical action's related image.",
     )
 
     name: Optional[str] = Field(
@@ -40,23 +40,29 @@ class TacticalAction(BaseApiModel):
     status: Optional[int] = Field(
         alias="status",
         default=None,
-        description="Integer representing status",
+        description="Integer representing status.  1 means inactive, 2 means active, 3 means cooldown.",
     )
 
     statusExpireAtWarTimeSeconds: Optional[int] = Field(
         alias="statusExpireAtWarTimeSeconds",
         default=None,
-        description="War time when the tactical action will expire",
+        description="War time when the tactical action will expire.",
     )
 
     cost: Optional[List[Cost]] = Field(
-        alias="cost", default_factory=list, description="List of costs."
+        alias="cost",
+        default_factory=list,
+        description="List of costs to activate this tactical action.",
     )
 
     effectIds: Optional[List[int]] = Field(
-        alias="effectIds", default_factory=list, description="List of effect IDs."
+        alias="effectIds",
+        default_factory=list,
+        description="List of effect IDs related to this tactical action.",
     )
 
     activeEffectIds: Optional[List[int]] = Field(
-        alias="activeEffectIds", default_factory=list, description="List of active effect IDs."
+        alias="activeEffectIds",
+        default_factory=list,
+        description="List of active effect IDs applied when this tactical action is active.",
     )

@@ -45,6 +45,23 @@ class SpaceStation(BaseApiModel):
         default=None,
         description="Internal identifier of which Space Station this is.",
     )
+    lastElectionId: Optional[str] = Field(
+        alias="lastElectionId",
+        default=None,
+        description="ID for the last election period to move the Space Station.",
+    )
+
+    currentElectionId: Optional[str] = Field(
+        alias="currentElectionId",
+        default=None,
+        description="ID for the current election period to move the Space Station.",
+    )
+
+    nextElectionId: Optional[str] = Field(
+        alias="nextElectionId",
+        default=None,
+        description="ID for the next election period to move the Space Station.",
+    )
 
     planetIndex: Optional[int] = Field(
         alias="planetIndex",
@@ -59,7 +76,7 @@ class SpaceStation(BaseApiModel):
     currentElectionEndWarTime: Optional[int] = Field(
         alias="currentElectionEndWarTime",
         default=None,
-        description="Election end war time.  significance unknown",
+        description="War Time when the current election period ends and the Station will move to the next planet.",
     )
 
     tacticalActions: Optional[List[TacticalAction]] = Field(

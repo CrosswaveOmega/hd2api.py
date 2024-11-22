@@ -12,6 +12,7 @@ class Cost(BaseApiModel):
         default=None,
         description="Internal identifier of this cost.",
     )
+
     itemMixId: Optional[int] = Field(
         alias="itemMixId",
         default=None,

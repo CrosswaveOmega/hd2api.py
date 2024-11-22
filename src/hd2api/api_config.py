@@ -28,6 +28,9 @@ class APIConfig(BaseModel):
     )
     verify: Union[bool, str] = Field(default=True, description="Unused")
     client_name: str = Field(default="DefaultClientName", description="Name sent to the client")
+    client_contact: Optional[str] = Field(
+        default=None, description="X-Super-Contact for the community API."
+    )
     language: str = Field(default="en-US", description="The accept-language sent to the client")
     static_path: str = Field(
         default="",

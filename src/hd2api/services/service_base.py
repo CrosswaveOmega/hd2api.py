@@ -27,6 +27,8 @@ async def make_async_api_request(
         "X-Super-Client": f"{api_config.get_client_name()}",
         "Accept-Language": api_config.language,
     }
+    if api_config.client_contact:
+        headers["X-Super-Contact"] = api_config.client_contact
 
     try:
         async with httpx.AsyncClient(
