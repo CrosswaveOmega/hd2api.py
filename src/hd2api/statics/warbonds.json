@@ -28,5 +28,20 @@
 		"name": "Viper Commandos",
 		"id": "viper_commandos",
 		"credits_to_unlock": 1000
+	},
+	"6": {
+		"name": "Freedom's Flame",
+		"id": "freedoms_flame",
+		"credits_to_unlock": 1000
+	},
+	"7": {
+		"name": "Chemical Agents",
+		"id": "chemical_agents",
+		"credits_to_unlock": 1000
+	},
+	"8": {
+		"name": "Truth Enforcers",
+		"id": "truth_enforcers",
+		"credits_to_unlock": 1000
 	}
 }

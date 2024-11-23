@@ -38,5 +38,17 @@
 	"2709264466": {
 		"name": "Motivational Shocks",
 		"description": "Allows all Helldivers to recover faster after being slowed by an attack, such as acid. Does not mitigate 'area effects,' such as EMS Strikes."
+	},
+	"3912131454": {
+		"name": "Experimental Infusion",
+		"description": "Temp Desc: Stims boost movement speed and reduced incoming damage for short period"
+	},
+	"3102833400": {
+		"name": "Firebomb Hellpods",
+		"description": "Lines all Hellpods with volatile incendiaries that detonate upon impact, igniting any units in vicinity of the drop site."
+	},
+	"2239116615": {
+		"name": "Dead Sprint",
+		"description": "Allows Helldivers to keep sprinting even when they are out of stamina, draining their health instead."
 	}
 }
