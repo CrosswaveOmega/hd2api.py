@@ -44,7 +44,7 @@ class TaskData(BaseApiModel):
             params["#LOCATION_PRE"] = " on "
             params["#LOCATION_POST"] = ""
         if self.hasItem and self.itemID[0]:
-            params["#ITEM_PRE"] = " on "
+            params["#ITEM_PRE"] = " with "
             params["#ITEM"] = samples.get(self.itemID[0], "UNKNOWN")
             params["#ITEM_POST"] = ""
         if self.enemyID and self.enemyID[0]:
@@ -58,8 +58,8 @@ class TaskData(BaseApiModel):
 
 def makeline(line: str, params: Dict[str, str]):
     """Format a line"""
-    for i, v in params.items():
-        line = line.replace(i, str(v))
+    for i in sorted(params.keys(), key=len, reverse=True):
+        line = line.replace(i, str(params[i]))
     return line
 
 
@@ -123,6 +123,8 @@ class Task2(BaseApiModel):
                     return makeline(lines[12]["C"], params)
                 return makeline(lines[12]["R"], params)
         elif self.type == 3:
+            if "#ITEM" in params:
+                return makeline(lines[3]["IA"], params)
             return makeline(lines[3]["A"], params)
         elif self.type == 2:
             return makeline(lines[2]["A"], params)
