@@ -59,7 +59,7 @@ class TaskData(BaseApiModel):
 def makeline(line: str, params: Dict[str, str]):
     """Format a line"""
     for i, v in params.items():
-        line = line.replace(i, v)
+        line = line.replace(i, str(v))
     return line
 
 

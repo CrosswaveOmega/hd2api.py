@@ -56,7 +56,7 @@ items = {
     3992382197: "Common Sample",
     2985106497: "Rare Sample",
     3608481516: "Requisition Slips",
-    897894480: "Metal",
+    897894480: "Medals",
     3481751602: "Super Credits",
 }
 
