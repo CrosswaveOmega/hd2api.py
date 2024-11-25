@@ -9,7 +9,7 @@ from ..util.utils import changeformatif as cfi
 from ..util.utils import extract_timestamp as et
 from ..util.utils import human_format as hf
 
-from ..constants import task_types, value_types, faction_names, samples, enemies, lines
+from ..constants import task_types, value_types, faction_names, samples, enemies, lines, stratagems
 
 
 class TaskData(BaseApiModel):
@@ -45,7 +45,11 @@ class TaskData(BaseApiModel):
             params["#LOCATION_POST"] = ""
         if self.hasItem and self.itemID[0]:
             params["#ITEM_PRE"] = " with "
-            params["#ITEM"] = samples.get(self.itemID[0], "UNKNOWN")
+            itemname = samples.get(self.itemID[0], None)
+            if not itemname:
+                itemname = stratagems.get(self.itemID[0], "unknown")
+
+            params["#ITEM"] = itemname
             params["#ITEM_POST"] = ""
         if self.enemyID and self.enemyID[0]:
             enemy_id = self.enemyID[0]
