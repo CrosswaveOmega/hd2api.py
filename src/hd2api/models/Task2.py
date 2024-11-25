@@ -109,29 +109,41 @@ class Task2(BaseApiModel):
             taskdata[attr_name].append(v)
         return task_type, taskdata
 
-    def format_task_str(self, curr_progress: int, e: int = 0, planets: Dict[int, Planet] = {}):
+    def format_task_str(
+        self,
+        curr_progress: int,
+        e: int = 0,
+        planets: Dict[int, Planet] = {},
+        last_progess=None,
+        projected=None,
+        show_faction=False,
+    ):
         task_type, taskdata = self.taskAdvanced()
         curr = curr_progress
+        taskstr = f"{curr}"
+        if taskdata.goal:
+            percent_done = round((int(curr) / int(taskdata.goal[0])) * 100.0, 4)
+            taskstr = f"{hf(curr)}/{hf(taskdata.goal[0])} ({percent_done}) "
         params = taskdata.make_params(planets)
         if self.type == 11:
             if "#COUNT" in params and "#RACE" in params:
-                return makeline(lines[11]["R"], params)
+                return taskstr + makeline(lines[11]["R"], params)
             elif params["#LOCATION"]:
-                return makeline(lines[11]["L"], params)
+                return taskstr + makeline(lines[11]["L"], params)
         elif self.type == 13:
             if params["#LOCATION"]:
-                return makeline(lines[13]["L"], params)
+                return taskstr + makeline(lines[13]["L"], params)
         elif self.type == 12:
             if "#COUNT" in params and "#RACE" in params:
                 if params["#RACE"] == "Anything":
-                    return makeline(lines[12]["C"], params)
-                return makeline(lines[12]["R"], params)
+                    return taskstr + makeline(lines[12]["C"], params)
+                return taskstr + makeline(lines[12]["R"], params)
         elif self.type == 3:
             if "#ITEM" in params:
-                return makeline(lines[3]["IA"], params)
-            return makeline(lines[3]["A"], params)
+                return taskstr + makeline(lines[3]["IA"], params)
+            return taskstr + makeline(lines[3]["A"], params)
         elif self.type == 2:
-            return makeline(lines[2]["A"], params)
+            return taskstr + makeline(lines[2]["A"], params)
         return self.task_str(curr_progress, e, planets)
 
     def task_str(
@@ -160,6 +172,7 @@ class Task2(BaseApiModel):
         task_type, taskdata = self.taskAdvanced()
         curr = curr_progress
         taskstr = f"{e}. {task_type}: {hf(curr)}"
+
         if self.type == 11 or self.type == 13:
             taskstr = self._task_liberate_control(taskstr, taskdata, curr, e, planets)
         elif self.type == 2:
