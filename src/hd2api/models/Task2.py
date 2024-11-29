@@ -40,7 +40,10 @@ class TaskData(BaseApiModel):
         if self.hasCount and self.hasCount[0]:
             params["#COUNT"] = self.goal[0]
         if self.hasPlanet and self.hasPlanet[0]:
-            planet_name = planets[self.planet[0]]
+
+            planet_name = "PLANETUNKNOWNN"
+            if planets.get(self.planet[0], None):
+                planet_name = planets[self.planet[0]].name
             params["#LOCATION"] = planet_name
             params["#PLANET"] = planet_name
             params["#LOCATION_PRE"] = " on "
