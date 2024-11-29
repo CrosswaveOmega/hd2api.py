@@ -29,7 +29,9 @@ class TaskData(BaseApiModel):
     planet: Optional[List[int]] = Field(alias="planet", default=None)
 
     def make_params(self, planets):
-        faction_name = faction_names.get(self.faction[0], f"Unknown Faction {self.faction[0]}")
+        faction_name = "Unknown"
+        if self.faction:
+            faction_name = faction_names.get(self.faction[0], f"Unknown Faction {self.faction[0]}")
         params = {
             "#LOCATION_PRE": "",
             "#LOCATION": "",
