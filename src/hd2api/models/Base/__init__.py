@@ -17,6 +17,7 @@ from .Reward import Reward
 from .Setting import Setting
 from .SpaceStation import SpaceStation, SpaceStationStatus
 from .SteamNewsRaw import SteamNewsRaw
+from .TacticalActions import TacticalAction
 from .Task import Task
 from .WarId import WarId
 from .WarInfo import WarInfo
@@ -45,6 +46,7 @@ __all__ = [
     "SpaceStation",
     "SpaceStationStatus",
     "SteamNewsRaw",
+    "TacticalAction",
     "Task",
     "WarId",
     "WarInfo",

@@ -87,6 +87,7 @@ __all__ = [
     "SpaceStation",
     "SpaceStationStatus",
     "SteamNewsRaw",
+    "TacticalAction"
     "Task",
     "WarId",
     "WarInfo",
