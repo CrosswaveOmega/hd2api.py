@@ -1,18 +1,25 @@
-from typing import List, Optional, Type, TypeVar, Dict
-
-import httpx
-
 import datetime as dt
-from ..api_config import APIConfig, HTTPException
-from ..models import *
-from ..models.ABC.model import BaseApiModel
+from typing import Dict, List, Optional, Any
 
-from ..constants import task_types, value_types, faction_names, samples
-
+from ..constants import faction_names
+from ..models import (
+    DiveharderAll,
+    Event,
+    GalaxyStatic,
+    Planet,
+    PlanetEvent,
+    PlanetInfo,
+    PlanetStats,
+    PlanetStatus,
+    Position,
+    StaticAll,
+    WarInfo,
+    WarStatus,
+    WarSummary,
+)
+from ..util import get_item
 from .effect_builder import build_planet_effect
 from .statistics_builder import statistics_builder
-
-from ..util import get_item
 
 
 def build_planet_basic(
@@ -41,8 +48,11 @@ def build_planet_basic(
     planet_base = gstatic.planets.get(index, None)
     if not planet_base:
         return None
+    print(planet_base)
     biome = gstatic.biomes.get(planet_base.biome, None)  # type: ignore
     env = [gstatic.environmentals.get(e, None) for e in planet_base.environmentals]
+    weather = [gstatic.environmentals.get(e, None) for e in planet_base.weather_effects]
+    env.extend(weather)
     # Build Statistics
     stats_new = statistics_builder(stats, planetStatus.players, planetStatus.retrieved_at)
     pos = planetInfo.position

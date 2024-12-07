@@ -1,9 +1,8 @@
-import pytest
-import asyncio
-from hd2api import *
-
 import logging
 
+import pytest
+
+from hd2api import *
 from hd2api.util.find import get_item
 
 hd2api_logger = logging.getLogger("hd2api_logger")
@@ -113,7 +112,18 @@ async def test_get_event_avg(apiconfig):
 async def test_get_planet_name(apiconfig):
     allval = await GetApiRawAll(apiconfig)
     planets = build_all_planets(allval, apiconfig.staticdata())
+    print(planets)
     item = get_item(planets.values(), name="MERIDIA")
     print(allval)
     assert item.name == "MERIDIA"
     return planets
+
+
+async def test_station_get(apiconfig):
+    apiconfig.use_raw = "direct"
+    allval = await GetApiRawWarStatus(apiconfig)
+
+    for i in allval.spaceStations:
+        station = await GetApiRawSpaceStation(i.id32, apiconfig)
+        hd2api_logger.info(str(station))
+    # print(allval)

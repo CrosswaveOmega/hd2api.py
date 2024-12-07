@@ -1,8 +1,8 @@
-from typing import *
+from typing import Any, List, Optional
 
 from pydantic import Field
-from ..ABC.model import BaseApiModel
 
+from ..ABC.model import BaseApiModel
 from .HomeWorld import HomeWorld
 from .PlanetInfo import PlanetInfo
 

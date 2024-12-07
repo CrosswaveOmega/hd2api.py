@@ -33,6 +33,11 @@ autodoc_pydantic_model_show_config_summary = False
 
 autosummary_generate = True  # Turn on sphinx.ext.autosummary
 
+intersphinx_mapping = {
+    "py": ("https://docs.python.org/3", None),
+    "aio": ("https://docs.aiohttp.org/en/stable/", None),
+    "req": ("https://requests.readthedocs.io/en/latest/", None),
+}
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ["_templates"]
 

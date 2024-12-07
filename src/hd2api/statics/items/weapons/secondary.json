@@ -1,0 +1,160 @@
+{
+	"2811723672": {
+		"name": "P-2 Peacemaker",
+		"description": "The SEAF standard pistol - offering a high fire rate, generous capacity, and fast reloading.",
+		"damage": 75,
+		"capacity": 15,
+		"recoil": 23,
+		"fire_rate": 900,
+		"fire_mode": [
+			0
+		],
+		"traits": [
+			1,
+			4
+		]
+	},
+	"3981773112": {
+		"name": "P-19 Redeemer",
+		"description": "A fully-automatic pistol with an extremely high fire rate, allowing for efficient crowd control.",
+		"damage": 60,
+		"capacity": 31,
+		"recoil": 15,
+		"fire_rate": 1100,
+		"fire_mode": [
+			0,
+			2
+		],
+		"traits": [
+			1,
+			4
+		]
+	},
+	"1374036584": {
+		"name": "P-4 Senator",
+		"description": "A high-damage revolver, which can be reloaded with single rounds. A heavy-hitting and reliable sidearm.",
+		"damage": 200,
+		"capacity": 6,
+		"recoil": 43,
+		"fire_rate": 200,
+		"fire_mode": [
+			0
+		],
+		"traits": [
+			3,
+			4,
+			5
+		]
+	},
+	"2501707184": {
+		"name": "LAS-7 Dagger",
+		"description": "A laser pistol that fires a continuous beam. Does not require ammo but can overheat and need to change batteries.",
+		"damage": 250,
+		"capacity": 7,
+		"recoil": 0,
+		"fire_rate": 0,
+		"fire_mode": [
+			2
+		],
+		"traits": [
+			1,
+			4,
+			8,
+			9
+		]
+	},
+	"2797735596": {
+		"name": "GP-31 Grenade Pistol",
+		"description": "A pistol that fires grenades. Must be reloaded between shots.",
+		"damage": 650,
+		"capacity": 1,
+		"recoil": 43,
+		"fire_rate": 900,
+		"fire_mode": [
+			0
+		],
+		"traits": [
+			4,
+			6
+		]
+	},
+	"1938200223": {
+		"name": "P-113 Verdict",
+		"description": "The gas-operated, semiautomatic P-113 chambers the 14mm 'Rapid Deliberation,' the largest centerfire cartridge of any magazine-fed pistol.",
+		"damage": 125,
+		"capacity": 10,
+		"recoil": 40,
+		"fire_rate": 450,
+		"fire_mode": [
+			0
+		],
+		"traits": [
+			2,
+			4
+		]
+	},
+	"2264358800": {
+		"name": "SG-22 Bushwhacker",
+		"description": "A triple-barreled, break-action, sawed-off shotgun. Switch firing modes to fire all three barrels at once.",
+		"damage": 405,
+		"capacity": 3,
+		"recoil": 170,
+		"fire_rate": 650,
+		"fire_mode": [
+			0,
+			5
+		],
+		"traits": [
+			1,
+			4
+		]
+	},
+	"2340232366": {
+		"name": "P-72 Crisper",
+		"description": "A compact handgun-style flamethrower, able to project a jet of fire over short distances.",
+		"damage": 375,
+		"capacity": 30,
+		"recoil": 2,
+		"fire_rate": 0,
+		"fire_mode": [
+			2
+		],
+		"traits": [
+			4,
+			7
+		]
+	},
+	"1084288106": {
+		"name": "P-11 Stim Pistol",
+		"description": "Fires a ballistic dart at near-supersonic speeds, allowing the user to stim allies from a distance. Might sting.",
+		"damage": 0,
+		"capacity": 6,
+		"recoil": 6,
+		"fire_rate": 70,
+		"fire_mode": [
+			0
+		],
+		"traits": [
+			4,
+			5,
+			11
+		]
+	},
+	"1902682578": {
+		"name": "PLAS-15 Loyalist",
+		"description": "A plasma pistol that charges each shot until the trigger is released. Plasma projectiles explode on impact.",
+		"damage": 125,
+		"capacity": 7,
+		"recoil": 8,
+		"fire_rate": 1000,
+		"fire_mode": [
+			6
+		],
+		"traits": [
+			2,
+			4,
+			6,
+			10
+		]
+	}
+}

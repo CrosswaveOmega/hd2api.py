@@ -1,6 +1,7 @@
-from typing import List
 import datetime as dt
-from ..models import Assignment, Assignment2, Reward, Reward2, Task, Task2, DiveharderAll
+from typing import List
+
+from ..models import Assignment, Assignment2, Reward2, Task2
 
 
 def build_assignment_2(assignment: Assignment) -> Assignment2:

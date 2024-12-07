@@ -1,9 +1,8 @@
-import json
-from typing import *
+from typing import List, Optional
 
 from pydantic import Field
-from .ABC.model import BaseApiModel
 
+from .ABC.model import BaseApiModel
 from .Base import PlanetStatus
 
 

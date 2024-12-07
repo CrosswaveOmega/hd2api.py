@@ -1,15 +1,6 @@
-from typing import List, Optional, Type, TypeVar, Dict
+from typing import Dict, Optional
 
-import httpx
-
-import datetime as dt
-from ..api_config import APIConfig, HTTPException
-from ..models import *
-from ..models.ABC.model import BaseApiModel
-
-from ..constants import task_types, value_types, faction_names, samples
-
-from .effect_builder import build_planet_effect
+from ..models import Campaign, Campaign2, Planet, WarStatus
 
 
 def build_campaign(planets: Dict[int, Optional[Planet]], campaign: Campaign):

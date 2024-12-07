@@ -1,14 +1,13 @@
-from typing import *
-import datetime
+from typing import List, Optional
+
 from pydantic import Field
-from ..ABC.model import BaseApiModel, HealthMixin
+
+from ..ABC.model import BaseApiModel
 
 
 class GlobalEvent(BaseApiModel):
     """
     Raw object which is an ongoing global event.
-
-
     """
 
     eventId: Optional[int] = Field(

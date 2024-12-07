@@ -1,12 +1,14 @@
-from typing import *
+from typing import Optional
 
 from pydantic import Field
+
 from ..ABC.model import BaseApiModel
 
 
 class JointOperation(BaseApiModel):
     """
-    Raw model representing a joint operation.  Typically seen with planetary defense campaigns, but exact use is unknown.
+    Raw model representing a joint operation.
+    Typically seen with planetary defense campaigns, but exact use is unknown.
 
     """
 

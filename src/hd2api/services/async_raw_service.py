@@ -1,35 +1,38 @@
+import logging
 from typing import List, TypeVar
 
-
 from ..api_config import APIConfig
-from ..models import *
+from ..models import Assignment, DiveharderAll, NewsFeedItem, WarInfo, WarStatus, WarSummary
 from ..models.ABC.model import BaseApiModel
-from .async_direct_service import (
-    GetApiDirectAssignment,
-    GetApiDirectWarStatus,
-    GetApiDirectSummary,
-    GetApiDirectWarInfo,
-    GetApiDirectNewsFeed,
-    GetApiDirectAll,
-)
 from .async_comm_service import (
-    GetCommApiRawWarStatus,
-    GetCommApiRawWarInfo,
-    GetCommApiRawSummary,
     GetCommApiRawAssignment,
     GetCommApiRawNewsFeed,
+    GetCommApiRawSpaceStation,
+    GetCommApiRawSummary,
+    GetCommApiRawWarInfo,
+    GetCommApiRawWarStatus,
+)
+from .async_direct_service import (
+    GetApiDirectAll,
+    GetApiDirectAssignment,
+    GetApiDirectNewsFeed,
+    GetApiDirectSpaceStation,
+    GetApiDirectSummary,
+    GetApiDirectWarInfo,
+    GetApiDirectWarStatus,
 )
 from .async_diveh_service import (
+    GetDhApiRawAll,
     GetDhApiRawAssignment,
+    GetDhApiRawNewsFeed,
+    GetDhApiRawSpaceStation,
+    GetDhApiRawSummary,
     GetDhApiRawWarInfo,
     GetDhApiRawWarStatus,
-    GetDhApiRawNewsFeed,
-    GetDhApiRawSummary,
-    GetDhApiRawAll,
 )
 
 T = TypeVar("T", bound=BaseApiModel)
-import logging
+
 
 hd2api_logger = logging.getLogger("hd2api_logger")
 
@@ -82,6 +85,18 @@ async def GetApiRawNewsFeed(api_config_override: APIConfig) -> List[NewsFeedItem
         return await GetDhApiRawNewsFeed(api_config_override)
     elif api_config_override.use_raw == "direct":
         return await GetApiDirectNewsFeed(api_config_override)
+
+
+async def GetApiRawSpaceStation(
+    station_id: int, api_config_override: APIConfig
+) -> List[NewsFeedItem]:
+    """Retrieve the raw news feed from the default raw api."""
+    if api_config_override.use_raw == "community":
+        return await GetCommApiRawSpaceStation(station_id, api_config_override)
+    elif api_config_override.use_raw == "diveharder":
+        return await GetDhApiRawSpaceStation(station_id, api_config_override)
+    elif api_config_override.use_raw == "direct":
+        return await GetApiDirectSpaceStation(station_id, api_config_override)
 
 
 async def GetApiRawAll(api_config_override: APIConfig, direct=False) -> DiveharderAll:

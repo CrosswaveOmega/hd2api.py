@@ -1,17 +1,16 @@
-import json
-from typing import *
+from typing import Any, List, Optional
 
 from pydantic import Field
-from ..ABC.model import BaseApiModel
 
+from ..ABC.model import BaseApiModel
 from .Campaign import Campaign
+from .Effects import PlanetActiveEffects
+from .GlobalEvent import GlobalEvent
 from .JointOperation import JointOperation
 from .PlanetAttack import PlanetAttack
 from .PlanetEvent import PlanetEvent
 from .PlanetStatus import PlanetStatus
-from .GlobalEvent import GlobalEvent
-from ..Position import Position
-from .Effects import PlanetActiveEffects
+from .SpaceStation import SpaceStationStatus
 
 
 class WarStatus(BaseApiModel):
@@ -87,6 +86,16 @@ class WarStatus(BaseApiModel):
         alias="globalEvents",
         default=[],
         description="All current global events, including major orders",
+    )
+    spaceStations: Optional[List[SpaceStationStatus]] = Field(
+        alias="spaceStations",
+        default_factory=list,
+        description="A list of 'spaceStations', which has not been used yet by ArrowHead.",
+    )
+    globalResources: Optional[List[Any]] = Field(
+        alias="globalResources",
+        default=[],
+        description="A list of 'global resources', which has not been used yet by ArrowHead.",
     )
 
     superEarthWarResults: Optional[List[Any]] = Field(

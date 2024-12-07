@@ -1,0 +1,82 @@
+{
+	"3191303848": {
+		"name": "G-12 High Explosive",
+		"description": "A high explosive grenade which damages lightly armored targets. Creates high damage over a small area when detonated.",
+		"damage": 800,
+		"penetration": 4,
+		"outer_radius": 7,
+		"fuse_time": 3.5
+	},
+	"375014954": {
+		"name": "G-23 Stun",
+		"description": "Temporarily stuns all targets within the effective radius.",
+		"damage": 0,
+		"penetration": 6,
+		"outer_radius": 10,
+		"fuse_time": 1.8
+	},
+	"2823164517": {
+		"name": "G-16 Impact",
+		"description": "A high explosive grenade which detonates on first impact.",
+		"damage": 400,
+		"penetration": 4,
+		"outer_radius": 7,
+		"fuse_time": 0
+	},
+	"2877510587": {
+		"name": "G-3 Smoke",
+		"description": "A 'compliance weapon' to modify enemy behaviour. Creates a thick smoke screen to block targets' line of sight",
+		"damage": 0,
+		"penetration": 0,
+		"outer_radius": 5,
+		"fuse_time": 2.4
+	},
+	"3295898003": {
+		"name": "G-6 Frag",
+		"description": "An antipersonnel fragmentation grenade. Creates damage over a large area when detonated.",
+		"damage": 500,
+		"penetration": 3,
+		"outer_radius": 10,
+		"fuse_time": 2.4
+	},
+	"3748749890": {
+		"name": "G-10 Incendiary",
+		"description": "An incendiary grenade designed for igniting intense fires upon detonation. Spreads burning material over a moderate area, causing burn damage.",
+		"damage": 300,
+		"penetration": 3,
+		"outer_radius": 7,
+		"fuse_time": 2.9
+	},
+	"3869545997": {
+		"name": "G-123 Thermite Grenade",
+		"description": "A thermite grenade designed to adhere to surfaces before burning at 2000°C. Capable of burning through some armor",
+		"damage": 2000,
+		"penetration": 7,
+		"outer_radius": 3,
+		"fuse_time": 2.9
+	},
+	"16338515": {
+		"name": "G-13 Incendiary Impact",
+		"description": "Detonates on impact, covering the immediate vicinity in self-igniting white phosphorus.",
+		"damage": 150,
+		"penetration": 3,
+		"outer_radius": 7,
+		"fuse_time": 0
+	},
+	"1858752103": {
+		"name": "K-2 Throwing Knife",
+		"description": "Delivers silent justice to Freedom's enemies.",
+		"damage": 250,
+		"penetration": 3,
+		"outer_radius": 0,
+		"fuse_time": 0
+	},
+	"1255689962": {
+		"name": "G-4 Gas",
+		"description": "A grenade that releases a cloud of toxic gas, effective at blinding and slowing both organic and inorganic enemies.",
+		"damage": 3,
+		"penetration": 6,
+		"outer_radius": 7,
+		"fuse_time": 2.9
+	}
+}

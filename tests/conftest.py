@@ -10,11 +10,10 @@ In VSCode, Code Coverage is recorded in config.xml. Delete this file to reset re
 
 from __future__ import annotations
 
-from typing import List
+import logging
 
 import pytest
 from _pytest.nodes import Item
-import logging
 
 hd2api_logger = logging.getLogger("hd2api_logger")
 
@@ -48,6 +47,3 @@ def pytest_configure(config):
         datefmt="%m/%d/%Y %I:%M:%S%p",
     )
     console_handler.setFormatter(formatter)
-
-    # Add the console handler to the logger
-    hd2api_logger.addHandler(console_handler)

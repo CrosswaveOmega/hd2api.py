@@ -34,6 +34,15 @@ faction_names = {
     5: "ERR",
     15: "ERR",
 }
+faction_names_plural = {
+    0: "Anything",
+    1: "Humans",
+    2: "the Terminids",
+    3: "the Automatons",
+    4: "the Illuminate",
+    5: "ERR",
+    15: "ERR",
+}
 
 rewards = {897894480: 1, 3608481516: 2, 3481751602: 3}
 
@@ -41,6 +50,14 @@ rewards = {897894480: 1, 3608481516: 2, 3481751602: 3}
 samples = {
     3992382197: "Common",
     2985106497: "Rare",
+}
+
+items = {
+    3992382197: "Common Sample",
+    2985106497: "Rare Sample",
+    3608481516: "Requisition Slips",
+    897894480: "Medals",
+    3481751602: "Super Credits",
 }
 
 enemies = {
@@ -112,4 +129,26 @@ stratagems = {
     3212037062: "Commando",
     202236804: "Spear",
     295440526: "Railgun",
+}
+
+lines = {
+    2: {
+        "A": "Successfully extract with **#COUNT #ITEM_PRE#ITEM#ITEM_POST**#LOCATION_PRE#LOCATION#LOCATION_POST."
+    },
+    3: {
+        "A": "Kill **#COUNT #ENEMY**#LOCATION_PRE#LOCATION#LOCATION_POST.",
+        "IA": "Kill **#COUNT #ENEMY**#ITEM_PRE#ITEM#ITEM_POST#LOCATION_PRE#LOCATION#LOCATION_POST.",
+    },
+    11: {"L": "Liberate **#LOCATION**", "R": "Liberate **#COUNT** planets from **#RACE**"},
+    12: {
+        "C": "Defend against **#COUNT** attacks on any planet",
+        "R": "Defend against **#COUNT** attacks from the **#RACE**",
+    },
+    13: {
+        "L": "Hold **#LOCATION** when the order expires",
+    },
+    15: {
+        "A": "Liberate more planets than are lost during the order duration",
+        "R": "Liberate more planets than are lost to **#RACE** during the order duration",
+    },
 }

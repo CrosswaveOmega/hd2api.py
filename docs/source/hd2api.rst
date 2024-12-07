@@ -9,7 +9,7 @@ Subpackages
 
    hd2api.builders
    hd2api.constants
-   hd2api.logging
+   hd2api.loggingsubmodule
    hd2api.models
    hd2api.services
    hd2api.util

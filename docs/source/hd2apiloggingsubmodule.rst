@@ -1,13 +1,13 @@
-hd2api.logging package
+hd2api.loggingsubmodule package
 ======================
 
 Submodules
 ----------
 
-hd2api.logging.logging module
+hd2api.loggingsubmodule.logging module
 -----------------------------
 
-.. automodule:: hd2api.logging.logging
+.. automodule:: hd2api.loggingsubmodule.logging
    :members:
    :undoc-members:
    :show-inheritance:
@@ -15,7 +15,7 @@ hd2api.logging.logging module
 Module contents
 ---------------
 
-.. automodule:: hd2api.logging
+.. automodule:: hd2api.loggingsubmodule
    :members:
    :undoc-members:
    :show-inheritance:

@@ -1,17 +1,10 @@
-from typing import *
+from typing import Optional
 
 from pydantic import Field
-from .ABC.model import BaseApiModel
-
-
-from ..util.utils import (
-    human_format as hf,
-    select_emoji as emj,
-    changeformatif as cfi,
-    extract_timestamp as et,
-)
 
 from ..constants import rewards
+from ..util.utils import select_emoji as emj
+from .ABC.model import BaseApiModel
 
 
 class Reward2(BaseApiModel):

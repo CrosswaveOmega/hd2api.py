@@ -1,17 +1,15 @@
-from typing import *
-
+from typing import List, Optional
 
 from pydantic import Field
+
 from .ABC.model import BaseApiModel
-
-
-from .Base.WarStatus import WarStatus
-from .Base.WarInfo import WarInfo
-from .Base.WarSummary import WarSummary
 from .Base.Assignment import Assignment
 from .Base.NewsFeedItem import NewsFeedItem
 from .Base.SteamNewsRaw import SteamNewsRaw
 from .Base.WarId import WarId
+from .Base.WarInfo import WarInfo
+from .Base.WarStatus import WarStatus
+from .Base.WarSummary import WarSummary
 
 
 class DiveharderAll(BaseApiModel):

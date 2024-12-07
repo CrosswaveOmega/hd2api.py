@@ -1,6 +1,7 @@
-from typing import *
+from typing import Optional
 
 from pydantic import Field
+
 from ..ABC.model import BaseApiModel
 
 

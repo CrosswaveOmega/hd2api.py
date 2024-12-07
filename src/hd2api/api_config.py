@@ -1,15 +1,15 @@
-import os
 from typing import Literal, Optional, Union
 
 # pylint: disable=no-name-in-module
 from pydantic import BaseModel, Field
-from .models import StaticAll, GalaxyStatic, EffectStatic
+
 from .load_json import load_and_merge_json_files
+from .models import EffectStatic, GalaxyStatic, StaticAll
 
 
 class APIConfig(BaseModel):
     """
-    Configuration object for the API wrappers.
+    Primary configuration object used for the API service functions.
     """
 
     api_comm: str = Field(
@@ -23,10 +23,14 @@ class APIConfig(BaseModel):
         description="Base path for the game's API directly",
     )
     use_raw: Literal["community", "diveharder", "direct"] = Field(
-        default="diveharder", description="The source to use, default is 'diveharder'"
+        default="diveharder",
+        description="The source to use when calling raw endpoints, default is 'diveharder'",
     )
     verify: Union[bool, str] = Field(default=True, description="Unused")
     client_name: str = Field(default="DefaultClientName", description="Name sent to the client")
+    client_contact: Optional[str] = Field(
+        default=None, description="X-Super-Contact for the community API."
+    )
     language: str = Field(default="en-US", description="The accept-language sent to the client")
     static_path: str = Field(
         default="",

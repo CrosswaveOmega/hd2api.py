@@ -1,10 +1,5 @@
 from operator import attrgetter
-
-from typing import (
-    Any,
-    Iterable,
-    Optional,
-)
+from typing import Any, Iterable, Optional
 
 
 def get_item(target: Iterable, /, **attrs: Any) -> Optional[Any]:

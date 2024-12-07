@@ -1,15 +1,26 @@
-from typing import List, Optional, Type, TypeVar
-
+import logging
+from typing import List, Optional, Type, TypeVar, Union
 
 from ..api_config import APIConfig
-from ..models import *
+from ..models import (
+    Assignment,
+    Assignment2,
+    Campaign2,
+    Dispatch,
+    NewsFeedItem,
+    Planet,
+    SpaceStation,
+    SteamNews,
+    War,
+    WarInfo,
+    WarStatus,
+    WarSummary,
+)
 from ..models.ABC.model import BaseApiModel
+from .service_base import make_async_api_request
 from .service_utils import make_output
 
-from .service_base import make_async_api_request
-
 T = TypeVar("T", bound=BaseApiModel)
-import logging
 
 hd2api_logger = logging.getLogger("hd2api_logger")
 
@@ -27,6 +38,9 @@ async def make_comm_v1_api_request(
     path = f"/api/v1/{endpoint}"
     if index is not None:
         path += f"/{index}"
+
+    if api_config.client_contact is None:
+        raise ValueError("Attempted to call community api without setting client_contact")
 
     data = await make_async_api_request(base_path, path, api_config)
 
@@ -48,6 +62,8 @@ async def make_comm_raw_api_request(
     path = f"/raw/api/{endpoint}"
     if index is not None:
         path += f"/{index}"
+    if api_config.client_contact is None:
+        raise ValueError("Attempted to call community api without setting client_contact")
 
     data = await make_async_api_request(base_path, path, api_config)
     return make_output(data, model, index)
@@ -86,6 +102,19 @@ async def GetCommApiRawNewsFeed(
     return await make_comm_raw_api_request(
         "NewsFeed/801", NewsFeedItem, api_config_override=api_config_override
     )
+
+
+async def GetCommApiRawSpaceStation(
+    station_id: int,
+    api_config_override: Optional[APIConfig] = None,
+) -> SpaceStation:
+    result = await make_comm_raw_api_request(
+        f"SpaceStation/801/{station_id}", SpaceStation, api_config_override=api_config_override
+    )
+    if result is None:
+        raise ValueError("Failed to retrieve Space Station.")
+
+    return result
 
 
 # V1 Community API Endpoints

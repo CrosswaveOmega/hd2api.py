@@ -1,5 +1,6 @@
-from typing import *
-from ..models import *
+from typing import List
+
+from ..models import SectorStates, StaticAll, WarStatus
 
 
 def sector_states(war_status: WarStatus, statics: StaticAll) -> List[SectorStates]:
@@ -21,7 +22,7 @@ def sector_states(war_status: WarStatus, statics: StaticAll) -> List[SectorState
             if not planet:
                 continue
             sector = planet.sector
-            if not sector in sect:
+            if sector not in sect:
                 sect[sector] = SectorStates(
                     retrieved_at=war_status.retrieved_at, name=sector, sector=sector
                 )

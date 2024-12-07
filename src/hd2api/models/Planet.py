@@ -1,25 +1,19 @@
 import datetime
-from typing import *
-
-import json
+from typing import Any, Dict, List, Optional, Tuple, Union
 
 from pydantic import Field
-from .ABC.model import BaseApiModel, HealthMixin
 
+from ..util.utils import changeformatif as cfi
+from ..util.utils import extract_timestamp as et
+from ..util.utils import format_datetime as fdt
+from ..util.utils import select_emoji as emj
+from .ABC.model import BaseApiModel, HealthMixin
 from .Biome import Biome
+from .Effects import KnownPlanetEffect
 from .Event import Event
 from .Hazard import Hazard
 from .Position import Position
 from .Statistics import Statistics
-from .Effects import KnownPlanetEffect
-from ..util.utils import (
-    human_format as hf,
-    select_emoji as emj,
-    changeformatif as cfi,
-    extract_timestamp as et,
-    format_datetime as fdt,
-)
-from .Base.PlanetStatus import PlanetStatus
 
 
 class Planet(BaseApiModel, HealthMixin):
@@ -299,7 +293,6 @@ class Planet(BaseApiModel, HealthMixin):
         """Get the emoji of the faction that is occupying or defending this planet."""
         faction = emj(self.currentOwner.lower())
         if self.event:
-            evt = self.event
             return emj(self.event.faction.lower())
         return faction
 

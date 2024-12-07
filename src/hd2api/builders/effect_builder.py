@@ -1,13 +1,6 @@
-from typing import List, Optional, Type, TypeVar, Dict
+from typing import Dict, cast
 
-import httpx
-
-import datetime as dt
-from ..api_config import APIConfig, HTTPException
-from ..models import *
-from ..models.ABC.model import BaseApiModel
-
-from ..constants import task_types, value_types, faction_names, samples
+from ..models import EffectStatic, KnownPlanetEffect
 
 
 def build_planet_effect(static_effects: EffectStatic, idv: int) -> KnownPlanetEffect:

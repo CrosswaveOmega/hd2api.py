@@ -1,15 +1,12 @@
-from typing import *
+import json
+from typing import Dict, List, Optional, Tuple
 
 from pydantic import Field
-from .ABC.model import BaseApiModel
-import json
-from .Planet import Planet
 
-from ..util.utils import changeformatif as cfi
-from ..util.utils import extract_timestamp as et
+from ..constants import enemies, faction_names, lines, samples, stratagems, task_types, value_types
 from ..util.utils import human_format as hf
-
-from ..constants import task_types, value_types, faction_names, samples, enemies
+from .ABC.model import BaseApiModel
+from .Planet import Planet
 
 
 class TaskData(BaseApiModel):
@@ -27,6 +24,48 @@ class TaskData(BaseApiModel):
     unknown7: Optional[List[int]] = Field(alias="unknown7", default=None)
     hasPlanet: Optional[List[int]] = Field(alias="hasPlanet", default=None)
     planet: Optional[List[int]] = Field(alias="planet", default=None)
+
+    def make_params(self, planets):
+        faction_name = "Unknown"
+        if self.faction:
+            faction_name = faction_names.get(self.faction[0], f"Unknown Faction {self.faction[0]}")
+        params = {
+            "#LOCATION_PRE": "",
+            "#LOCATION": "",
+            "#LOCATION_POST": "",
+        }
+        if self.hasCount and self.hasCount[0]:
+            params["#COUNT"] = self.goal[0]
+        if self.hasPlanet and self.hasPlanet[0]:
+            planet_name = "PLANETUNKNOWNN"
+            if planets.get(self.planet[0], None):
+                planet_name = planets[self.planet[0]].name
+            params["#LOCATION"] = planet_name
+            params["#PLANET"] = planet_name
+            params["#LOCATION_PRE"] = " on "
+            params["#LOCATION_POST"] = ""
+        if self.hasItem and self.itemID[0]:
+            params["#ITEM_PRE"] = " with "
+            itemname = samples.get(self.itemID[0], None)
+            if not itemname:
+                itemname = stratagems.get(self.itemID[0], "unknown")
+
+            params["#ITEM"] = itemname
+            params["#ITEM_POST"] = ""
+        if self.enemyID and self.enemyID[0]:
+            enemy_id = self.enemyID[0]
+            params["#ENEMY"] = enemies.get(enemy_id, f"UNKNOWN {enemy_id}")
+        else:
+            params["#ENEMY"] = faction_name + ""
+        params["#RACE"] = faction_name
+        return params
+
+
+def makeline(line: str, params: Dict[str, str]):
+    """Format a line"""
+    for i in sorted(params.keys(), key=len, reverse=True):
+        line = line.replace(i, str(params[i]))
+    return line
 
 
 class Task2(BaseApiModel):
@@ -71,6 +110,43 @@ class Task2(BaseApiModel):
             taskdata[attr_name].append(v)
         return task_type, taskdata
 
+    def format_task_str(
+        self,
+        curr_progress: int,
+        e: int = 0,
+        planets: Dict[int, Planet] = {},
+        last_progess=None,
+        projected=None,
+        show_faction=False,
+    ):
+        task_type, taskdata = self.taskAdvanced()
+        curr = curr_progress
+        taskstr = f"{curr}"
+        if taskdata.goal:
+            percent_done = round((int(curr) / int(taskdata.goal[0])) * 100.0, 4)
+            taskstr = f"{hf(curr)}/{hf(taskdata.goal[0])} ({percent_done}) "
+        params = taskdata.make_params(planets)
+        if self.type == 11:
+            if "#COUNT" in params and "#RACE" in params:
+                return taskstr + makeline(lines[11]["R"], params)
+            elif params["#LOCATION"]:
+                return taskstr + makeline(lines[11]["L"], params)
+        elif self.type == 13:
+            if params["#LOCATION"]:
+                return taskstr + makeline(lines[13]["L"], params)
+        elif self.type == 12:
+            if "#COUNT" in params and "#RACE" in params:
+                if params["#RACE"] == "Anything":
+                    return taskstr + makeline(lines[12]["C"], params)
+                return taskstr + makeline(lines[12]["R"], params)
+        elif self.type == 3:
+            if "#ITEM" in params:
+                return taskstr + makeline(lines[3]["IA"], params)
+            return taskstr + makeline(lines[3]["A"], params)
+        elif self.type == 2:
+            return taskstr + makeline(lines[2]["A"], params)
+        return self.task_str(curr_progress, e, planets)
+
     def task_str(
         self,
         curr_progress: int,
@@ -97,6 +173,7 @@ class Task2(BaseApiModel):
         task_type, taskdata = self.taskAdvanced()
         curr = curr_progress
         taskstr = f"{e}. {task_type}: {hf(curr)}"
+
         if self.type == 11 or self.type == 13:
             taskstr = self._task_liberate_control(taskstr, taskdata, curr, e, planets)
         elif self.type == 2:
@@ -179,9 +256,10 @@ class Task2(BaseApiModel):
             planet_name = planet.get_name()
             health = planet.health_percent()
         task_mode = "Liberate" if self.type == 11 else "Control"
-        taskstr = (
-            f"{e}. {task_mode} {planet_name}. Status: `{'ok' if curr == 1 else f'{health},{curr}'}`"
-        )
+        if self.type == 13:
+            taskstr = f"{e}.`{'ok' if curr == 1 else f'{health},{curr}'}` Hold {planet_name} until the order expires."
+        else:
+            taskstr = f"{e}. {task_mode} {planet_name}. Status: `{'ok' if curr == 1 else f'{health},{curr}'}`"
         return taskstr
 
     def _task_get_samples(

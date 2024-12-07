@@ -1,22 +1,13 @@
 import datetime
 import re
-from typing import Callable, Dict, Optional, Union
+from typing import Callable, Optional, Union
 
-status_emoji: Dict[str, str] = {
-    "onc": "<:checkboxon:1199756987471241346>",
-    "noc": "<:checkboxoff:1199756988410777610>",
-    "emptyc": "<:checkboxempty:1199756989887172639>",
-    "edit": "<:edit:1199769314929164319>",
-    "add": "<:add:1199770854112890890>",
-    "automaton": "<:bots:1241748819620659332>",
-    "terminids": "<:bugs:1241748834632208395>",
-    "humans": "<:superearth:1275126046869557361>",
-    "illuminate": "<:squid:1274752443246448702>",
-    "hdi": "<:hdi:1240695940965339136>",
-    "medal": "<:Medal:1241748215087235143>",
-    "req": "<:rec:1274481505611288639>",
-    "credits": "<:supercredit:1274728715175067681>",
-}
+status_emoji = {}
+
+
+def set_status_emoji(new):
+    global status_emoji
+    status_emoji = new
 
 
 def default_fdt(dt: datetime.datetime, *args, **kwargs) -> str:
@@ -110,7 +101,7 @@ def select_emoji(key: str) -> str:
     """Select an emoji from the status emoji dictionary."""
     if key in status_emoji:
         return status_emoji.get(key)
-    return status_emoji["emptyc"]
+    return key
 
 
 pattern = r"<i=1>(.*?)<\/i>"
