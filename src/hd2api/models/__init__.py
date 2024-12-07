@@ -20,6 +20,7 @@ from .Base import (
     SpaceStation,
     SpaceStationStatus,
     SteamNewsRaw,
+    TacticalAction,
     Task,
     WarId,
     WarInfo,
@@ -87,7 +88,7 @@ __all__ = [
     "SpaceStation",
     "SpaceStationStatus",
     "SteamNewsRaw",
-    "TacticalAction"
+    "TacticalAction",
     "Task",
     "WarId",
     "WarInfo",
