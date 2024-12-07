@@ -1,16 +1,11 @@
-from typing import *
-from datetime import datetime
+from typing import Any, Dict, List, Optional, Union
 
 from pydantic import Field
-from .ABC.model import BaseApiModel
 
+from ..util.utils import extract_timestamp as et
+from .ABC.model import BaseApiModel
 from .Reward2 import Reward2
 from .Task2 import Task2
-from .Planet import Planet
-from .Base.Reward import Reward
-from ..util.utils import changeformatif as cfi
-from ..util.utils import extract_timestamp as et
-from ..util.utils import human_format as hf
 
 
 class Assignment2(BaseApiModel):

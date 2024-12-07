@@ -1,17 +1,21 @@
-from typing import List, Optional, Type, TypeVar
+import logging
+from typing import Dict, List, Optional, Type, TypeVar, Union
 
-import httpx
-
-from ..api_config import APIConfig, HTTPException
-from ..models import *
+from ..api_config import APIConfig
+from ..models import (
+    Assignment,
+    DiveharderAll,
+    NewsFeedItem,
+    SpaceStation,
+    WarInfo,
+    WarStatus,
+    WarSummary,
+)
 from ..models.ABC.model import BaseApiModel
-from .async_direct_service import GetApiDirectAll
-from .service_utils import make_output
 from .service_base import make_async_api_request
+from .service_utils import make_output
 
 T = TypeVar("T", bound=BaseApiModel)
-
-import logging
 
 hd2api_logger = logging.getLogger("hd2api_logger")
 
@@ -71,7 +75,7 @@ async def GetDhApiRawSpaceStation(
     api_config_override: Optional[APIConfig] = None,
 ) -> SpaceStation:
     result = await make_raw_api_request(
-        f"dss", SpaceStation, api_config_override=api_config_override
+        "dss", SpaceStation, api_config_override=api_config_override
     )
     if result is None:
         raise ValueError("Failed to retrieve Space Station.")

@@ -1,7 +1,6 @@
-from typing import *
-
-from ..models import *
 import datetime as dt
+from typing import Optional, Union
+from ..models import GalaxyStats, PlanetStats, Statistics
 
 
 def statistics_builder(

@@ -1,15 +1,12 @@
-from typing import *
+import json
+from typing import Dict, List, Optional, Tuple
 
 from pydantic import Field
-from .ABC.model import BaseApiModel
-import json
-from .Planet import Planet
 
-from ..util.utils import changeformatif as cfi
-from ..util.utils import extract_timestamp as et
+from ..constants import enemies, faction_names, lines, samples, stratagems, task_types, value_types
 from ..util.utils import human_format as hf
-
-from ..constants import task_types, value_types, faction_names, samples, enemies, lines, stratagems
+from .ABC.model import BaseApiModel
+from .Planet import Planet
 
 
 class TaskData(BaseApiModel):
@@ -40,7 +37,6 @@ class TaskData(BaseApiModel):
         if self.hasCount and self.hasCount[0]:
             params["#COUNT"] = self.goal[0]
         if self.hasPlanet and self.hasPlanet[0]:
-
             planet_name = "PLANETUNKNOWNN"
             if planets.get(self.planet[0], None):
                 planet_name = planets[self.planet[0]].name

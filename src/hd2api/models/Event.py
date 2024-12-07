@@ -1,17 +1,14 @@
-from typing import *
 import datetime
-from pydantic import Field
-from .ABC.model import BaseApiModel, HealthMixin
 import logging
+from typing import List, Optional
 
-from ..util.utils import (
-    human_format as hf,
-    select_emoji as emj,
-    changeformatif as cfi,
-    extract_timestamp as et,
-    format_datetime as fdt,
-)
+from pydantic import Field
 
+from ..util.utils import extract_timestamp as et
+from ..util.utils import format_datetime as fdt
+from ..util.utils import human_format as hf
+from ..util.utils import select_emoji as emj
+from .ABC.model import BaseApiModel, HealthMixin
 
 hd2api_logger = logging.getLogger("hd2api_logger")
 

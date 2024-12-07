@@ -1,27 +1,13 @@
-import datetime
-from typing import *
+from typing import Dict, List, Optional, cast
 
 from pydantic import Field
-from .ABC.model import BaseApiModel, HealthMixin
 
+from .ABC.model import BaseApiModel
 from .Biome import Biome
-from .Event import Event
-from .Hazard import Hazard
-from .Position import Position
-from .Statistics import Statistics
-from .Base.PlanetStatus import PlanetStatus
-from .Base.PlanetInfo import PlanetInfo
-from .Planet import Planet
-from .Base.PlanetStats import PlanetStats
 from .Effects import KnownPlanetEffect
+from .Hazard import Hazard
 
-from ..constants import task_types, value_types, faction_names, samples
-
-from ..util.utils import (
-    human_format as hf,
-    changeformatif as cfi,
-    extract_timestamp as et,
-)
+__all__ = ["EffectStatic", "PlanetStatic", "GalaxyStatic", "StaticAll"]
 
 
 class EffectStatic(BaseApiModel):
@@ -37,8 +23,9 @@ class EffectStatic(BaseApiModel):
     )
 
     def check_for_id(self, idv):
-        if idv in self.planetEffects:
-            return self.planetEffects[idv]
+        peffect: Dict[int, KnownPlanetEffect] = cast(dict, self.planetEffects)
+        if idv in peffect:
+            return peffect[idv]
         return KnownPlanetEffect(
             galacticEffectId=idv,
             name=f"Effect {idv}",
@@ -62,6 +49,16 @@ class PlanetStatic(BaseApiModel):
         alias="environmentals",
         default=None,
         description="List of all enviormental effects on this planet.",
+    )
+    weather_effects: Optional[List[str]] = Field(
+        alias="weather_effects",
+        default=None,
+        description="List of all weather based effects on this planet.",
+    )
+    type: Optional[str] = Field(
+        alias="type",
+        default=None,
+        description="The 'PlanetType' of this planet.  This determines terrain layouts.",
     )
     names: Optional[Dict[str, str]] = Field(
         alias="names", default=None, description="All known localized names for this planet."

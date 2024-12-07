@@ -1,17 +1,22 @@
-from typing import List, Optional, Type, TypeVar
+import logging
+from typing import List, Optional, Type, TypeVar, Union
 
-import httpx
-
-from ..api_config import APIConfig, HTTPException
-from ..models import *
+from ..api_config import APIConfig
+from ..models import (
+    Assignment,
+    DiveharderAll,
+    NewsFeedItem,
+    SpaceStation,
+    WarInfo,
+    WarStatus,
+    WarSummary,
+)
 from ..models.ABC.model import BaseApiModel
-from .service_utils import make_output
-
 from .service_base import make_async_api_request
+from .service_utils import make_output
 
 T = TypeVar("T", bound=BaseApiModel)
 
-import logging
 
 # Create a logger and set its level
 hd2api_logger = logging.getLogger("hd2api_logger")

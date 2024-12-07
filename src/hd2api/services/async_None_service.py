@@ -1,17 +1,15 @@
-import json
-from typing import *
+from typing import Any, Dict, Optional
 
 import httpx
 
 from ..api_config import APIConfig, HTTPException
-from ..models import *
 
 
 async def Get(api_config_override: Optional[APIConfig] = None) -> str:
     api_config = api_config_override if api_config_override else APIConfig()
 
     base_path = api_config.api_comm
-    path = f"/"
+    path = "/"
     headers = {
         "Content-Type": "application/json",
         "Accept": "application/json",

@@ -1,14 +1,14 @@
-from typing import *
+from typing import List, Optional, Tuple, Union
 
 from pydantic import Field
-from ..ABC.model import BaseApiModel
+
 from ...util.utils import hdml_parse
-import re
+from ..ABC.model import BaseApiModel
 
 
 class NewsFeedItem(BaseApiModel):
     """
-    Represents an item in the newsfeed of Super Earth.
+    Represents an item in the newsfeed of Super Earth, known in game as a dispatch.
 
     """
 

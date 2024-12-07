@@ -1,19 +1,16 @@
-import json
-from typing import *
+from typing import Any, List, Optional
 
 from pydantic import Field
 
-from .SpaceStation import SpaceStationStatus
 from ..ABC.model import BaseApiModel
-
 from .Campaign import Campaign
+from .Effects import PlanetActiveEffects
+from .GlobalEvent import GlobalEvent
 from .JointOperation import JointOperation
 from .PlanetAttack import PlanetAttack
 from .PlanetEvent import PlanetEvent
 from .PlanetStatus import PlanetStatus
-from .GlobalEvent import GlobalEvent
-from ..Position import Position
-from .Effects import PlanetActiveEffects
+from .SpaceStation import SpaceStationStatus
 
 
 class WarStatus(BaseApiModel):

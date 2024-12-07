@@ -1,6 +1,6 @@
 import datetime
 import re
-from typing import Callable, Dict, Optional, Union
+from typing import Callable, Optional, Union
 
 status_emoji = {}
 

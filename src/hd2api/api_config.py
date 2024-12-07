@@ -1,10 +1,10 @@
-import os
 from typing import Literal, Optional, Union
 
 # pylint: disable=no-name-in-module
 from pydantic import BaseModel, Field
-from .models import StaticAll, GalaxyStatic, EffectStatic
+
 from .load_json import load_and_merge_json_files
+from .models import EffectStatic, GalaxyStatic, StaticAll
 
 
 class APIConfig(BaseModel):

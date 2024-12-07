@@ -1,8 +1,8 @@
-from typing import *
+from datetime import datetime, timedelta, timezone
+from typing import Optional
 
 # pylint: disable=no-name-in-module
 from pydantic import BaseModel, Field
-from datetime import datetime, timezone, timedelta
 
 
 class BaseApiModel(BaseModel):
