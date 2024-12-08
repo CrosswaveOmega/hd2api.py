@@ -30,7 +30,7 @@ def load_and_merge_json_files(json_path: str, static_dir: Optional[str] = None):
     if static_dir:
         source_dir = static_dir
 
-    directory_path = os.path.join(static_dir, json_path)
+    directory_path = os.path.join(source_dir, json_path)
 
     # Validate directory path
     if not os.path.isdir(directory_path):
