@@ -5,7 +5,7 @@ from typing import Optional
 
 def get_repo_dir() -> str:
     """
-    Get the directory path for the static json file directory.
+    Get the directory path for the default static json file directory.
 
     Returns:
         str: The target directory path.
@@ -30,7 +30,7 @@ def load_and_merge_json_files(json_path: str, static_dir: Optional[str] = None):
     if static_dir:
         source_dir = static_dir
 
-    directory_path = os.path.join(get_repo_dir(), json_path)
+    directory_path = os.path.join(static_dir, json_path)
 
     # Validate directory path
     if not os.path.isdir(directory_path):
