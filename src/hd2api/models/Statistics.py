@@ -190,7 +190,7 @@ class Statistics(BaseApiModel):
 
         # Format kill statistics
         kill_stats = (
-            f"T:{hf(self.terminidKills)}, " f"A:{hf(self.automatonKills)}, " f"DATA EXPUNGED"
+            f"T:{hf(self.terminidKills)}, " f"A:{hf(self.automatonKills)}, " f"I:{hf(self.illuminateKills)}"
         )
         #             f"I: {hf(self.illuminateKills)}"
 
@@ -233,7 +233,7 @@ class Statistics(BaseApiModel):
         mission_stats += f"\n Time per mission: {sts(thistime)}({sts(lasttime)})"
         kill_stats = f"T:{hf(self.terminidKills)} ({other.terminidKills}),"
         kill_stats += f"A:{hf(self.automatonKills)} ({other.automatonKills}),"
-        kill_stats += "DATA EXPUNGED"
+        kill_stats += f"I:{hf(self.illuminateKills)} ({other.illuminateKills}),"
         bullets_stats = f"Bullets Hit/Fired: {hf(self.bulletsHit)}/{hf(self.bulletsFired)} ({other.bulletsHit}/{other.bulletsFired})"
         deaths_and_friendlies = f"Deaths/Friendlies: {hf(self.deaths)}/{hf(self.friendlies)} ({other.deaths}/{other.friendlies})"
 
