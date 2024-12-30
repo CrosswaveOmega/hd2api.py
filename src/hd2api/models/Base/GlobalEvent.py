@@ -52,6 +52,10 @@ class GlobalEvent(BaseApiModel):
     planetIndices: Optional[List[int]] = Field(
         alias="planetIndices", default_factory=list, description="List of planet indices."
     )
+    expireTime: Optional[int] = Field(
+        default=None,
+        description="When the event will end, in arrowhead's internal 'wartime' format.",
+    )
 
     def strout(self) -> str:
         formatv = {

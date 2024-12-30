@@ -65,6 +65,10 @@ class Event(BaseApiModel, HealthMixin):
         default=None,
         description="A list of joint operation identifiers linked to this event.",
     )
+    potentialBuildUp: Optional[int] = Field(
+        default=None,
+        description="For invasion events, use unknown.",
+    )
 
     def __sub__(self, other: "Event") -> "Event":
         new_health = (
@@ -82,6 +86,7 @@ class Event(BaseApiModel, HealthMixin):
             endTime=self.endTime,
             campaignId=self.campaignId,
             jointOperationIds=self.jointOperationIds,
+            potentialBuildUp=self.potentialBuildUp,
             time_delta=self.retrieved_at - other.retrieved_at,  # type: ignore
         )
         return event
@@ -111,6 +116,7 @@ class Event(BaseApiModel, HealthMixin):
             id=events_list[0].id,
             campaignId=events_list[0].campaignId,
             jointOperationIds=events_list[0].jointOperationIds,
+            potentialBuildUp=events_list[0].potentialBuildUp,
         )
         avg_event.time_delta = datetime.timedelta(seconds=avg_time)
         return avg_event
@@ -202,6 +208,7 @@ class Event(BaseApiModel, HealthMixin):
             f"ID: {self.id}, Type: {hf(self.eventType)}, Faction: {self.faction}\n"
             f"Event Health: `{(self.health)}/{(self.maxHealth)}` (`{diff.health if diff is not None else 0}` change)\n"
             f"Start Time: {fdt(et(self.startTime),'R')}, End Time: {fdt(et(self.endTime),'R')}\n"
-            f"Campaign ID: {hf(self.campaignId)}, Joint Operation IDs: {joint_ops}"
+            f"Campaign ID: {hf(self.campaignId)}, Joint Operation IDs: {joint_ops}",
+            f"Potential Build Up:{self.potentialBuildUp}",  # type: ignore
         )
         return event_details

@@ -52,12 +52,18 @@ class PlanetEvent(BaseApiModel):
         default=None, description="A list of identifiers of related joint operations."
     )
 
+    potentialBuildUp: Optional[int] = Field(
+        default=None,
+        description="For invasion events, use unknown.",
+    )
+
     def long_event_details(self):
         factions = {1: "Humans", 2: "Terminids", 3: "Automaton", 4: "Illuminate"}
         event_details = (
             f"ID: {self.id}, Type: {self.eventType}, Faction: {factions.get(self.race,'UNKNOWN')}\n"  # type: ignore
             f"Event Health: `{(self.health)}/{(self.maxHealth)}`\n"
             f"Start Time: {self.startTime}, End Time: {self.expireTime}\n"
-            f"Campaign ID: C{self.campaignId}, Joint Operation IDs: {', '.join(map(str, self.jointOperationIds))}"  # type: ignore
+            f"Campaign ID: C{self.campaignId}, Joint Operation IDs: {', '.join(map(str, self.jointOperationIds))}\n"  # type: ignore
+            f"Potential Build Up:{self.potentialBuildUp}"  # type: ignore
         )
         return event_details
