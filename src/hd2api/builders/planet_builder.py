@@ -190,6 +190,7 @@ def build_planet_full(
             endTime=(starttime + (dt.timedelta(seconds=event.expireTime))).isoformat(),
             campaignId=event.campaignId,
             jointOperationIds=event.jointOperationIds,
+            potentialBuildUp=event.potentialBuildUp,
         )
         planet.event = newevent
     return planet
