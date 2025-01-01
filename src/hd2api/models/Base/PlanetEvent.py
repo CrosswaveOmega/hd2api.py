@@ -66,4 +66,5 @@ class PlanetEvent(BaseApiModel):
             f"Campaign ID: C{self.campaignId}, Joint Operation IDs: {', '.join(map(str, self.jointOperationIds))}\n"  # type: ignore
             f"Potential Build Up:{self.potentialBuildUp}"  # type: ignore
         )
+
         return event_details

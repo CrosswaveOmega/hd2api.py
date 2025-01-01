@@ -1,11 +1,11 @@
 from datetime import datetime, timedelta, timezone
-from typing import Optional
+from typing import Optional, Set
 
 # pylint: disable=no-name-in-module
 from pydantic import BaseModel, Field
 
 
-class BaseApiModel(BaseModel):
+class BaseApiModel(BaseModel, extra="allow"):
     """Base model class for everything returend by the api.  Features the retrieved_at and time_delta fields."""
 
     retrieved_at: Optional[datetime] = Field(alias="retrieved_at", default=None)
@@ -38,6 +38,14 @@ class BaseApiModel(BaseModel):
         if not hasattr(self, attr):
             return default
         return getattr(self, attr)
+
+    def get_extra_fields(self) -> str:
+        """Print out all additional fields."""
+        fields = list(self.model_extra)
+        output = ""
+        for k in fields:
+            output += f"{k}:`{str(self.get(k,'?'))}`\n"
+        return output
 
 
 class HealthMixin:
