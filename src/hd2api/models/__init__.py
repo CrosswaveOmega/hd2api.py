@@ -75,6 +75,7 @@ __all__ = [
     "PlanetActiveEffects",
     "GalaxyStats",
     "GlobalEvent",
+    "GlobalResource",
     "HomeWorld",
     "JointOperation",
     "NewsFeedItem",
