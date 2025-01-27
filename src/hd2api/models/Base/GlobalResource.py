@@ -1,0 +1,28 @@
+from typing import Optional, Union
+
+from pydantic import Field
+
+from ..ABC.model import BaseApiModel
+
+
+class GlobalResource(BaseApiModel):
+    """
+    Raw object which represents a global resource.
+    """
+
+    id32: Optional[int] = Field(alias="id32", default=None, description="The 32-bit ID.")
+    currentValue: Optional[Union[int, float]] = Field(
+        alias="currentValue",
+        default=None,
+        description="The current value of whatever this global resource is.",
+    )
+    maxValue: Optional[Union[int, float]] = Field(
+        alias="maxValue",
+        default=None,
+        description="The max value of whatever this global resource is.",
+    )
+    flags: Optional[int] = Field(
+        alias="flags",
+        default=None,
+        description="Flags that indicate something about this resource.",
+    )

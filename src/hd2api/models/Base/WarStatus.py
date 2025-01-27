@@ -6,6 +6,7 @@ from ..ABC.model import BaseApiModel
 from .Campaign import Campaign
 from .Effects import PlanetActiveEffects
 from .GlobalEvent import GlobalEvent
+from .GlobalResource import GlobalResource
 from .JointOperation import JointOperation
 from .PlanetAttack import PlanetAttack
 from .PlanetEvent import PlanetEvent
@@ -92,10 +93,10 @@ class WarStatus(BaseApiModel):
         default_factory=list,
         description="A list of 'spaceStations', which has not been used yet by ArrowHead.",
     )
-    globalResources: Optional[List[Any]] = Field(
+    globalResources: Optional[List[GlobalResource]] = Field(
         alias="globalResources",
         default=[],
-        description="A list of 'global resources', which has not been used yet by ArrowHead.",
+        description="A list of 'global resources', which first appear to be tied to 'gravitational waves'.",
     )
 
     superEarthWarResults: Optional[List[Any]] = Field(

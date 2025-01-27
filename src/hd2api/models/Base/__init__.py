@@ -4,6 +4,7 @@ from .Cost import Cost
 from .Effects import PlanetActiveEffects
 from .GalaxyStats import GalaxyStats
 from .GlobalEvent import GlobalEvent
+from .GlobalResource import GlobalResource
 from .HomeWorld import HomeWorld
 from .JointOperation import JointOperation
 from .NewsFeedItem import NewsFeedItem
@@ -32,6 +33,7 @@ __all__ = [
     "PlanetActiveEffects",
     "GalaxyStats",
     "GlobalEvent",
+    "GlobalResource",
     "HomeWorld",
     "JointOperation",
     "NewsFeedItem",

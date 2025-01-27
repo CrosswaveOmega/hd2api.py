@@ -6,6 +6,7 @@ from .Base import (
     PlanetActiveEffects,
     GalaxyStats,
     GlobalEvent,
+    GlobalResource,
     HomeWorld,
     JointOperation,
     NewsFeedItem,
