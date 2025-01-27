@@ -26,3 +26,13 @@ class GlobalResource(BaseApiModel):
         default=None,
         description="Flags that indicate something about this resource.",
     )
+
+    def __sub__(self, other: "GlobalResource") -> "GlobalResource":
+        camp = GlobalResource(
+            id32=self.id32,
+            currentValue=self.currentValue - other.currentValue,  # type: ignore
+            maxValue=self.maxValue,
+            flags=self.flags,
+        )
+        # camp.retrieved_at = self.retrieved_at - other.retrieved_at
+        return camp
