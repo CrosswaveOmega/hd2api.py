@@ -55,7 +55,10 @@ def build_planet_basic(
     env.extend(weather)
     # Build Statistics
     stats_new = statistics_builder(stats, planetStatus.players, planetStatus.retrieved_at)
+    # Position can come from planetInfo OR planetStatus
     pos = planetInfo.position
+    if planetStatus.position is not None:
+        pos = planetStatus.position
     name = planet_base.name
     if "en-US" in planet_base.names:  # type: ignore
         name = planet_base.names.get("en-US", planet_base.name)

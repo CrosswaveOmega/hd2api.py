@@ -23,6 +23,23 @@ class BaseApiModel(BaseModel, extra="allow"):
             elif isinstance(data["retrieved_at"], datetime):
                 self.retrieved_at = data["retrieved_at"]
 
+    def get_time_delta(self, other: "BaseApiModel") -> Optional[timedelta]:
+        """
+        Calculate the time difference between the retrieved_at times of two BaseApiModel instances.
+
+        Args:
+            other (BaseApiModel): The other instance of BaseApiModel to compare with.
+
+        Returns:
+            Optional[timedelta]: The time difference if both retrieved_at values are not None, otherwise None.
+        """
+        time_delta = (
+            (self.retrieved_at - other.retrieved_at)
+            if self.retrieved_at is not None and other.retrieved_at is not None
+            else None
+        )
+        return time_delta
+
     def __getitem__(self, attr):
         """
         Get a field in the same manner as a dictionary.
