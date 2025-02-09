@@ -111,7 +111,17 @@ class Position(BaseApiModel):
 
     @staticmethod
     def average(positions_list: List["Position"]) -> "Position":
-        """Average together a list of position differences over time."""
+        """
+        Average together a list of position differences over time.
+
+        Args:
+            positions_list (List[Position]): A list of Position objects to be averaged.
+
+        Returns:
+            Position: A new Position object representing the average position and
+                      average time delta from the provided list of positions. If the
+                      list is empty, returns Position with x, y, and time_delta of 0.
+        """
         count = len(positions_list)
         if count == 0:
             return Position(x=0, y=0)
