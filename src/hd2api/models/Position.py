@@ -1,6 +1,6 @@
 import datetime
 import math
-from typing import Optional
+from typing import List, Optional
 
 from pydantic import Field
 
@@ -108,3 +108,28 @@ class Position(BaseApiModel):
         else:
             time_to_target = None  # Avoid division by zero
         return time_to_target
+
+    @staticmethod
+    def average(positions_list: List["Position"]) -> "Position":
+        """Average together a list of position differences over time."""
+        count = len(positions_list)
+        if count == 0:
+            return Position(x=0, y=0)
+
+        avg_x = sum(position.x for position in positions_list if position.x is not None) // count
+        avg_y = sum(position.y for position in positions_list if position.y is not None) // count
+
+        avg_time = (
+            sum(
+                position.time_delta.total_seconds()
+                for position in positions_list
+                if position.time_delta is not None
+            )
+            // count
+        )
+        avg_position = Position(
+            x=avg_x,
+            y=avg_y,
+            time_delta=datetime.timedelta(seconds=avg_time),
+        )
+        return avg_position
