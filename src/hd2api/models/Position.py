@@ -60,9 +60,10 @@ class Position(BaseApiModel):
         if self.time_delta:
             dist = self.mag()
             delta_seconds = self.time_delta.total_seconds()
-            if delta_seconds <= 0:
+            if abs(delta_seconds) <= 0:
+                return 0.0
                 raise Exception("Delta seconds is zero!")
-            return dist / delta_seconds
+            return dist / abs(delta_seconds)
         return 0.0
 
     def angle(self):
