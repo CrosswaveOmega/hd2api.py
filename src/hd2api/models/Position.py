@@ -127,8 +127,8 @@ class Position(BaseApiModel):
         if count == 0:
             return Position(x=0, y=0)
 
-        avg_x = sum(position.x for position in positions_list if position.x is not None) // count
-        avg_y = sum(position.y for position in positions_list if position.y is not None) // count
+        avg_x = sum(position.x for position in positions_list if position.x is not None) / count
+        avg_y = sum(position.y for position in positions_list if position.y is not None) / count
 
         avg_time = (
             sum(
@@ -136,7 +136,7 @@ class Position(BaseApiModel):
                 for position in positions_list
                 if position.time_delta is not None
             )
-            // count
+            / count
         )
         avg_position = Position(
             x=avg_x,
