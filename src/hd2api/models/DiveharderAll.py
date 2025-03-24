@@ -57,7 +57,3 @@ class DiveharderAll(BaseApiModel):
         default=None,
         description="List of news articles from a new article from Steam's news feed.",
     )
-
-    war_id: Optional[WarId] = Field(
-        alias="war_id", default=801, description="The ID of the current galactic war season."
-    )

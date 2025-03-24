@@ -62,7 +62,7 @@ class Position(BaseApiModel):
             delta_seconds = self.time_delta.total_seconds()
             if abs(delta_seconds) <= 0:
                 return 0.0
-                raise Exception("Delta seconds is zero!")
+                # raise Exception("Delta seconds is zero!")
             return dist / abs(delta_seconds)
         return 0.0
 

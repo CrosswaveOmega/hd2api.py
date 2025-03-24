@@ -3,7 +3,15 @@ from typing import Dict, List, Optional, Tuple
 
 from pydantic import Field
 
-from ..constants import enemies, faction_names, lines, samples, stratagems, task_types, value_types
+from ..constants import (
+    enemies,
+    faction_names,
+    lines,
+    samples,
+    stratagems,
+    task_types,
+    value_types,
+)
 from ..util.utils import human_format as hf
 from .ABC.model import BaseApiModel
 from .Planet import Planet
