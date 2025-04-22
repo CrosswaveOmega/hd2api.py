@@ -64,7 +64,7 @@ test = [
     "pre-commit==4.0.1",
     "pylint==3.3.2",
     "pylint_junit",
-    "pytest-cov==6.0.0",
+    "pytest-cov==6.1.0",
     "pytest-mock<3.14.0",
     "pytest-runner",
     "pytest==8.3.4",
