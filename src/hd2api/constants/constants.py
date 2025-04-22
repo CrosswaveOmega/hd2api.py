@@ -72,6 +72,7 @@ enemies = {
     2651633799: "Charger",
     2514244534: "Bile Titan",
     1379865898: "Bile Spewer",
+    4211847317: "Voteless"
 }
 
 stratagems = {
