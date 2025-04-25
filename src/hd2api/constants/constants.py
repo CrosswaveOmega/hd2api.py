@@ -5,6 +5,7 @@ task_types = {
     3: "Eradicate",
     4: "Objectives",
     7: "Extract",
+    9: "Operations",
     11: "Liberation",
     12: "Defense",
     13: "Control",
