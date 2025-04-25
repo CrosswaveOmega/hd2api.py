@@ -46,6 +46,10 @@ class TaskData(BaseApiModel):
             params["#COUNT"] = self.goal[0]
             params["#COUNT_PRE"] = " "
             params["#COUNT_POST"] = " times"
+        else:
+            params["#COUNT"] = self.goal[0]
+            params["#COUNT_PRE"] = " "
+            params["#COUNT_POST"] = " times"
 
         if self.hasPlanet and self.hasPlanet[0]:
             planet_name = "PLANETUNKNOWNN"
