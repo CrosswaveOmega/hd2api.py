@@ -27,8 +27,8 @@ class TaskData(BaseApiModel):
     itemID: Optional[List[int]] = Field(alias="itemID", default=None)
     hasItem: Optional[List[int]] = Field(alias="hasItem", default=None)
     objective: Optional[List[int]] = Field(alias="objective", default=None)
-    unknown5: Optional[List[int]] = Field(alias="unknown5", default=None)
-    unknown6: Optional[List[int]] = Field(alias="unknown6", default=None)
+    hasDifficulty: Optional[List[int]] = Field(alias="hasDifficulty", default=None)
+    difficulty: Optional[List[int]] = Field(alias="difficulty", default=None)
     unknown7: Optional[List[int]] = Field(alias="unknown7", default=None)
     hasPlanet: Optional[List[int]] = Field(alias="hasPlanet", default=None)
     planet: Optional[List[int]] = Field(alias="planet", default=None)
@@ -44,6 +44,9 @@ class TaskData(BaseApiModel):
         }
         if self.hasCount and self.hasCount[0]:
             params["#COUNT"] = self.goal[0]
+            params["#COUNT_PRE"] = " "
+            params["#COUNT_POST"] = " times"
+
         if self.hasPlanet and self.hasPlanet[0]:
             planet_name = "PLANETUNKNOWNN"
             if planets.get(self.planet[0], None):
@@ -65,6 +68,11 @@ class TaskData(BaseApiModel):
             params["#ENEMY"] = enemies.get(enemy_id, f"UNKNOWN {enemy_id}")
         else:
             params["#ENEMY"] = faction_name + ""
+        if self.hasDifficulty and self.difficulty[0]:
+            params["#DIFF_PRE"] = ""
+            params["#DIFF"] = self.difficulty[0]
+            params["#DIFF_POST"] = " or higher"
+
         params["#RACE"] = faction_name
         return params
 
@@ -134,7 +142,11 @@ class Task2(BaseApiModel):
             percent_done = round((int(curr) / int(taskdata.goal[0])) * 100.0, 4)
             taskstr = f"{hf(curr)}/{hf(taskdata.goal[0])} ({percent_done}) "
         params = taskdata.make_params(planets)
-        if self.type == 11:
+        if self.type == 9:
+            if "#COUNT" in params and "#RACE" in params:
+                return taskstr + makeline(lines[9]["R"], params)
+            return taskstr + makeline(lines[9]["R"], params)
+        elif self.type == 11:
             if "#COUNT" in params and "#RACE" in params:
                 return taskstr + makeline(lines[11]["R"], params)
             elif params["#LOCATION"]:

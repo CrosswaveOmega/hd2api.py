@@ -19,8 +19,8 @@ value_types = {
     5: "itemID",
     6: "hasItem",
     7: "objective",
-    8: "unknown5",
-    9: "unknown6",
+    8: "hasDifficulty",
+    9: "difficulty",
     10: "unknown7",
     11: "hasPlanet",
     12: "planet",
@@ -72,7 +72,7 @@ enemies = {
     2651633799: "Charger",
     2514244534: "Bile Titan",
     1379865898: "Bile Spewer",
-    4211847317: "Voteless"
+    4211847317: "Voteless",
 }
 
 stratagems = {
@@ -139,6 +139,9 @@ lines = {
     3: {
         "A": "Kill **#COUNT #ENEMY**#LOCATION_PRE#LOCATION#LOCATION_POST.",
         "IA": "Kill **#COUNT #ENEMY**#ITEM_PRE#ITEM#ITEM_POST#LOCATION_PRE#LOCATION#LOCATION_POST.",
+    },
+    9: {
+        "R": "Complete an Operation against #RACE on #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST"
     },
     11: {"L": "Liberate **#LOCATION**", "R": "Liberate **#COUNT** planets from **#RACE**"},
     12: {
