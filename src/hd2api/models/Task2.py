@@ -73,7 +73,7 @@ class TaskData(BaseApiModel):
         else:
             params["#ENEMY"] = faction_name + ""
         if self.hasDifficulty and self.difficulty[0]:
-            params["#DIFF_PRE"] = ""
+            params["#DIFF_PRE"] = "on "
             params["#DIFF"] = self.difficulty[0]
             params["#DIFF_POST"] = " or higher"
 
@@ -151,10 +151,10 @@ class Task2(BaseApiModel):
                 return taskstr + makeline(lines[9]["R"], params)
             return taskstr + makeline(lines[9]["R"], params)
         elif self.type == 11:
-            if "#COUNT" in params and "#RACE" in params:
-                return taskstr + makeline(lines[11]["R"], params)
-            elif params["#LOCATION"]:
+            if params["#LOCATION"]:
                 return taskstr + makeline(lines[11]["L"], params)
+            elif "#COUNT" in params and "#RACE" in params:
+                return taskstr + makeline(lines[11]["R"], params)
         elif self.type == 13:
             if params["#LOCATION"]:
                 return taskstr + makeline(lines[13]["L"], params)

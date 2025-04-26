@@ -142,7 +142,7 @@ lines = {
         "IA": "Kill **#COUNT #ENEMY**#ITEM_PRE#ITEM#ITEM_POST#LOCATION_PRE#LOCATION#LOCATION_POST.",
     },
     9: {
-        "R": "Complete an Operation against #RACE on #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST"
+        "R": "Complete an Operation against #RACE #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST"
     },
     11: {"L": "Liberate **#LOCATION**", "R": "Liberate **#COUNT** planets from **#RACE**"},
     12: {
