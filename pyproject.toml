@@ -73,7 +73,7 @@ test = [
     "pytest-asyncio==0.26.0",
 ]
 docs = [
-    "sphinx>=8.3.0",
+    "sphinx>=8.2.0",
     "autodoc_pydantic==2.2.0",
 ]
 
