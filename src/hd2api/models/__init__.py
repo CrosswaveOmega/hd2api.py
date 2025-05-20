@@ -14,6 +14,8 @@ from .Base import (
     PlanetCoordinates,
     PlanetEvent,
     PlanetInfo,
+    PlanetRegion,
+    PlanetRegionInfo,
     PlanetStats,
     PlanetStatus,
     Reward,
