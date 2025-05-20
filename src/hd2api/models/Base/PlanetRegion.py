@@ -36,7 +36,7 @@ class PlanetRegion(BaseApiModel):
     )
 
     regenPerSecond: Optional[float] = Field(
-        alias="regenPerSecond",
+        alias="regerPerSecond",
         default=None,
         description="If left alone, how much the health of the region would regenerate.",
     )
@@ -59,14 +59,8 @@ class PlanetRegion(BaseApiModel):
         description="The number of helldivers currently active in this region.",
     )
 
-    position: Optional[PlanetCoordinates] = Field(
-        alias="position",
-        default=None,
-        description="A set of X/Y coordinates specifying the position of this region on the galaxy map.",
-    )
-
     def __str__(self):
-        return f"{self.planetIndex}-{self.regionIndex}-{self.owner}-{self.regenPerSecond}"
+        return f"{self.planetIndex}-{self.regionIndex}-{self.owner}-{self.regenPerSecond}-{self.health}"
 
     def __repr__(self):
-        return f"{self.planetIndex}-{self.regionIndex}-{self.owner}-{self.regenPerSecond}"
+        return f"{self.planetIndex}-{self.regionIndex}-{self.owner}-{self.regenPerSecond}-{self.health}"
