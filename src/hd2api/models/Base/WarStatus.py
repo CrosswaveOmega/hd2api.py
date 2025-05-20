@@ -12,6 +12,7 @@ from .PlanetAttack import PlanetAttack
 from .PlanetEvent import PlanetEvent
 from .PlanetStatus import PlanetStatus
 from .SpaceStation import SpaceStationStatus
+from .PlanetRegion import PlanetRegion
 
 
 class WarStatus(BaseApiModel):
@@ -49,6 +50,12 @@ class WarStatus(BaseApiModel):
         alias="planetStatus",
         default=[],
         description="List of all state for each planet in the galactic war at the current time.",
+    )
+
+    planetRegions: Optional[List[Optional[PlanetRegion]]] = Field(
+        alias="planetRegions",
+        default=[],
+        description="List of all state for each planet regions in the galactic war at the current time.",
     )
 
     planetAttacks: Optional[List[Optional[PlanetAttack]]] = Field(

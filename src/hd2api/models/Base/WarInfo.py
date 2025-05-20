@@ -5,6 +5,7 @@ from pydantic import Field
 from ..ABC.model import BaseApiModel
 from .HomeWorld import HomeWorld
 from .PlanetInfo import PlanetInfo
+from .PlanetRegionInfo import PlanetRegionInfo
 
 
 class WarInfo(BaseApiModel):
@@ -67,4 +68,10 @@ class WarInfo(BaseApiModel):
         alias="planetPermanentEffects",
         default_factory=list,
         description="List of permanent effects on planets.  Unused.",
+    )
+
+    regionInfos: Optional[List[Optional[PlanetRegionInfo]]] = Field(
+        alias="regionInfos",
+        default_factory=list,
+        description="A list of planets involved in this season's war.",
     )
