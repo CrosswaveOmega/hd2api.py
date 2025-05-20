@@ -71,7 +71,7 @@ class WarInfo(BaseApiModel):
     )
 
     regionInfos: Optional[List[Optional[PlanetRegionInfo]]] = Field(
-        alias="regionInfos",
+        alias="planetRegions",
         default_factory=list,
         description="A list of planets involved in this season's war.",
     )
