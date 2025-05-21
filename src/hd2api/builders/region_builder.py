@@ -57,10 +57,13 @@ def build_region(
         pname = planet_base.names.get("en-US", planet_base.name)
 
     keycombo = f"{region_info.planetIndex}_{region_info.regionIndex}"
+    # Hash the keycombo into a 32-bit integer
+    keycombo_hash = hash(keycombo) & 0xFFFFFFFF
     return Region(
         # From PlanetRegionInfo
         planetIndex=region_info.planetIndex,
-        key_combo=keycombo,
+        keyCombo=keycombo,
+        id=keycombo_hash,
         planetName=pname,
         regionIndex=region_info.regionIndex,
         settingsHash=region_info.settingsHash,

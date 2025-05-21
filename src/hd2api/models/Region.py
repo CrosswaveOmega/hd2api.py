@@ -16,16 +16,18 @@ class Region(BaseApiModel, HealthMixin):
     about a region on a planet, using data from PlanetRegion and PlanetRegionInfo.
     """
 
-    # From PlanetRegionInfo (static/config)
-    key_combo: str = Field(
-        alias="keyCombo", default="NOKEY", description="Unique key of planetIndex_regionIndex"
-    )
     planetIndex: Optional[int] = Field(
         alias="planetIndex",
         default=None,
         description="The numerical identifier for the planet.",
     )
-
+    # From PlanetRegionInfo (static/config)
+    keyCombo: str = Field(
+        alias="keyCombo", default="NOKEY", description="Unique key of planetIndex_regionIndex"
+    )
+    id: Optional[int] = Field(
+        alias="id", default=None, description="The identifier of this campaign, hash of key_combo."
+    )
     # From PlanetRegionInfo (static/config)
     planetName: Optional[str] = Field(
         alias="planetName", default=None, description="The name for the planet."
