@@ -3,6 +3,8 @@ from typing import Any, Dict, List, Optional, Tuple, Union
 
 from pydantic import Field
 
+from hd2api.models.Region import Region
+
 from ..util.utils import changeformatif as cfi
 from ..util.utils import extract_timestamp as et
 from ..util.utils import format_datetime as fdt
@@ -132,6 +134,11 @@ class Planet(BaseApiModel, HealthMixin):
         default=None,
         description="List of any active planet effects that happen to be assigned to this planet, such as the black hole in the place of Meridia",
     )
+    regions: Optional[List[Region]] = Field(
+        alias="regions",
+        default=None,
+        description="List of all regions found for this planet.",
+    )
 
     def __sub__(self, other: "Planet") -> "Planet":
         """
@@ -154,6 +161,18 @@ class Planet(BaseApiModel, HealthMixin):
             else self.event
         )
 
+        new_regions = None
+        if self.regions is not None and other.regions is not None:
+            new_regions = []
+            other_regions_dict = {region.id: region for region in other.regions}
+            for region in self.regions:
+                if region.id in other_regions_dict:
+                    new_regions.append(region - other_regions_dict[region.id])
+                else:
+                    new_regions.append(region)
+        elif self.regions is not None:
+            new_regions = self.regions
+
         # Create a new instance of the Planet class with calculated values
         planet = Planet(
             health=new_health,
@@ -173,6 +192,7 @@ class Planet(BaseApiModel, HealthMixin):
             currentOwner=self.currentOwner,
             regenPerSecond=self.regenPerSecond,
             attacking=self.attacking,
+            regions=new_regions,
             time_delta=self.retrieved_at - other.retrieved_at,  # type: ignore
         )
         return planet
@@ -211,9 +231,7 @@ class Planet(BaseApiModel, HealthMixin):
 
     def format_estimated_time_string(self, change: float, esttime: datetime.datetime):
         change_str = f"{round(change, 5)}"
-        timeval_str = (
-            f"Est.Loss {fdt(esttime,'R')}" if change > 0 else f"{fdt(esttime,'R')}"
-        )
+        timeval_str = f"Est.Loss {fdt(esttime,'R')}" if change > 0 else f"{fdt(esttime,'R')}"
 
         return f"`[{change_str} dps]`, {timeval_str}"
 
@@ -257,8 +275,7 @@ class Planet(BaseApiModel, HealthMixin):
             return Planet()
 
         avg_health = (
-            sum(planet.health for planet in planets_list if planet.health is not None)
-            // count
+            sum(planet.health for planet in planets_list if planet.health is not None) // count
         )
 
         stats = []
@@ -267,7 +284,6 @@ class Planet(BaseApiModel, HealthMixin):
                 stats.append(planet.statistics)
 
         avg_statistics = Statistics.average(stats)
-        print("avgstat", avg_statistics)
         avg_event = Event.average(
             [planet.event for planet in planets_list if planet.event is not None]
         )
@@ -280,6 +296,18 @@ class Planet(BaseApiModel, HealthMixin):
             )
             // count
         )
+
+        # Average regions with the same id
+        regions_dict = {}
+        for planet in planets_list:
+            if planet.regions is not None:
+                for region in planet.regions:
+                    if region.id not in regions_dict:
+                        regions_dict[region.id] = []
+                    regions_dict[region.id].append(region)
+
+        avg_regions = [Region.average(regions) for regions in regions_dict.values()]
+
         avg_planet = Planet(
             health=avg_health,
             statistics=avg_statistics,
@@ -295,9 +323,9 @@ class Planet(BaseApiModel, HealthMixin):
             currentOwner=planets_list[0].currentOwner,
             regenPerSecond=planets_list[0].regenPerSecond,
             attacking=planets_list[0].attacking,
+            regions=avg_regions,
             time_delta=datetime.timedelta(seconds=avg_time),
         )
-        # avg_planet.time_delta = datetime.timedelta(seconds=avg_time)
         return avg_planet
 
     def campaign_against(self) -> str:
@@ -329,7 +357,9 @@ class Planet(BaseApiModel, HealthMixin):
         faction = emj(self.currentOwner.lower())
 
         name = f"{faction}P#{self.index}: {self.name}"
-        players = f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
+        players = (
+            f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
+        )
         outlist = [f"{players}"]
         if (not self.event) or show_hp_without_event:
             outlist.append(
@@ -354,8 +384,6 @@ class Planet(BaseApiModel, HealthMixin):
             outlist.append(f"Deadline: [{timev}]")
             if avg:
                 if avg.event:
-                    outlist.append(
-                        f"{self.event.estimate_remaining_lib_time(avg.event)}"
-                    )
+                    outlist.append(f"{self.event.estimate_remaining_lib_time(avg.event)}")
 
         return name, outlist
