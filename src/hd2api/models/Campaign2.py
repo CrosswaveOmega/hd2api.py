@@ -33,6 +33,11 @@ class Campaign2(BaseApiModel):
         default=None,
         description="Indicates how many campaigns have already been fought on this Planet.",
     )
+    faction: Optional[int] = Field(
+        alias="faction",
+        default=None,
+        description="Optional Faction ID.",
+    )
 
     def __sub__(self, other: "Campaign2") -> "Campaign2":
         camp = Campaign2(
@@ -40,6 +45,7 @@ class Campaign2(BaseApiModel):
             planet=self.planet - other.planet,  # type: ignore
             type=self.type,
             count=self.count,
+            faction=self.faction,
             time_delta=self.retrieved_at - other.retrieved_at,  # type: ignore
         )
         # camp.retrieved_at = self.retrieved_at - other.retrieved_at
@@ -49,4 +55,10 @@ class Campaign2(BaseApiModel):
     def average(changes: List["Campaign2"]) -> "Campaign2":
         first = changes[0]
         avg = Planet.average([c.planet for c in changes])
-        return Campaign2(id=first.id, planet=avg, type=first.type, count=first.count)
+        return Campaign2(
+            id=first.id,
+            planet=avg,
+            type=first.type,
+            count=first.count,
+            faction=first.faction,
+        )
