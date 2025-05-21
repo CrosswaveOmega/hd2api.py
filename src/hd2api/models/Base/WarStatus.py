@@ -48,25 +48,25 @@ class WarStatus(BaseApiModel):
 
     planetStatus: Optional[List[Optional[PlanetStatus]]] = Field(
         alias="planetStatus",
-        default=[],
+        default_factory=list,
         description="List of all state for each planet in the galactic war at the current time.",
     )
 
-    planetRegions: Optional[List[Optional[PlanetRegion]]] = Field(
+    planetRegions: Optional[List[PlanetRegion]] = Field(
         alias="planetRegions",
-        default=[],
+        default_factory=list,
         description="List of all state for each planet regions in the galactic war at the current time.",
     )
 
     planetAttacks: Optional[List[Optional[PlanetAttack]]] = Field(
         alias="planetAttacks",
-        default=[],
+        default_factory=list,
         description="A list of attacks between currently ongoing at the time of this snapshot. Planet Attacks are required for Liberation Campaigns (when a Super Earth world attacks an enemy world) and Defense Campaigns (when an enemy world attacks a Super Earth world).",
     )
 
     campaigns: Optional[List[Optional[Campaign]]] = Field(
         alias="campaigns",
-        default=[],
+        default_factory=list,
         description="A list of ongoing campaigns in the galactic war.",
     )
 
