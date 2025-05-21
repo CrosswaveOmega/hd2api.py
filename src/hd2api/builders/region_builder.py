@@ -94,14 +94,14 @@ def build_all_regions(warall: DiveharderAll, statics: StaticAll) -> List[Region]
         warall.status is None
         or warall.war_info is None
         or warall.status.planetRegions is None
-        or warall.war_info.regionInfos is None
+        or warall.war_info.planetRegions is None
     ):
         print("TEST FAILURE")
         return result
 
     # Index PlanetRegionInfo by (planetIndex, regionIndex)
     info_lookup = {
-        f"{info.planetIndex}_{info.regionIndex}": info for info in warall.war_info.regionInfos
+        f"{info.planetIndex}_{info.regionIndex}": info for info in warall.war_info.planetRegions
     }
 
     for region in warall.status.planetRegions:

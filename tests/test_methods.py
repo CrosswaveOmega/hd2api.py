@@ -115,7 +115,7 @@ async def test_get_regions(apiconfig):
     print("STAT")
     allval = await GetApiRawAll(apiconfig)
     print(allval.status.planetRegions)
-    print(allval.war_info.regionInfos)
+    print(allval.war_info.planetRegions)
     regions = build_all_regions(allval, apiconfig.staticdata())
     assert regions
     for i in regions:
