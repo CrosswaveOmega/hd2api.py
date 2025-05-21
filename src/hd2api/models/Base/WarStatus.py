@@ -46,7 +46,7 @@ class WarStatus(BaseApiModel):
         description="Internal identifier possibly pertaining to an automated, storybeat for the galactic war, but is often set to 0.",
     )
 
-    planetStatus: Optional[List[Optional[PlanetStatus]]] = Field(
+    planetStatus: Optional[List[PlanetStatus]] = Field(
         alias="planetStatus",
         default_factory=list,
         description="List of all state for each planet in the galactic war at the current time.",

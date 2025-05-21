@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import Field
+from pydantic import Field, model_validator, root_validator
 
 from ..ABC.model import BaseApiModel
 
@@ -35,7 +35,7 @@ class PlanetRegion(BaseApiModel):
     )
 
     regenPerSecond: Optional[float] = Field(
-        alias="regerPerSecond",
+        alias="regenPerSecond",
         default=None,
         description="If left alone, how much the health of the region would regenerate.",
     )
@@ -57,6 +57,14 @@ class PlanetRegion(BaseApiModel):
         default=None,
         description="The number of helldivers currently active in this region.",
     )
+
+    @model_validator(mode="before")
+    @classmethod
+    def _fix_reger_typo(cls, data: dict) -> dict:
+        # If the API mistakenly returns "regerPerSecond", map it to "regenPerSecond"
+        if "regerPerSecond" in data and "regenPerSecond" not in data:
+            data["regenPerSecond"] = data.pop("regerPerSecond")
+        return data
 
     def __str__(self):
         return f"{self.planetIndex}-{self.regionIndex}-{self.owner}-{self.regenPerSecond}-{self.health}"
