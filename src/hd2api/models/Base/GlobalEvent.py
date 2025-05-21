@@ -13,19 +13,27 @@ class GlobalEvent(BaseApiModel):
     eventId: Optional[int] = Field(
         alias="eventId", default=None, description="The ID of the event."
     )
-    id32: Optional[int] = Field(alias="id32", default=None, description="The 32-bit ID.")
+    id32: Optional[int] = Field(
+        alias="id32", default=None, description="The 32-bit ID."
+    )
     portraitId32: Optional[int] = Field(
         alias="portraitId32", default=None, description="The 32-bit ID of the portrait."
     )
-    title: Optional[str] = Field(alias="title", default=None, description="The title of the event.")
+    title: Optional[str] = Field(
+        alias="title", default=None, description="The title of the event."
+    )
     titleId32: Optional[int] = Field(
-        alias="titleId32", default=None, description="The 32-bit ID for this event's title."
+        alias="titleId32",
+        default=None,
+        description="The 32-bit ID for this event's title.",
     )
     message: Optional[str] = Field(
         alias="message", default=None, description="The message of the event."
     )
     messageId32: Optional[int] = Field(
-        alias="messageId32", default=None, description="The 32-bit ID for this event's message."
+        alias="messageId32",
+        default=None,
+        description="The 32-bit ID for this event's message.",
     )
     introMediaId32: Optional[int] = Field(
         alias="introMediaId32",
@@ -50,7 +58,9 @@ class GlobalEvent(BaseApiModel):
         alias="effectIds", default_factory=list, description="List of effect IDs."
     )
     planetIndices: Optional[List[int]] = Field(
-        alias="planetIndices", default_factory=list, description="List of planet indices."
+        alias="planetIndices",
+        default_factory=list,
+        description="List of planet indices.",
     )
     expireTime: Optional[int] = Field(
         default=None,

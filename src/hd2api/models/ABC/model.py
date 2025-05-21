@@ -17,9 +17,9 @@ class BaseApiModel(BaseModel, extra="allow"):
             self.retrieved_at = datetime.now(tz=timezone.utc)
         else:
             if isinstance(data["retrieved_at"], str):
-                self.retrieved_at = datetime.fromisoformat(data["retrieved_at"]).replace(
-                    tzinfo=timezone.utc
-                )
+                self.retrieved_at = datetime.fromisoformat(
+                    data["retrieved_at"]
+                ).replace(tzinfo=timezone.utc)
             elif isinstance(data["retrieved_at"], datetime):
                 self.retrieved_at = data["retrieved_at"]
 
@@ -48,7 +48,9 @@ class BaseApiModel(BaseModel, extra="allow"):
 
     def set(self, attr, new=None):
         if not hasattr(self, attr):
-            raise AttributeError(f"'{self.__class__.__name__}' object has no attribute '{attr}'")
+            raise AttributeError(
+                f"'{self.__class__.__name__}' object has no attribute '{attr}'"
+            )
         setattr(self, attr, new)
 
     def get(self, attr, default=None):

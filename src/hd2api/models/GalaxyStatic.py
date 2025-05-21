@@ -61,7 +61,22 @@ class PlanetStatic(BaseApiModel):
         description="The 'PlanetType' of this planet.  This determines terrain layouts.",
     )
     names: Optional[Dict[str, str]] = Field(
-        alias="names", default=None, description="All known localized names for this planet."
+        alias="names",
+        default=None,
+        description="All known localized names for this planet.",
+    )
+
+
+class PlanetRegionStatic(BaseApiModel):
+    """All static data reguarding each region, generated from statics/planets/planetRegion.json"""
+
+    name: Optional[str] = Field(
+        alias="name", default=None, description="English name of the region."
+    )
+    description: Optional[str] = Field(
+        alias="description",
+        default=None,
+        description="The Description for this region.",
     )
 
 
@@ -85,6 +100,11 @@ class GalaxyStatic(BaseApiModel):
 
     planets: Optional[Dict[int, PlanetStatic]] = Field(
         alias="planets", default=None, description="All static planet data."
+    )
+    planetRegion: Optional[Dict[int, PlanetRegionStatic]] = Field(
+        alias="planetRegion",
+        default_factory=dict,
+        description="All static planet region data.",
     )
 
 

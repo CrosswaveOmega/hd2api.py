@@ -13,7 +13,9 @@ class PlanetActiveEffects(BaseApiModel):
     """
 
     index: Optional[int] = Field(
-        alias="index", default=None, description="The planet index this effect is applied to"
+        alias="index",
+        default=None,
+        description="The planet index this effect is applied to",
     )
 
     galacticEffectId: Optional[int] = Field(

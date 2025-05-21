@@ -36,6 +36,14 @@ hd2api.builders.planet\_builder module
    :undoc-members:
    :show-inheritance:
 
+hd2api.builders.region\_builder module
+--------------------------------------
+
+.. automodule:: hd2api.builders.region_builder
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 hd2api.builders.sector\_state\_builder module
 ---------------------------------------------
 

@@ -13,7 +13,9 @@ class JointOperation(BaseApiModel):
     """
 
     id: Optional[int] = Field(
-        alias="id", default=None, description="Unique identifier for this joint operation."
+        alias="id",
+        default=None,
+        description="Unique identifier for this joint operation.",
     )
 
     planetIndex: Optional[int] = Field(

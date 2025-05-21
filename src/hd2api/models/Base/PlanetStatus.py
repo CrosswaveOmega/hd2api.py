@@ -19,11 +19,15 @@ class PlanetStatus(BaseApiModel):
     )
 
     owner: Optional[int] = Field(
-        alias="owner", default=None, description="The faction currently owning the planet."
+        alias="owner",
+        default=None,
+        description="The faction currently owning the planet.",
     )
 
     health: Optional[int] = Field(
-        alias="health", default=None, description="The current health / liberation of a planet."
+        alias="health",
+        default=None,
+        description="The current health / liberation of a planet.",
     )
 
     regenPerSecond: Optional[float] = Field(

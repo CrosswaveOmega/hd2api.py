@@ -1,12 +1,13 @@
 import logging
+
+hd2api_logger = logging.getLogger("hd2api_logger")
+
 import math
 
 import pytest
 
 from hd2api import *
 from hd2api.util.find import get_item
-
-hd2api_logger = logging.getLogger("hd2api_logger")
 
 
 @pytest.fixture
@@ -24,7 +25,7 @@ async def test_get_raw(apiconfig):
     """
     warstatus = await GetApiRawWarStatus(apiconfig)
     assert warstatus is not None
-    print(warstatus.time)
+    # print(warstatus.time)
 
 
 async def test_get_direct(apiconfig):
@@ -34,7 +35,7 @@ async def test_get_direct(apiconfig):
     """
     warstatus = await GetApiDirectWarStatus(apiconfig)
     assert warstatus is not None
-    print(warstatus.time)
+    # print(warstatus.time)
 
 
 async def test_get_direct_all(apiconfig):
@@ -107,15 +108,26 @@ async def test_get_event_avg(apiconfig):
     est = planetc.simple_planet_view(diffs[0], avg)
     hd2api_logger.info(str(est))
 
-    print(planeta)
+    # print(planeta)
+
+
+async def test_get_regions(apiconfig):
+    print("STAT")
+    allval = await GetApiRawAll(apiconfig)
+    print(allval.status.planetRegions)
+    print(allval.war_info.regionInfos)
+    regions = build_all_regions(allval, apiconfig.staticdata())
+    assert regions
+    for i in regions:
+        print(i)
 
 
 async def test_get_planet_name(apiconfig):
     allval = await GetApiRawAll(apiconfig)
     planets = build_all_planets(allval, apiconfig.staticdata())
-    print(planets)
+    # print(planets)
     item = get_item(planets.values(), name="MERIDIA")
-    print(allval)
+    # print(allval)
     assert item.name == "MERIDIA"
     return planets
 
@@ -127,7 +139,7 @@ async def test_station_get(apiconfig):
     for i in allval.spaceStations:
         station = await GetApiRawSpaceStation(i.id32, apiconfig)
         hd2api_logger.info(str(station))
-    # print(allval)
+    # #print(allval)
 
 
 async def test_positions(apiconfig):
@@ -139,26 +151,26 @@ async def test_positions(apiconfig):
     target = Position(x=0.0, y=0.0, retrieved_at=now)
     difference = this - last
     mag = difference.mag()
-    print("Mag is", mag)
+    # print("Mag is", mag)
     speed = difference.speed()
-    print("Speed is", speed * 60)
+    # print("Speed is", speed * 60)
     current_angle = difference.angle()
-    print("Angle is", current_angle)
+    # print("Angle is", current_angle)
     if last_speed is not None:
         acceleration = (
             speed - last_speed
         ) / difference.time_delta.total_seconds()  # Acceleration in units/hr²
     else:
         acceleration = None  # First measurement, no acceleration
-    print("Acceleration is", acceleration)
+    # print("Acceleration is", acceleration)
     target_diff = target - this
     target_mag = target_diff.mag()
     target_angle = target_diff.angle()
 
     time_to_target = this.estimate_time_to_target(target, speed, acceleration)
 
-    print("Distance to target is", target_mag)
-    print(f"Current Trajectory: {current_angle:.2f}° (Clockwise from +Y-axis)")
-    print(f"Required Trajectory to Reach Target: {target_angle:.2f}° (Clockwise)")
+    # print("Distance to target is", target_mag)
+    # print(f"Current Trajectory: {current_angle:.2f}° (Clockwise from +Y-axis)")
+    # print(f"Required Trajectory to Reach Target: {target_angle:.2f}° (Clockwise)")
     assert time_to_target != None
-    print(f"Time to Target: {time_to_target}\n")
+    # print(f"Time to Target: {time_to_target}\n")

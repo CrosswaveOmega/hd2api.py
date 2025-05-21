@@ -14,6 +14,8 @@ from .PlanetEvent import PlanetEvent
 from .PlanetInfo import PlanetInfo
 from .PlanetStats import PlanetStats
 from .PlanetStatus import PlanetStatus
+from .PlanetRegion import PlanetRegion
+from .PlanetRegionInfo import PlanetRegionInfo
 from .Reward import Reward
 from .Setting import Setting
 from .SpaceStation import SpaceStation, SpaceStationStatus
@@ -41,6 +43,8 @@ __all__ = [
     "PlanetCoordinates",
     "PlanetEvent",
     "PlanetInfo",
+    "PlanetRegion",
+    "PlanetRegionInfo",
     "PlanetStats",
     "PlanetStatus",
     "Reward",

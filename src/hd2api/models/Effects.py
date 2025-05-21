@@ -17,7 +17,9 @@ class KnownPlanetEffect(BaseApiModel):
     )
 
     name: Optional[str] = Field(
-        alias="name", default=None, description="A fan nickname for this galactic effect."
+        alias="name",
+        default=None,
+        description="A fan nickname for this galactic effect.",
     )
 
     description: Optional[str] = Field(

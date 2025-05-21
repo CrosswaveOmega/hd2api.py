@@ -10,7 +10,9 @@ class GlobalResource(BaseApiModel):
     Raw object which represents a global resource.
     """
 
-    id32: Optional[int] = Field(alias="id32", default=None, description="The 32-bit ID.")
+    id32: Optional[int] = Field(
+        alias="id32", default=None, description="The 32-bit ID."
+    )
     currentValue: Optional[Union[int, float]] = Field(
         alias="currentValue",
         default=None,

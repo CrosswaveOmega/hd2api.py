@@ -56,7 +56,9 @@ async def GetApiDirectWarStatus(
     return result  # Here, result is guaranteed to be a WarStatus
 
 
-async def GetApiDirectWarInfo(api_config_override: Optional[APIConfig] = None) -> WarInfo:
+async def GetApiDirectWarInfo(
+    api_config_override: Optional[APIConfig] = None,
+) -> WarInfo:
     result = await make_direct_api_request(
         "WarSeason/801/WarInfo", WarInfo, api_config_override=api_config_override
     )
@@ -69,7 +71,9 @@ async def GetApiDirectWarInfo(api_config_override: Optional[APIConfig] = None) -
     return result  # Here, result is guaranteed to be WarInfo
 
 
-async def GetApiDirectSummary(api_config_override: Optional[APIConfig] = None) -> WarSummary:
+async def GetApiDirectSummary(
+    api_config_override: Optional[APIConfig] = None,
+) -> WarSummary:
     result = await make_direct_api_request(
         "Stats/War/801/Summary", WarSummary, api_config_override=api_config_override
     )
@@ -121,7 +125,9 @@ async def GetApiDirectSpaceStation(
     api_config_override: Optional[APIConfig] = None,
 ) -> SpaceStation:
     result = await make_direct_api_request(
-        f"SpaceStation/801/{station_id}", SpaceStation, api_config_override=api_config_override
+        f"SpaceStation/801/{station_id}",
+        SpaceStation,
+        api_config_override=api_config_override,
     )
     if result is None:
         raise ValueError("Failed to retrieve Space Station.")
@@ -129,7 +135,9 @@ async def GetApiDirectSpaceStation(
     return result
 
 
-async def GetApiDirectAll(api_config_override: Optional[APIConfig] = None) -> DiveharderAll:
+async def GetApiDirectAll(
+    api_config_override: Optional[APIConfig] = None,
+) -> DiveharderAll:
     warstatus = await GetApiDirectWarStatus(api_config_override)
     warinfo = await GetApiDirectWarInfo(api_config_override)
     summary = await GetApiDirectSummary(api_config_override)

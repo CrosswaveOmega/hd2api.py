@@ -73,9 +73,9 @@ def extract_timestamp(timestamp: str) -> datetime.datetime:
             if not timestamp_adjusted.endswith("Z"):
                 timestamp_adjusted += "Z"
         # Convert the adjusted timestamp string to a datetime object
-        datetime_obj = datetime.datetime.strptime(timestamp_adjusted, format_string).replace(
-            tzinfo=datetime.timezone.utc
-        )
+        datetime_obj = datetime.datetime.strptime(
+            timestamp_adjusted, format_string
+        ).replace(tzinfo=datetime.timezone.utc)
         return datetime_obj
 
 
@@ -87,7 +87,9 @@ def human_format(num: float) -> str:
         magnitude += 1
         num /= 1000.0
     suffixes = ["", "K", "M", "B", "T", "Q", "Qi"]
-    return "{}{}".format("{:f}".format(num).rstrip("0").rstrip("."), suffixes[magnitude])
+    return "{}{}".format(
+        "{:f}".format(num).rstrip("0").rstrip("."), suffixes[magnitude]
+    )
 
 
 def changeformatif(value: Optional[str]) -> str:

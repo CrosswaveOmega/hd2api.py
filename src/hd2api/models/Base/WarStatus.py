@@ -84,10 +84,14 @@ class WarStatus(BaseApiModel):
         description="A list of 'community targets', which have not been used yet by ArrowHead.",
     )
     activeElectionPolicyEffects: Optional[List[Any]] = Field(
-        alias="activeElectionPolicyEffects", default=[], description="Use currently unknown."
+        alias="activeElectionPolicyEffects",
+        default=[],
+        description="Use currently unknown.",
     )
     planetActiveEffects: Optional[List[PlanetActiveEffects]] = Field(
-        alias="planetActiveEffects", default=[], description="A list of active planet effects."
+        alias="planetActiveEffects",
+        default=[],
+        description="A list of active planet effects.",
     )
 
     globalEvents: Optional[List[GlobalEvent]] = Field(

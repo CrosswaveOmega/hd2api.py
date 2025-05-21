@@ -27,7 +27,9 @@ class Assignment2(BaseApiModel):
     )
 
     id: Optional[int] = Field(
-        alias="id", default=None, description="The unique identifier of this assignment."
+        alias="id",
+        default=None,
+        description="The unique identifier of this assignment.",
     )
 
     progress: Optional[List[int]] = Field(
@@ -49,7 +51,9 @@ class Assignment2(BaseApiModel):
     )
 
     description: Optional[Union[str, Dict[str, Any]]] = Field(
-        alias="description", default=None, description="A very short summary of the description."
+        alias="description",
+        default=None,
+        description="A very short summary of the description.",
     )
 
     tasks: Optional[List[Task2]] = Field(

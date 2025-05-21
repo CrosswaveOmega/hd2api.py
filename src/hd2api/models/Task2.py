@@ -36,7 +36,9 @@ class TaskData(BaseApiModel):
     def make_params(self, planets):
         faction_name = "Unknown"
         if self.faction:
-            faction_name = faction_names.get(self.faction[0], f"Unknown Faction {self.faction[0]}")
+            faction_name = faction_names.get(
+                self.faction[0], f"Unknown Faction {self.faction[0]}"
+            )
         params = {
             "#LOCATION_PRE": "",
             "#LOCATION": "",
@@ -205,7 +207,9 @@ class Task2(BaseApiModel):
         elif self.type == 12:
             taskstr = self._task_defend(taskstr, taskdata, curr, e, planets)
         elif self.type == 3:
-            taskstr = self._task_exterminate(taskstr, taskdata, curr, planets, projected)
+            taskstr = self._task_exterminate(
+                taskstr, taskdata, curr, planets, projected
+            )
         elif self.type == 15:
             taskstr = self._task_conquest(taskstr, taskdata, curr, e, planets)
         else:
@@ -308,7 +312,9 @@ class Task2(BaseApiModel):
         if taskdata.faction:
             faction_name = (
                 "("
-                + faction_names.get(taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}")
+                + faction_names.get(
+                    taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}"
+                )
                 + " type)"
             )
         goal = taskdata.goal[0]

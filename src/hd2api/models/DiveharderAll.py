@@ -49,7 +49,9 @@ class DiveharderAll(BaseApiModel):
     )
 
     news_feed: Optional[List[NewsFeedItem]] = Field(
-        alias="news_feed", default=None, description="All items within the newsfeed of Super Earth."
+        alias="news_feed",
+        default=None,
+        description="All items within the newsfeed of Super Earth.",
     )
 
     updates: Optional[List[SteamNewsRaw]] = Field(

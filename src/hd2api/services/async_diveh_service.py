@@ -39,21 +39,33 @@ async def make_raw_api_request(
     return make_output(data, model, None)
 
 
-async def GetDhApiRawWarStatus(api_config_override: Optional[APIConfig] = None) -> WarStatus:
-    return await make_raw_api_request("status", WarStatus, api_config_override=api_config_override)
+async def GetDhApiRawWarStatus(
+    api_config_override: Optional[APIConfig] = None,
+) -> WarStatus:
+    return await make_raw_api_request(
+        "status", WarStatus, api_config_override=api_config_override
+    )
 
 
-async def GetDhApiRawWarInfo(api_config_override: Optional[APIConfig] = None) -> WarInfo:
-    return await make_raw_api_request("war_info", WarInfo, api_config_override=api_config_override)
+async def GetDhApiRawWarInfo(
+    api_config_override: Optional[APIConfig] = None,
+) -> WarInfo:
+    return await make_raw_api_request(
+        "war_info", WarInfo, api_config_override=api_config_override
+    )
 
 
-async def GetDhApiRawSummary(api_config_override: Optional[APIConfig] = None) -> WarSummary:
+async def GetDhApiRawSummary(
+    api_config_override: Optional[APIConfig] = None,
+) -> WarSummary:
     return await make_raw_api_request(
         "planet_stats", WarSummary, api_config_override=api_config_override
     )
 
 
-async def GetDhApiRawAssignment(api_config_override: Optional[APIConfig] = None) -> Assignment:
+async def GetDhApiRawAssignment(
+    api_config_override: Optional[APIConfig] = None,
+) -> Assignment:
     return await make_raw_api_request(
         "major_order", Assignment, api_config_override=api_config_override
     )
@@ -83,7 +95,9 @@ async def GetDhApiRawSpaceStation(
     return result
 
 
-async def GetDhApiRawAll(api_config_override: Optional[APIConfig] = None) -> DiveharderAll:
+async def GetDhApiRawAll(
+    api_config_override: Optional[APIConfig] = None,
+) -> DiveharderAll:
     return await make_raw_api_request(
         "all", DiveharderAll, api_config_override=api_config_override, path2=True
     )

@@ -17,7 +17,9 @@ class War(BaseApiModel):
     )
 
     ended: Optional[str] = Field(
-        alias="ended", default=None, description="When this war will end (or has ended)."
+        alias="ended",
+        default=None,
+        description="When this war will end (or has ended).",
     )
 
     now: Optional[str] = Field(

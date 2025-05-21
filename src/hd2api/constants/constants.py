@@ -144,7 +144,10 @@ lines = {
     9: {
         "R": "Complete an Operation against #RACE #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST"
     },
-    11: {"L": "Liberate **#LOCATION**", "R": "Liberate **#COUNT** planets from **#RACE**"},
+    11: {
+        "L": "Liberate **#LOCATION**",
+        "R": "Liberate **#COUNT** planets from **#RACE**",
+    },
     12: {
         "C": "Defend against **#COUNT** attacks on any planet",
         "R": "Defend against **#COUNT** attacks from the **#RACE**",

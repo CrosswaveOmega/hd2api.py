@@ -36,10 +36,17 @@ from .Dispatch import Dispatch
 from .DiveharderAll import DiveharderAll
 from .Effects import KnownPlanetEffect
 from .Event import Event
-from .GalaxyStatic import EffectStatic, PlanetStatic, GalaxyStatic, StaticAll
+from .GalaxyStatic import (
+    EffectStatic,
+    PlanetStatic,
+    GalaxyStatic,
+    StaticAll,
+    PlanetRegionStatic,
+)
 from .Hazard import Hazard
 from .Planet import Planet
 from .Position import Position
+from .Region import Region
 from .Reward2 import Reward2
 from .SectorState import SectorStates
 from .SpaceStation2 import SpaceStation2
@@ -61,10 +68,12 @@ __all__ = [
     "EffectStatic",
     "PlanetStatic",
     "GalaxyStatic",
+    "PlanetRegionStatic",
     "StaticAll",
     "Hazard",
     "Planet",
     "Position",
+    "Region",
     "Reward2",
     "SectorStates",
     "SpaceStation2",

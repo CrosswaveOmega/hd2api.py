@@ -6,7 +6,9 @@ from ..models.ABC.model import BaseApiModel
 T = TypeVar("T", bound=BaseApiModel)
 
 
-def make_output(data: Any, model: Type[T], index: Optional[int] = None) -> Union[T, List[T]]:
+def make_output(
+    data: Any, model: Type[T], index: Optional[int] = None
+) -> Union[T, List[T]]:
     """
     Process the API response data based on the model type and index.
 

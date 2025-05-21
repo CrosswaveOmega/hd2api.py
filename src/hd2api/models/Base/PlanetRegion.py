@@ -3,7 +3,6 @@ from typing import Optional
 from pydantic import Field
 
 from ..ABC.model import BaseApiModel
-from .PlanetCoordinates import PlanetCoordinates
 
 
 class PlanetRegion(BaseApiModel):

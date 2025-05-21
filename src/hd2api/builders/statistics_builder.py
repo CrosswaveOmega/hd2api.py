@@ -4,7 +4,9 @@ from ..models import GalaxyStats, PlanetStats, Statistics
 
 
 def statistics_builder(
-    stats: Union[PlanetStats, GalaxyStats], players: int, retrieved_at: Optional[dt.datetime] = None
+    stats: Union[PlanetStats, GalaxyStats],
+    players: int,
+    retrieved_at: Optional[dt.datetime] = None,
 ) -> Statistics:
     """
     Build a Statistics object.

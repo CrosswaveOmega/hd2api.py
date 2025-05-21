@@ -64,7 +64,9 @@ class PlanetStats(BaseApiModel):
     )
 
     deaths: Optional[int] = Field(
-        alias="deaths", default=0, description="The amount of casualties on the side of humanity."
+        alias="deaths",
+        default=0,
+        description="The amount of casualties on the side of humanity.",
     )
 
     revives: Optional[int] = Field(
@@ -72,7 +74,9 @@ class PlanetStats(BaseApiModel):
     )
 
     friendlies: Optional[int] = Field(
-        alias="friendlies", default=0, description="The amount of friendly fire casualties."
+        alias="friendlies",
+        default=0,
+        description="The amount of friendly fire casualties.",
     )
 
     missionSuccessRate: Optional[int] = Field(

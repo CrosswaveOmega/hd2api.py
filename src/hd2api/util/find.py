@@ -19,7 +19,8 @@ def get_item(target: Iterable, /, **attrs: Any) -> Optional[Any]:
 
     def matches(obj: Any) -> bool:
         return all(
-            attrgetter(attr.replace("__", "."))(obj) == value for attr, value in attrs.items()
+            attrgetter(attr.replace("__", "."))(obj) == value
+            for attr, value in attrs.items()
         )
 
     for element in target:

@@ -13,7 +13,9 @@ class Assignment(BaseApiModel):
     """
 
     id32: Optional[int] = Field(
-        alias="id32", default=None, description="Internal identifier of this assignment."
+        alias="id32",
+        default=None,
+        description="Internal identifier of this assignment.",
     )
 
     progress: Optional[List[int]] = Field(

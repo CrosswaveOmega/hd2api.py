@@ -29,11 +29,15 @@ class Event(BaseApiModel, HealthMixin):
     )
 
     faction: Optional[str] = Field(
-        alias="faction", default=None, description="The faction that initiated the event."
+        alias="faction",
+        default=None,
+        description="The faction that initiated the event.",
     )
 
     health: Optional[int] = Field(
-        alias="health", default=None, description="The health of the Event at the time of snapshot."
+        alias="health",
+        default=None,
+        description="The health of the Event at the time of snapshot.",
     )
 
     maxHealth: Optional[int] = Field(
@@ -97,12 +101,16 @@ class Event(BaseApiModel, HealthMixin):
         if count == 0:
             return Event()
 
-        avg_health = sum(event.health for event in events_list if event.health is not None) // count
+        avg_health = (
+            sum(event.health for event in events_list if event.health is not None)
+            // count
+        )
         avg_time = (
             sum(
                 event.time_delta.total_seconds()
                 for event in events_list
-                if event.time_delta is not None and isinstance(event.time_delta, datetime.timedelta)
+                if event.time_delta is not None
+                and isinstance(event.time_delta, datetime.timedelta)
             )
             // count
         )
@@ -166,7 +174,11 @@ class Event(BaseApiModel, HealthMixin):
             str: A formatted string with the change rate and estimated time.
         """
         change_str = f"{round(change, 5)}"
-        timeval_str = f"Est.Loss {fdt(esttime,'R')}" if change > 0 else f"Clear {fdt(esttime,'R')}"
+        timeval_str = (
+            f"Est.Loss {fdt(esttime,'R')}"
+            if change > 0
+            else f"Clear {fdt(esttime,'R')}"
+        )
 
         return f"`[{change_str} dps]`, {timeval_str}"
 

@@ -21,5 +21,7 @@ class PlanetAttack(BaseApiModel):
     )
 
     target: Optional[int] = Field(
-        alias="target", default=None, description="planetIndex of the planet that is under attack."
+        alias="target",
+        default=None,
+        description="planetIndex of the planet that is under attack.",
     )

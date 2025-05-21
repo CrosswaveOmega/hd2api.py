@@ -2,7 +2,14 @@ import logging
 from typing import List, TypeVar
 
 from ..api_config import APIConfig
-from ..models import Assignment, DiveharderAll, NewsFeedItem, WarInfo, WarStatus, WarSummary
+from ..models import (
+    Assignment,
+    DiveharderAll,
+    NewsFeedItem,
+    WarInfo,
+    WarStatus,
+    WarSummary,
+)
 from ..models.ABC.model import BaseApiModel
 from .async_comm_service import (
     GetCommApiRawAssignment,

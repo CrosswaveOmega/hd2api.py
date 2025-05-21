@@ -16,5 +16,7 @@ class Biome(BaseApiModel):
     )
 
     description: Optional[str] = Field(
-        alias="description", default=None, description="The in-game description for the biome."
+        alias="description",
+        default=None,
+        description="The in-game description for the biome.",
     )

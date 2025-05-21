@@ -13,7 +13,9 @@ class SteamNewsRaw(BaseApiModel):
     """
 
     id: Optional[str] = Field(
-        alias="id", default=None, description="The identifier assigned by Steam to this news item."
+        alias="id",
+        default=None,
+        description="The identifier assigned by Steam to this news item.",
     )
 
     title: Optional[str] = Field(
@@ -21,11 +23,15 @@ class SteamNewsRaw(BaseApiModel):
     )
 
     url: Optional[str] = Field(
-        alias="url", default=None, description="The URL to Steam where this news item was posted."
+        alias="url",
+        default=None,
+        description="The URL to Steam where this news item was posted.",
     )
 
     author: Optional[str] = Field(
-        alias="author", default=None, description="The author who posted this message on Steam."
+        alias="author",
+        default=None,
+        description="The author who posted this message on Steam.",
     )
 
     content: Optional[str] = Field(

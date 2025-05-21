@@ -16,7 +16,9 @@ def build_war(diveharder: DiveharderAll) -> War:
     war = War(
         retrieved_at=diveharder.status.retrieved_at,
         warId=diveharder.status.warId,
-        started=(dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc)).isoformat(),
+        started=(
+            dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc)
+        ).isoformat(),
         ended=(dt.datetime.fromtimestamp(info.endDate, tz=dt.timezone.utc)).isoformat(),
         clientVersion=info.minimumClientVersion,
         now=info.retrieved_at.isoformat(),

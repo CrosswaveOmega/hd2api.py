@@ -31,7 +31,9 @@ class Planet(BaseApiModel, HealthMixin):
     )
 
     name: Optional[Union[str, Dict[str, Any]]] = Field(
-        alias="name", default=None, description="The name of the planet, as shown in game."
+        alias="name",
+        default=None,
+        description="The name of the planet, as shown in game.",
     )
 
     sector: Optional[str] = Field(
@@ -51,7 +53,9 @@ class Planet(BaseApiModel, HealthMixin):
     )
 
     hazards: Optional[List[Optional[Hazard]]] = Field(
-        alias="hazards", default=None, description="All Hazards that are applicable to this planet."
+        alias="hazards",
+        default=None,
+        description="All Hazards that are applicable to this planet.",
     )
 
     hash: Optional[int] = Field(
@@ -73,7 +77,9 @@ class Planet(BaseApiModel, HealthMixin):
     )
 
     maxHealth: Optional[int] = Field(
-        alias="maxHealth", default=None, description="The maximum health pool of this planet."
+        alias="maxHealth",
+        default=None,
+        description="The maximum health pool of this planet.",
     )
 
     health: Optional[int] = Field(
@@ -111,7 +117,9 @@ class Planet(BaseApiModel, HealthMixin):
     )
 
     statistics: Optional[Statistics] = Field(
-        alias="statistics", default=None, description="A set of statistics scoped to this planet."
+        alias="statistics",
+        default=None,
+        description="A set of statistics scoped to this planet.",
     )
 
     attacking: Optional[List[int]] = Field(
@@ -203,7 +211,9 @@ class Planet(BaseApiModel, HealthMixin):
 
     def format_estimated_time_string(self, change: float, esttime: datetime.datetime):
         change_str = f"{round(change, 5)}"
-        timeval_str = f"Est.Loss {fdt(esttime,'R')}" if change > 0 else f"{fdt(esttime,'R')}"
+        timeval_str = (
+            f"Est.Loss {fdt(esttime,'R')}" if change > 0 else f"{fdt(esttime,'R')}"
+        )
 
         return f"`[{change_str} dps]`, {timeval_str}"
 
@@ -247,7 +257,8 @@ class Planet(BaseApiModel, HealthMixin):
             return Planet()
 
         avg_health = (
-            sum(planet.health for planet in planets_list if planet.health is not None) // count
+            sum(planet.health for planet in planets_list if planet.health is not None)
+            // count
         )
 
         stats = []
@@ -318,15 +329,15 @@ class Planet(BaseApiModel, HealthMixin):
         faction = emj(self.currentOwner.lower())
 
         name = f"{faction}P#{self.index}: {self.name}"
-        players = (
-            f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
-        )
+        players = f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
         outlist = [f"{players}"]
         if (not self.event) or show_hp_without_event:
             outlist.append(
                 f"HP `{self.get_health_percent(self.health)}% {cfi(self.get_health_percent(diff.health))}`"
             )
-            outlist.append(f"Decay:`{round((100*(self.regenPerSecond/self.maxHealth))*60*60,2)}`")  # type: ignore
+            outlist.append(
+                f"Decay:`{round((100*(self.regenPerSecond/self.maxHealth))*60*60,2)}`"
+            )  # type: ignore
         if avg:
             remaining_time = self.estimate_remaining_lib_time(avg)
             if remaining_time:
@@ -343,6 +354,8 @@ class Planet(BaseApiModel, HealthMixin):
             outlist.append(f"Deadline: [{timev}]")
             if avg:
                 if avg.event:
-                    outlist.append(f"{self.event.estimate_remaining_lib_time(avg.event)}")
+                    outlist.append(
+                        f"{self.event.estimate_remaining_lib_time(avg.event)}"
+                    )
 
         return name, outlist

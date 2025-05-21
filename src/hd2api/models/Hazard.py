@@ -13,7 +13,9 @@ class Hazard(BaseApiModel):
     """
 
     name: Optional[str] = Field(
-        alias="name", default=None, description="Official or fan name for environmental hazard"
+        alias="name",
+        default=None,
+        description="Official or fan name for environmental hazard",
     )
 
     description: Optional[str] = Field(

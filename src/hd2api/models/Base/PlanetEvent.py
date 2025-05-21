@@ -11,7 +11,9 @@ class PlanetEvent(BaseApiModel):
 
     """
 
-    id: Optional[int] = Field(default=None, description="The unique identifier of this event.")
+    id: Optional[int] = Field(
+        default=None, description="The unique identifier of this event."
+    )
 
     planetIndex: Optional[int] = Field(
         default=None, description="The planetIndex of the planet where this event is."
@@ -24,10 +26,13 @@ class PlanetEvent(BaseApiModel):
     )
 
     race: Optional[int] = Field(
-        default=None, description="The identifier of the faction that owns the planet currently."
+        default=None,
+        description="The identifier of the faction that owns the planet currently.",
     )
 
-    health: Optional[int] = Field(default=None, description="The current health of the event.")
+    health: Optional[int] = Field(
+        default=None, description="The current health of the event."
+    )
 
     maxHealth: Optional[int] = Field(
         default=None, description="The current maximum health of the event."

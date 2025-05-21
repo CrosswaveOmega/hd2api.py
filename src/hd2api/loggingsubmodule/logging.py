@@ -10,7 +10,9 @@ def setuphd2logging(log_dir="./logs/"):
         f"{log_dir}hd2api_logger.log", maxBytes=5 * 1024 * 1024, backupCount=5
     )
     log_handler.setLevel(logging.WARNING)
-    formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
+    formatter = logging.Formatter(
+        "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    )
     log_handler.setFormatter(formatter)
 
     log_handler2 = RotatingFileHandler(

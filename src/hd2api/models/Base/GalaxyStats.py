@@ -44,7 +44,9 @@ class GalaxyStats(BaseApiModel):
     )
 
     bulletsFired: Optional[int] = Field(
-        alias="bulletsFired", default=None, description="The total amount of bullets fired."
+        alias="bulletsFired",
+        default=None,
+        description="The total amount of bullets fired.",
     )
 
     bulletsHit: Optional[int] = Field(
@@ -68,7 +70,9 @@ class GalaxyStats(BaseApiModel):
     )
 
     friendlies: Optional[int] = Field(
-        alias="friendlies", default=None, description="The amount of friendly fire casualties."
+        alias="friendlies",
+        default=None,
+        description="The amount of friendly fire casualties.",
     )
 
     missionSuccessRate: Optional[int] = Field(
