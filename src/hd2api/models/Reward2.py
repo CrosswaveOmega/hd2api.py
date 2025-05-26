@@ -36,8 +36,11 @@ class Reward2(BaseApiModel):
     def format(self):
         """Return the string representation of any reward."""
         type = self.type
+
         if self.id32 in rewards:
             type = rewards[self.id32]
+        if type == 0:
+            return f"Nothing × 0"
         if type == 1:
             return f"{emj('medal')} × {self.amount}"
         if type == 2:

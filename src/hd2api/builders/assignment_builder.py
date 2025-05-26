@@ -26,6 +26,13 @@ def build_assignment_2(assignment: Assignment) -> Assignment2:
             amount=reward.amount,
             id32=reward.id32,
         )
+    else:
+        set_reward = Reward2(
+            retrieved_at=assignment.retrieved_at,
+            type=0,
+            amount=0,
+            id32=000,
+        )
     ret = Assignment2(
         retrieved_at=assignment.retrieved_at,
         id=assignment.id32,
