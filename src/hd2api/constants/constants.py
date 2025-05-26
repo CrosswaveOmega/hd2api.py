@@ -141,6 +141,9 @@ lines = {
         "A": "Kill **#COUNT #ENEMY**#LOCATION_PRE#LOCATION#LOCATION_POST.",
         "IA": "Kill **#COUNT #ENEMY**#ITEM_PRE#ITEM#ITEM_POST#LOCATION_PRE#LOCATION#LOCATION_POST.",
     },
+    7: {
+        "R": "Extract from a successful #MTYPE against #RACE #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST#MULTI#LOCATION_PRE#LOCATION#LOCATION_POST"
+    },
     9: {
         "R": "Complete an Operation against #RACE #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST"
     },

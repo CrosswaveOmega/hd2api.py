@@ -36,9 +36,7 @@ class TaskData(BaseApiModel):
     def make_params(self, planets):
         faction_name = "Unknown"
         if self.faction:
-            faction_name = faction_names.get(
-                self.faction[0], f"Unknown Faction {self.faction[0]}"
-            )
+            faction_name = faction_names.get(self.faction[0], f"Unknown Faction {self.faction[0]}")
         params = {
             "#LOCATION_PRE": "",
             "#LOCATION": "",
@@ -80,6 +78,7 @@ class TaskData(BaseApiModel):
             params["#DIFF_POST"] = " or higher"
 
         params["#RACE"] = faction_name
+        params["#MTYPE"] = "Mission"
         return params
 
 
@@ -152,6 +151,10 @@ class Task2(BaseApiModel):
             if "#COUNT" in params and "#RACE" in params:
                 return taskstr + makeline(lines[9]["R"], params)
             return taskstr + makeline(lines[9]["R"], params)
+        elif self.type == 7:
+            if "#COUNT" in params and "#RACE" in params:
+                return taskstr + makeline(lines[7]["R"], params)
+            return taskstr + makeline(lines[7]["R"], params)
         elif self.type == 11:
             if params["#LOCATION"]:
                 return taskstr + makeline(lines[11]["L"], params)
@@ -207,9 +210,7 @@ class Task2(BaseApiModel):
         elif self.type == 12:
             taskstr = self._task_defend(taskstr, taskdata, curr, e, planets)
         elif self.type == 3:
-            taskstr = self._task_exterminate(
-                taskstr, taskdata, curr, planets, projected
-            )
+            taskstr = self._task_exterminate(taskstr, taskdata, curr, planets, projected)
         elif self.type == 15:
             taskstr = self._task_conquest(taskstr, taskdata, curr, e, planets)
         else:
@@ -312,9 +313,7 @@ class Task2(BaseApiModel):
         if taskdata.faction:
             faction_name = (
                 "("
-                + faction_names.get(
-                    taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}"
-                )
+                + faction_names.get(taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}")
                 + " type)"
             )
         goal = taskdata.goal[0]
