@@ -20,13 +20,11 @@ def build_assignment_2(assignment: Assignment) -> Assignment2:
 
     set_reward = None
     if reward:
-        set_reward = (
-            Reward2(
-                retrieved_at=reward.retrieved_at,
-                type=reward.type,
-                amount=reward.amount,
-                id32=reward.id32,
-            ),
+        set_reward = Reward2(
+            retrieved_at=reward.retrieved_at,
+            type=reward.type,
+            amount=reward.amount,
+            id32=reward.id32,
         )
     ret = Assignment2(
         retrieved_at=assignment.retrieved_at,
