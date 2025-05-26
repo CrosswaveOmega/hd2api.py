@@ -17,6 +17,17 @@ def build_assignment_2(assignment: Assignment) -> Assignment2:
     """
     setting = assignment.setting
     reward = setting.reward
+
+    set_reward = None
+    if reward:
+        set_reward = (
+            Reward2(
+                retrieved_at=reward.retrieved_at,
+                type=reward.type,
+                amount=reward.amount,
+                id32=reward.id32,
+            ),
+        )
     ret = Assignment2(
         retrieved_at=assignment.retrieved_at,
         id=assignment.id32,
@@ -27,12 +38,7 @@ def build_assignment_2(assignment: Assignment) -> Assignment2:
         briefing=setting.overrideBrief,
         title=setting.overrideTitle,
         description=setting.taskDescription,
-        reward=Reward2(
-            retrieved_at=reward.retrieved_at,
-            type=reward.type,
-            amount=reward.amount,
-            id32=reward.id32,
-        ),
+        reward=set_reward,
         rewards=[Reward2(**r.model_dump()) for r in setting.rewards],
         tasks=[Task2(**t.model_dump()) for t in setting.tasks],
         type=setting.type,
