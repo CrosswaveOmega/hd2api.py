@@ -81,7 +81,7 @@ class Region(BaseApiModel, HealthMixin):
     )
 
     # From PlanetRegion (dynamic/state)
-    owner: Optional[int] = Field(
+    owner: Optional[Union[int, str]] = Field(
         alias="owner",
         default=None,
         description="The faction currently controlling the region.",

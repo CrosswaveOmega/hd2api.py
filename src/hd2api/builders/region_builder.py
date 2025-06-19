@@ -99,19 +99,36 @@ def build_all_regions(warall: DiveharderAll, statics: StaticAll) -> List[Region]
         or warall.status.planetRegions is None
         or warall.war_info.planetRegions is None
     ):
-        print("TEST FAILURE")
+        print("NOTHING!")
+        raise Exception(
+            "Tried to build all regions when either status.planetRegions or war_info.planetRegions was empty!"
+        )
         return result
 
     # Index PlanetRegionInfo by (planetIndex, regionIndex)
-    info_lookup = {
-        f"{info.planetIndex}_{info.regionIndex}": info for info in warall.war_info.planetRegions
+    status_lookup = {
+        f"{info.planetIndex}_{info.regionIndex}": info for info in warall.status.planetRegions
     }
 
-    for region in warall.status.planetRegions:
+    for region in warall.war_info.planetRegions:
         key = f"{region.planetIndex}_{region.regionIndex}"
-        region_info = info_lookup.get(key)
+        region_info = status_lookup.get(key)
         if region_info:
-            status = build_region(region, region_info, statics)
+            status = build_region(region_info, region, statics)
+            if status:
+                result.append(status)
+        else:
+            region_info = PlanetRegion(
+                planetIndex=region.planetIndex,
+                regionIndex=region.regionIndex,
+                regenPerSecond=0.0,
+                owner=None,
+                health=region.maxHealth,
+                availabilityFactor=0.0,
+                isAvailable=False,
+                players=0,
+            )
+            status = build_region(region_info, region, statics)
             if status:
                 result.append(status)
 

@@ -57,9 +57,7 @@ def build_planet_basic(
     weather = [gstatic.environmentals.get(e, None) for e in planet_base.weather_effects]
     env.extend(weather)
     # Build Statistics
-    stats_new = statistics_builder(
-        stats, planetStatus.players, planetStatus.retrieved_at
-    )
+    stats_new = statistics_builder(stats, planetStatus.players, planetStatus.retrieved_at)
     # Position can come from planetInfo OR planetStatus
     pos = planetInfo.position
     if planetStatus.position is not None:
@@ -95,9 +93,7 @@ def check_compare_value(key, value, target: List[Dict[str, Any]]):
     return None
 
 
-def check_compare_value_list(
-    keys: List[str], values: List[Any], target: List[Dict[str, Any]]
-):
+def check_compare_value_list(keys: List[str], values: List[Any], target: List[Dict[str, Any]]):
     values = []
     for s in target:
         if all(s[key] == value for key, value in zip(keys, values)):
@@ -110,14 +106,12 @@ def get_time(status: WarStatus, info: WarInfo) -> dt.datetime:
 
     # Get datetime diveharder object was retrieved at
     now = status.retrieved_at
-    gametime = dt.datetime.fromtimestamp(
-        info.startDate, tz=dt.timezone.utc
-    ) + dt.timedelta(seconds=status.time)
+    gametime = dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + dt.timedelta(
+        seconds=status.time
+    )
     deviation = now - gametime
     # print(deviation)
-    relative_game_start = (
-        dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + deviation
-    )
+    relative_game_start = dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + deviation
     return relative_game_start
 
 
@@ -155,8 +149,8 @@ def build_planet_full(
     """
 
     # Get planet status & planet info
-    planetStatus = get_item(status.planetStatus, index=planetIndex)
-    planetInfo = get_item(info.planetInfos, index=planetIndex)
+    planetStatus: PlanetStatus = get_item(status.planetStatus, index=planetIndex)
+    planetInfo: PlanetInfo = get_item(info.planetInfos, index=planetIndex)
     if summary.planets_stats is not None:
         planetStatistics = get_item(
             summary.planets_stats,
@@ -216,6 +210,9 @@ def build_planet_full(
     if regions:
         for r in regions:
             if r.planetIndex == planet.index:
+                if r.owner is None:
+                    r.owner = faction_names.get(planetStatus.owner, "???")
+
                 planet.regions.append(r)
 
     return planet
@@ -240,9 +237,7 @@ def build_planet_2(planetIndex: int, warall: DiveharderAll, statics: StaticAll):
     summary: Optional[WarSummary] = warall.planet_stats
 
     regions = build_all_regions(warall, statics)
-    planet = build_planet_full(
-        planetIndex, status, info, summary, statics, regions=regions
-    )
+    planet = build_planet_full(planetIndex, status, info, summary, statics, regions=regions)
     return planet
 
 

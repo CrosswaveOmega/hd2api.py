@@ -45,7 +45,7 @@ faction_names_plural = {
     15: "ERR",
 }
 
-region_size_enums = {0: "Settlement", 1: "Town", 2: "City", 3: "Megacity"}
+region_size_enums = {0: "Settlement", 1: "Town", 2: "City", 3: "MegaCity"}
 
 rewards = {897894480: 1, 3608481516: 2, 3481751602: 3}
 

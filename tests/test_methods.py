@@ -119,7 +119,8 @@ async def test_get_regions(apiconfig):
     regions = build_all_regions(allval, apiconfig.staticdata())
     assert regions
     for i in regions:
-        print(i)
+        # print(i)
+        print(i.name)
 
 
 async def test_get_planet_name(apiconfig):
