@@ -1,7 +1,7 @@
 import datetime as dt
 from typing import Dict, List, Optional, Any
 
-from ..constants import faction_names
+from ..constants import faction_names, region_size_enums
 from ..models import (
     DiveharderAll,
     Event,
@@ -44,9 +44,7 @@ def build_region(
     if statics.galaxystatic is None or statics.galaxystatic.planetRegion is None:
         return None
     index = region_info.planetIndex if region_info.planetIndex is not None else -1
-    planet_base = statics.galaxystatic.planets.get(
-        index, PlanetStatic(name="UNKNOWN PLANET")
-    )
+    planet_base = statics.galaxystatic.planets.get(index, PlanetStatic(name="UNKNOWN PLANET"))
     if not planet_base:
         return None
     if region_info.settingsHash in statics.galaxystatic.planetRegion:
@@ -70,8 +68,10 @@ def build_region(
         planetName=pname,
         regionIndex=region_info.regionIndex,
         settingsHash=region_info.settingsHash,
+        hash=region_info.settingsHash,
         maxHealth=region_info.maxHealth,
         regionSize=region_info.regionSize,
+        size=region_size_enums.get(int(region_info.regionSize), region_info.regionSize),
         # From Static Region Metadata
         name=static_region.name,
         description=static_region.description,
@@ -104,18 +104,15 @@ def build_all_regions(warall: DiveharderAll, statics: StaticAll) -> List[Region]
 
     # Index PlanetRegionInfo by (planetIndex, regionIndex)
     info_lookup = {
-        f"{info.planetIndex}_{info.regionIndex}": info
-        for info in warall.war_info.planetRegions
+        f"{info.planetIndex}_{info.regionIndex}": info for info in warall.war_info.planetRegions
     }
 
     for region in warall.status.planetRegions:
         key = f"{region.planetIndex}_{region.regionIndex}"
         region_info = info_lookup.get(key)
         if region_info:
-            print(key)
             status = build_region(region, region_info, statics)
             if status:
-                print("OK")
                 result.append(status)
 
     return result

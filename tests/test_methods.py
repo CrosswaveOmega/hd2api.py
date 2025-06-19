@@ -12,7 +12,7 @@ from hd2api.util.find import get_item
 
 @pytest.fixture
 def apiconfig():
-    config = APIConfig()
+    config = APIConfig(client_contact="TEST_CONTACT")
     config.staticdata()
 
     return config
@@ -114,8 +114,8 @@ async def test_get_event_avg(apiconfig):
 async def test_get_regions(apiconfig):
     print("STAT")
     allval = await GetApiRawAll(apiconfig)
-    print(allval.status.planetRegions)
-    print(allval.war_info.planetRegions)
+    # print(allval.status.planetRegions)
+    # print(allval.war_info.planetRegions)
     regions = build_all_regions(allval, apiconfig.staticdata())
     assert regions
     for i in regions:
@@ -142,35 +142,12 @@ async def test_station_get(apiconfig):
     # #print(allval)
 
 
-async def test_positions(apiconfig):
-    now = datetime.datetime.now()
-    this = Position(x=0.1, y=0.2, retrieved_at=now)
-    last = Position(x=0.1, y=0.1, retrieved_at=now - datetime.timedelta(minutes=5))
+async def test_v1(apiconfig):
+    apiconfig.use_raw = "direct"
+    allval = await GetApiV1PlanetsAll(apiconfig)
 
-    last_speed = 0.05
-    target = Position(x=0.0, y=0.0, retrieved_at=now)
-    difference = this - last
-    mag = difference.mag()
-    # print("Mag is", mag)
-    speed = difference.speed()
-    # print("Speed is", speed * 60)
-    current_angle = difference.angle()
-    # print("Angle is", current_angle)
-    if last_speed is not None:
-        acceleration = (
-            speed - last_speed
-        ) / difference.time_delta.total_seconds()  # Acceleration in units/hr²
-    else:
-        acceleration = None  # First measurement, no acceleration
-    # print("Acceleration is", acceleration)
-    target_diff = target - this
-    target_mag = target_diff.mag()
-    target_angle = target_diff.angle()
-
-    time_to_target = this.estimate_time_to_target(target, speed, acceleration)
-
-    # print("Distance to target is", target_mag)
-    # print(f"Current Trajectory: {current_angle:.2f}° (Clockwise from +Y-axis)")
-    # print(f"Required Trajectory to Reach Target: {target_angle:.2f}° (Clockwise)")
-    assert time_to_target != None
-    # print(f"Time to Target: {time_to_target}\n")
+    for p in allval:
+        # print(p)
+        if p.regions:
+            print(p.name, p.regions)
+    # #print(allval)
