@@ -189,7 +189,7 @@ class Region(BaseApiModel, HealthMixin):
             f"HP: {self.get_health_percent(self.health)}%({self.health}) {cfi(self.get_health_percent(diff.health))}`"
         )
         outlist.append(
-            f"Regen:`{round((100*(self.regenPerSecond/self.maxHealth))*60*60,2)}`"  # type: ignore
+            f"Regen:`{self.regenPerSecond}, {round((100*(self.regenPerSecond/self.maxHealth))*60*60,2)}%`"  # type: ignore
         )  # type: ignore
         if avg:
             remaining_time = self.estimate_remaining_lib_time(avg)
