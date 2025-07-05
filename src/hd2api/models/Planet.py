@@ -386,7 +386,7 @@ class Planet(BaseApiModel, HealthMixin):
                 if avg.event:
                     outlist.append(f"{self.event.estimate_remaining_lib_time(avg.event)}")
         if self.regions:
-            addme = "**REGIONS**" + "\n".join(
+            addme = "**REGIONS**\n" + "\n".join(
                 "* " + region.inline_view() for region in self.regions
             )
             outlist.append(addme)
