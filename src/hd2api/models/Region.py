@@ -202,12 +202,12 @@ class Region(BaseApiModel, HealthMixin):
         if self.isAvailable:
             outp = f"{round((self.health / max(self.maxHealth,1)) * 100, 1)}%"
 
-            return f"[{self.size}-{outp}]"
+            return f"[{self.size} {self.name}-{outp}]"
         else:
             fact = self.owner
             if isinstance(self.owner, int):
                 fact = faction_names.get(int(fact), str(fact))
-            return f"[{self.size}-{fact}]"
+            return f"[{self.size} {self.name}-{fact}]"
 
     def calculate_timeval(self, change: float, is_positive: bool) -> datetime.datetime:
         if self.health is None or self.maxHealth is None:
