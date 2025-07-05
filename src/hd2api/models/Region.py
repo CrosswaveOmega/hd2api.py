@@ -9,6 +9,8 @@ from ..util.utils import format_datetime as fdt
 from ..util.utils import select_emoji as emj
 from .ABC.model import BaseApiModel, HealthMixin
 
+from ..constants import faction_names, region_size_enums
+
 
 class Region(BaseApiModel, HealthMixin):
     """
@@ -178,10 +180,10 @@ class Region(BaseApiModel, HealthMixin):
 
         outlist = [
             self.description,
-            f"{players}, Owner: {self.owner}, Is available {self.isAvailable}",
+            f"{players}, Owner: {self.owner}\n Is Available {self.isAvailable}",
         ]
-        outlist.append(f"availabilityFactor {self.availabilityFactor}")
-        outlist.append(f"Region Size: {self.regionSize}")
+        outlist.append(f"Availability Factor: {self.availabilityFactor}")
+        outlist.append(f"Region Size: {self.size}")
 
         outlist.append(
             f"HP: {self.get_health_percent(self.health)}%({self.health}) {cfi(self.get_health_percent(diff.health))}`"
@@ -195,6 +197,17 @@ class Region(BaseApiModel, HealthMixin):
                 outlist.append(remaining_time)
 
         return name, outlist
+
+    def inline_view(self):
+        if self.isAvailable:
+            outp = f"{round((self.health / max(self.maxHealth,1)) * 100, 1)}%"
+
+            return f"[{self.size}-{outp}]"
+        else:
+            fact = self.owner
+            if isinstance(self.owner, int):
+                fact = faction_names.get(int(fact), str(fact))
+            return f"[{self.size}-{fact}]"
 
     def calculate_timeval(self, change: float, is_positive: bool) -> datetime.datetime:
         if self.health is None or self.maxHealth is None:
