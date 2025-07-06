@@ -33,8 +33,8 @@ class Campaign(BaseApiModel):
         description="A numerical count, the amount of campaigns the planet has seen.",
     )
 
-    faction: Optional[int] = Field(
-        alias="faction",
+    race: Optional[int] = Field(
+        alias="race",
         default=None,
         description="Optional Faction ID.",
     )

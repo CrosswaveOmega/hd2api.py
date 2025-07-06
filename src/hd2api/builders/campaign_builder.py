@@ -22,7 +22,7 @@ def build_campaign(planets: Dict[int, Optional[Planet]], campaign: Campaign):
         planet=planet,
         count=campaign.count,
         type=campaign.type,
-        faction=campaign.faction,
+        faction=campaign.race,
     )
     return camp2
 
