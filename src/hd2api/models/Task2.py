@@ -149,8 +149,10 @@ class Task2(BaseApiModel):
         params = taskdata.make_params(planets)
         if self.type == 9:
             if "#COUNT" in params and "#RACE" in params:
+                if params["#RACE"] == "Anything":
+                    return taskstr + makeline(lines[9]["C"], params)
                 return taskstr + makeline(lines[9]["R"], params)
-            return taskstr + makeline(lines[9]["R"], params)
+            return taskstr + makeline(lines[9]["C"], params)
         elif self.type == 7:
             if "#COUNT" in params and "#RACE" in params:
                 return taskstr + makeline(lines[7]["R"], params)

@@ -147,7 +147,8 @@ lines = {
         "R": "Extract from a successful #MTYPE against #RACE #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST#MULTI#LOCATION_PRE#LOCATION#LOCATION_POST"
     },
     9: {
-        "R": "Complete an Operation against #RACE #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST"
+        "C": "Complete an Operation #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST",
+        "R": "Complete an Operation against #RACE #DIFF_PRE#DIFF#DIFF_POST#COUNT_PRE#COUNT#COUNT_POST",
     },
     11: {
         "L": "Liberate **#LOCATION**",
