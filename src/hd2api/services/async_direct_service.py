@@ -1,7 +1,7 @@
 import logging
 from typing import List, Optional, Type, TypeVar, Union
 
-from ..api_config import APIConfig
+from ..api_config import APIConfig, HTTPException
 from ..models import (
     Assignment,
     DiveharderAll,
@@ -103,13 +103,13 @@ async def GetApiDirectAssignment(
 
 
 async def GetApiDirectNewsFeed(
-    api_config_override: Optional[APIConfig] = None,fromTimestamp=100
+    api_config_override: Optional[APIConfig] = None, fromTimestamp=100
 ) -> List[NewsFeedItem]:
     result = await make_direct_api_request(
         "NewsFeed/801",
         NewsFeedItem,
         api_config_override=api_config_override,
-        params={"maxEntries": 1024,"fromTimestamp":fromTimestamp},
+        params={"maxEntries": 1024, "fromTimestamp": fromTimestamp},
     )
     if result is None:
         raise ValueError("Failed to retrieve News Feed.")
@@ -144,10 +144,10 @@ async def GetApiDirectAll(
     assign = await GetApiDirectAssignment(api_config_override)
     try:
         news = await GetApiDirectNewsFeed(
-        api_config_override, 
-        fromTimestamp=warstatus.time-10000000)
+            api_config_override, fromTimestamp=warstatus.time - 10000000
+        )
     except HTTPException as e:
-        news=None
+        news = None
     newdive = DiveharderAll(
         status=warstatus,
         war_info=warinfo,
