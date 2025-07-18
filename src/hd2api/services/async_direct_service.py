@@ -103,13 +103,13 @@ async def GetApiDirectAssignment(
 
 
 async def GetApiDirectNewsFeed(
-    api_config_override: Optional[APIConfig] = None,
+    api_config_override: Optional[APIConfig] = None,fromTimestamp=100
 ) -> List[NewsFeedItem]:
     result = await make_direct_api_request(
         "NewsFeed/801",
         NewsFeedItem,
         api_config_override=api_config_override,
-        params={"maxEntries": 1024},
+        params={"maxEntries": 1024,"fromTimestamp":fromTimestamp},
     )
     if result is None:
         raise ValueError("Failed to retrieve News Feed.")
@@ -142,7 +142,9 @@ async def GetApiDirectAll(
     warinfo = await GetApiDirectWarInfo(api_config_override)
     summary = await GetApiDirectSummary(api_config_override)
     assign = await GetApiDirectAssignment(api_config_override)
-    news = await GetApiDirectNewsFeed(api_config_override)
+    news = await GetApiDirectNewsFeed(
+        api_config_override, 
+        fromTimestamp=warstatus.time-10000000)
 
     newdive = DiveharderAll(
         status=warstatus,
