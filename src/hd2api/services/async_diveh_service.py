@@ -1,7 +1,7 @@
 import logging
 from typing import Dict, List, Optional, Type, TypeVar, Union
 
-from ..api_config import APIConfig
+from ..api_config import APIConfig, HTTPException
 from ..models import (
     Assignment,
     DiveharderAll,
