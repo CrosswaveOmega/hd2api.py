@@ -142,10 +142,12 @@ async def GetApiDirectAll(
     warinfo = await GetApiDirectWarInfo(api_config_override)
     summary = await GetApiDirectSummary(api_config_override)
     assign = await GetApiDirectAssignment(api_config_override)
-    news = await GetApiDirectNewsFeed(
+    try:
+        news = await GetApiDirectNewsFeed(
         api_config_override, 
         fromTimestamp=warstatus.time-10000000)
-
+    except HTTPException as e:
+        news=None
     newdive = DiveharderAll(
         status=warstatus,
         war_info=warinfo,
