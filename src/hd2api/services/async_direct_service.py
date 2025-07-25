@@ -147,6 +147,7 @@ async def GetApiDirectAll(
             api_config_override, fromTimestamp=warstatus.time - 10000000
         )
     except HTTPException as e:
+        hd2api_logger.error("Error raised when calling news feed: %s", e)
         news = None
     newdive = DiveharderAll(
         status=warstatus,
