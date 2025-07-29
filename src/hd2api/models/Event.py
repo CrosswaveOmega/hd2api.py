@@ -175,9 +175,9 @@ class Event(BaseApiModel, HealthMixin):
         """
         change_str = f"{round(change, 5)}"
         timeval_str = (
-            f"Est.Loss {fdt(esttime,'R')}"
+            f"Est.Loss {fdt(esttime, 'R')}"
             if change > 0
-            else f"Clear {fdt(esttime,'R')}"
+            else f"Clear {fdt(esttime, 'R')}"
         )
 
         return f"`[{change_str} dps]`, {timeval_str}"
@@ -219,7 +219,7 @@ class Event(BaseApiModel, HealthMixin):
         event_details = (
             f"ID: {self.id}, Type: {hf(self.eventType)}, Faction: {self.faction}\n"
             f"Event Health: `{(self.health)}/{(self.maxHealth)}` (`{diff.health if diff is not None else 0}` change)\n"
-            f"Start Time: {fdt(et(self.startTime),'R')}, End Time: {fdt(et(self.endTime),'R')}\n"
+            f"Start Time: {fdt(et(self.startTime), 'R')}, End Time: {fdt(et(self.endTime), 'R')}\n"
             f"Campaign ID: {hf(self.campaignId)}, Joint Operation IDs: {joint_ops}",
             f"Potential Build Up:{self.potentialBuildUp}",  # type: ignore
         )

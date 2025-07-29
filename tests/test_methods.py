@@ -1,4 +1,5 @@
 import logging
+import datetime as dt
 
 hd2api_logger = logging.getLogger("hd2api_logger")
 
@@ -46,6 +47,7 @@ async def test_get_direct_all(apiconfig):
     warstatus = await GetApiRawAll(apiconfig)
     assert warstatus is not None
     timea = get_time(warstatus.status, warstatus.war_info)
+    print(timea)
 
 
 async def test_planet(apiconfig):
@@ -120,7 +122,7 @@ async def test_get_regions(apiconfig):
     assert regions
     for i in regions:
         # print(i)
-        print(i.name)
+        pass
 
 
 async def test_get_planet_name(apiconfig):
@@ -143,6 +145,49 @@ async def test_station_get(apiconfig):
     # #print(allval)
 
 
+async def test_languages(apiconfig):
+    apiconfig.use_raw = "direct"
+    languages = [
+        "en-US",
+        "en-GB",
+        "pt-BR",
+        "de-DE",
+        "es-ES",
+        "fr-FR",
+        "it-IT",
+        "ja-JP",
+        "ko-KO",
+        "ms-MY",
+        "pl-PL",
+        "pt-PT",
+        "ru-RU",
+        "zh-Hans",
+        "zh-Hant",
+    ]
+    for i in range(0, 2):
+        for l in languages:
+            apiconfig.language = l
+            allval = await GetApiDirectNewsFeed(apiconfig)
+            if allval:
+                print(l, "Is ok, size is", len(allval))
+
+    # #print(allval)
+
+    apiconfig.language = "en-US"
+
+
+async def test_time_get(apiconfig):
+    apiconfig.use_raw = "direct"
+    warstatus = await GetApiRawAll(apiconfig)
+    assert warstatus is not None
+    timea = get_time(warstatus.status, warstatus.war_info)
+    print(timea + dt.timedelta(seconds=warstatus.status.time))
+    # #print(allval)
+    print(timea + dt.timedelta(seconds=45795971))
+    print(warstatus.status.time - 45795971)
+    apiconfig.language = "en-US"
+
+
 async def test_v1(apiconfig):
     apiconfig.use_raw = "direct"
     allval = await GetApiV1PlanetsAll(apiconfig)
@@ -150,5 +195,6 @@ async def test_v1(apiconfig):
     for p in allval:
         # print(p)
         if p.regions:
-            print(p.name, p.regions)
+            pass
+            # print(p.name, p.regions)
     # #print(allval)

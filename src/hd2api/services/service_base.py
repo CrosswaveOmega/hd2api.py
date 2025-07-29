@@ -37,9 +37,7 @@ async def make_async_api_request(
                     path, headers=headers, params=params
                 )  # Added params to the request
             else:
-                response = await client.get(
-                    path, headers=headers
-                )  # Added params to the request
+                response = await client.get(path, headers=headers)  # Added params to the request
     except httpx.HTTPError as e:
         print(e)
         hd2api_logger.error(str(e), exc_info=e)

@@ -229,7 +229,7 @@ class Statistics(BaseApiModel):
 
         # Format deaths and friendlies statistics
         deaths_and_friendlies = (
-            f"Deaths/Friendlies: {hf(self.deaths)}/" f"{hf(self.friendlies)}"
+            f"Deaths/Friendlies: {hf(self.deaths)}/{hf(self.friendlies)}"
         )
 
         # Format player count
@@ -266,7 +266,7 @@ class Statistics(BaseApiModel):
         misiontotalother = max(1, other.missionsWon + other.missionsLost)  # type: ignore
         mission_stats = f"W:{hf(self.missionsWon)} ({other.missionsWon}),"
         mission_stats += f"L:{hf(self.missionsLost)} ({other.missionsLost})"
-        mission_stats += f"{round(100.0*(other.missionsWon/(max(other.missionsWon+other.missionsLost,1))),1)}"  # type: ignore
+        mission_stats += f"{round(100.0 * (other.missionsWon / (max(other.missionsWon + other.missionsLost, 1))), 1)}"  # type: ignore
         mission_stats += f"\nTime:{sts(self.missionTime)}({sts(other.missionTime)})"
 
         thistime = round(max(self.missionTime, 1) / (missiontotal), 4)

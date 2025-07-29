@@ -103,14 +103,22 @@ async def GetApiDirectAssignment(
 
 
 async def GetApiDirectNewsFeed(
-    api_config_override: Optional[APIConfig] = None, fromTimestamp=100
+    api_config_override: Optional[APIConfig] = None, fromTimestamp=None
 ) -> List[NewsFeedItem]:
-    result = await make_direct_api_request(
-        "NewsFeed/801",
-        NewsFeedItem,
-        api_config_override=api_config_override,
-        params={"maxEntries": 1024, "fromTimestamp": fromTimestamp},
-    )
+    if fromTimestamp:
+        result = await make_direct_api_request(
+            "NewsFeed/801",
+            NewsFeedItem,
+            api_config_override=api_config_override,
+            params={"maxEntries": 1024, "fromTimestamp": fromTimestamp},
+        )
+    else:
+        result = await make_direct_api_request(
+            "NewsFeed/801",
+            NewsFeedItem,
+            api_config_override=api_config_override,
+            params={"maxEntries": 1024},
+        )
     if result is None:
         raise ValueError("Failed to retrieve News Feed.")
 

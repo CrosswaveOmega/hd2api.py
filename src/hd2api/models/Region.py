@@ -57,7 +57,9 @@ class Region(BaseApiModel, HealthMixin):
         description="Hash for the internal region settings.",
     )
 
-    name: Optional[str] = Field(alias="name", default=None, description="The name of the region.")
+    name: Optional[str] = Field(
+        alias="name", default=None, description="The name of the region."
+    )
 
     description: Optional[str] = Field(
         alias="description",
@@ -189,7 +191,7 @@ class Region(BaseApiModel, HealthMixin):
             f"HP: {self.get_health_percent(self.health)}%({self.health}) {cfi(self.get_health_percent(diff.health))}`"
         )
         outlist.append(
-            f"Regen:`{self.regenPerSecond}, {round((100*(self.regenPerSecond/self.maxHealth))*60*60,2)}%`"  # type: ignore
+            f"Regen:`{self.regenPerSecond}, {round((100 * (self.regenPerSecond / self.maxHealth)) * 60 * 60, 2)}%`"  # type: ignore
         )  # type: ignore
         if avg:
             remaining_time = self.estimate_remaining_lib_time(avg)
@@ -200,7 +202,7 @@ class Region(BaseApiModel, HealthMixin):
 
     def inline_view(self):
         if self.isAvailable:
-            outp = f"{round((self.health / max(self.maxHealth,1)) * 100, 1)}%"
+            outp = f"{round((self.health / max(self.maxHealth, 1)) * 100, 1)}%"
 
             return f"[{self.size} {self.name}-{outp}]"
         else:
@@ -219,9 +221,13 @@ class Region(BaseApiModel, HealthMixin):
             seconds = abs(self.health / change)
         return self.retrieved_at + datetime.timedelta(seconds=seconds)
 
-    def format_estimated_time_string(self, change: float, esttime: datetime.datetime) -> str:
+    def format_estimated_time_string(
+        self, change: float, esttime: datetime.datetime
+    ) -> str:
         change_str = f"{round(change, 5)}"
-        timeval_str = f"Est.Loss {fdt(esttime, 'R')}" if change > 0 else f"{fdt(esttime, 'R')}"
+        timeval_str = (
+            f"Est.Loss {fdt(esttime, 'R')}" if change > 0 else f"{fdt(esttime, 'R')}"
+        )
         return f"`[{change_str} dps]`, {timeval_str}"
 
     def estimate_remaining_lib_time(self, diff: "Region") -> str:
@@ -243,7 +249,9 @@ class Region(BaseApiModel, HealthMixin):
 
         avg_health = sum(r.health for r in regions if r.health is not None) // count
         avg_players = sum(r.players for r in regions if r.players is not None) // count
-        avg_time = sum(r.time_delta.total_seconds() for r in regions if r.time_delta) // count
+        avg_time = (
+            sum(r.time_delta.total_seconds() for r in regions if r.time_delta) // count
+        )
 
         return Region(
             planetIndex=regions[0].planetIndex,

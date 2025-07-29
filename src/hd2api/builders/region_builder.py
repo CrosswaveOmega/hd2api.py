@@ -44,7 +44,9 @@ def build_region(
     if statics.galaxystatic is None or statics.galaxystatic.planetRegion is None:
         return None
     index = region_info.planetIndex if region_info.planetIndex is not None else -1
-    planet_base = statics.galaxystatic.planets.get(index, PlanetStatic(name="UNKNOWN PLANET"))
+    planet_base = statics.galaxystatic.planets.get(
+        index, PlanetStatic(name="UNKNOWN PLANET")
+    )
     if not planet_base:
         return None
     if region_info.settingsHash in statics.galaxystatic.planetRegion:
@@ -107,7 +109,8 @@ def build_all_regions(warall: DiveharderAll, statics: StaticAll) -> List[Region]
 
     # Index PlanetRegionInfo by (planetIndex, regionIndex)
     status_lookup = {
-        f"{info.planetIndex}_{info.regionIndex}": info for info in warall.status.planetRegions
+        f"{info.planetIndex}_{info.regionIndex}": info
+        for info in warall.status.planetRegions
     }
 
     for region in warall.war_info.planetRegions:

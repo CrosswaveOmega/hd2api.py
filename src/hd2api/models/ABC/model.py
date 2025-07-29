@@ -63,7 +63,7 @@ class BaseApiModel(BaseModel, extra="allow"):
         fields = list(self.model_extra)
         output = ""
         for k in fields:
-            output += f"{k}:`{str(self.get(k,'?'))}`\n"
+            output += f"{k}:`{str(self.get(k, '?'))}`\n"
         return output
 
 
