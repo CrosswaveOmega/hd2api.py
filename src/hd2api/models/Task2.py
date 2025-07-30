@@ -36,9 +36,7 @@ class TaskData(BaseApiModel):
     def make_params(self, planets):
         faction_name = "Unknown"
         if self.faction:
-            faction_name = faction_names.get(
-                self.faction[0], f"Unknown Faction {self.faction[0]}"
-            )
+            faction_name = faction_names.get(self.faction[0], f"Unknown Faction {self.faction[0]}")
         params = {
             "#LOCATION_PRE": "",
             "#LOCATION": "",
@@ -61,6 +59,13 @@ class TaskData(BaseApiModel):
             params["#PLANET"] = planet_name
             params["#LOCATION_PRE"] = " on "
             params["#LOCATION_POST"] = ""
+            if self.hasPlanet == 2:
+                params["#LOCATION_PRE"] = " in the "
+                planetnames = [
+                    planet.name for planet in planets.values() if planet.sector_id == self.planet[0]
+                ]
+                params["#LOCATION"] = f"Sector id:{self.planet[0]}"
+                params["#LOCATION_POST"] = f" Sector, ie {','.join(planetnames)}"
         if self.hasItem and self.itemID[0]:
             params["#ITEM_PRE"] = " with "
             itemname = samples.get(self.itemID[0], None)
@@ -214,9 +219,7 @@ class Task2(BaseApiModel):
         elif self.type == 12:
             taskstr = self._task_defend(taskstr, taskdata, curr, e, planets)
         elif self.type == 3:
-            taskstr = self._task_exterminate(
-                taskstr, taskdata, curr, planets, projected
-            )
+            taskstr = self._task_exterminate(taskstr, taskdata, curr, planets, projected)
         elif self.type == 15:
             taskstr = self._task_conquest(taskstr, taskdata, curr, e, planets)
         else:
@@ -319,9 +322,7 @@ class Task2(BaseApiModel):
         if taskdata.faction:
             faction_name = (
                 "("
-                + faction_names.get(
-                    taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}"
-                )
+                + faction_names.get(taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}")
                 + " type)"
             )
         goal = taskdata.goal[0]
