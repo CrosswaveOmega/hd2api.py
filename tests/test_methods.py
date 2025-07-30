@@ -1,5 +1,7 @@
 import logging
 import datetime as dt
+from collections import defaultdict, Counter
+
 
 hd2api_logger = logging.getLogger("hd2api_logger")
 
@@ -135,6 +137,22 @@ async def test_get_planet_name(apiconfig):
     return planets
 
 
+async def test_get_list_sector_names(apiconfig):
+    allval = await GetApiRawAll(apiconfig, direct=True)
+    planets = build_all_planets(allval, apiconfig.staticdata())
+
+    sector_count = defaultdict(Counter)
+
+    for plan in planets.values():
+        sector_name = plan.sector
+        sector_id = plan.sector_id
+        sector_count[sector_name][sector_id] += 1
+
+    result = [(name, dict(id_counts)) for name, id_counts in sector_count.items()]
+
+    print(result)
+
+
 async def test_station_get(apiconfig):
     apiconfig.use_raw = "direct"
     allval = await GetApiRawWarStatus(apiconfig)
@@ -164,12 +182,11 @@ async def test_languages(apiconfig):
         "zh-Hans",
         "zh-Hant",
     ]
-    for i in range(0, 2):
-        for l in languages:
-            apiconfig.language = l
-            allval = await GetApiDirectNewsFeed(apiconfig)
-            if allval:
-                print(l, "Is ok, size is", len(allval))
+    for l in languages:
+        apiconfig.language = l
+        allval = await GetApiDirectNewsFeed(apiconfig)
+        if allval:
+            print(l, "Is ok, size is", len(allval))
 
     # #print(allval)
 
@@ -186,15 +203,3 @@ async def test_time_get(apiconfig):
     print(timea + dt.timedelta(seconds=45795971))
     print(warstatus.status.time - 45795971)
     apiconfig.language = "en-US"
-
-
-async def test_v1(apiconfig):
-    apiconfig.use_raw = "direct"
-    allval = await GetApiV1PlanetsAll(apiconfig)
-
-    for p in allval:
-        # print(p)
-        if p.regions:
-            pass
-            # print(p.name, p.regions)
-    # #print(allval)

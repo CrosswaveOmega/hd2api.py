@@ -32,13 +32,19 @@ class TaskData(BaseApiModel):
     hasDifficulty: Optional[List[int]] = Field(alias="hasDifficulty", default=None)
     difficulty: Optional[List[int]] = Field(alias="difficulty", default=None)
     unknown7: Optional[List[int]] = Field(alias="unknown7", default=None)
-    hasPlanet: Optional[List[int]] = Field(alias="hasPlanet", default=None)
+    hasPlanet: Optional[List[int]] = Field(
+        alias="hasPlanet",
+        default=None,
+        description="0 if there is no target planet, 1 if there is a target planet, 2 if there is a target sector",
+    )
     planet: Optional[List[int]] = Field(alias="planet", default=None)
 
     def make_params(self, planets):
         faction_name = "Unknown"
         if self.faction:
-            faction_name = faction_names.get(self.faction[0], f"Unknown Faction {self.faction[0]}")
+            faction_name = faction_names.get(
+                self.faction[0], f"Unknown Faction {self.faction[0]}"
+            )
         params = {
             "#LOCATION_PRE": "",
             "#LOCATION": "",
@@ -73,7 +79,7 @@ class TaskData(BaseApiModel):
                     ).items()
                 ]
 
-                params["#LOCATION"] = f"Sector id:{self.planet[0]}"
+                params["#LOCATION"] = f"ID {self.planet[0]}"
                 params["#LOCATION_POST"] = (
                     f" Sector, ie {','.join(f'{sector}:{count}' for count, sector in planetnames)}"
                 )
@@ -230,7 +236,9 @@ class Task2(BaseApiModel):
         elif self.type == 12:
             taskstr = self._task_defend(taskstr, taskdata, curr, e, planets)
         elif self.type == 3:
-            taskstr = self._task_exterminate(taskstr, taskdata, curr, planets, projected)
+            taskstr = self._task_exterminate(
+                taskstr, taskdata, curr, planets, projected
+            )
         elif self.type == 15:
             taskstr = self._task_conquest(taskstr, taskdata, curr, e, planets)
         else:
@@ -333,7 +341,9 @@ class Task2(BaseApiModel):
         if taskdata.faction:
             faction_name = (
                 "("
-                + faction_names.get(taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}")
+                + faction_names.get(
+                    taskdata.faction[0], f"Unknown Faction {taskdata.faction[0]}"
+                )
                 + " type)"
             )
         goal = taskdata.goal[0]
