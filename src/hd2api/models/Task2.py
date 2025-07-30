@@ -1,6 +1,8 @@
 import json
 from typing import Dict, List, Optional, Tuple
 
+from collections import Counter
+
 from pydantic import Field
 
 from ..constants import (
@@ -61,11 +63,20 @@ class TaskData(BaseApiModel):
             params["#LOCATION_POST"] = ""
             if self.hasPlanet[0] == 2:
                 params["#LOCATION_PRE"] = " in the "
+
                 planetnames = [
-                    planet.name for planet in planets.values() if planet.sector_id == self.planet[0]
+                    (sector, count)
+                    for sector, count in Counter(
+                        planet.sector
+                        for planet in planets.values()
+                        if planet.sector_id == self.planet[0]
+                    ).items()
                 ]
+
                 params["#LOCATION"] = f"Sector id:{self.planet[0]}"
-                params["#LOCATION_POST"] = f" Sector, ie {','.join(planetnames)}"
+                params["#LOCATION_POST"] = (
+                    f" Sector, ie {','.join(f'{sector}:{count}' for count, sector in planetnames)}"
+                )
         if self.hasItem and self.itemID[0]:
             params["#ITEM_PRE"] = " with "
             itemname = samples.get(self.itemID[0], None)
