@@ -59,7 +59,7 @@ class TaskData(BaseApiModel):
             params["#PLANET"] = planet_name
             params["#LOCATION_PRE"] = " on "
             params["#LOCATION_POST"] = ""
-            if self.hasPlanet == 2:
+            if self.hasPlanet[0] == 2:
                 params["#LOCATION_PRE"] = " in the "
                 planetnames = [
                     planet.name for planet in planets.values() if planet.sector_id == self.planet[0]
