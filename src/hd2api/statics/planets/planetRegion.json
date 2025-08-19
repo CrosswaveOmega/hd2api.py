@@ -189,7 +189,7 @@
 	},
 	"1193052974": {
 		"name": "NEW ASPIRATION CITY",
-		"description": "One of 3 Maximum Security Cities."
+		"description": "One of 3 Maximum Security Cities. Impregnable to Tyranny; the future of the Federation."
 	},
 	"16522331": {
 		"name": "FARMHANDSTOWN",
@@ -241,7 +241,7 @@
 	},
 	"27836851": {
 		"name": "NEW YEARNING CITY",
-		"description": "One of 3 Maximum Security Cities."
+		"description": "One of 3 Maximum Security Cities. Impregnable to Tyranny; the future of the Federation."
 	},
 	"2557369266": {
 		"name": "OTARU'S PLEDGE",
@@ -257,7 +257,7 @@
 	},
 	"1239520232": {
 		"name": "NEW HOPE CITY",
-		"description": "One of 3 Maximum Security Cities."
+		"description": "The flagship Maximum Security City. Impregnable to Tyranny; the future of the Federation."
 	},
 	"3900513024": {
 		"name": "VÁHTJER",
@@ -281,6 +281,18 @@
 	},
 	"2591044773": {
 		"name": "BIRTH",
+		"description": ""
+	},
+	"1897395642": {
+		"name": "GRAFSART",
+		"description": ""
+	},
+	"3626214155": {
+		"name": "GRAFSWALLIT",
+		"description": ""
+	},
+	"3851016682": {
+		"name": "GRAFSEAD",
 		"description": ""
 	},
 	"3188612954": {
@@ -328,7 +340,7 @@
 		"description": ""
 	},
 	"3373033616": {
-		"name": "MORSKE OKO",
+		"name": "MORSKIE OKO",
 		"description": ""
 	},
 	"4028778105": {
@@ -387,8 +399,28 @@
 		"name": "SAPPHIRE LAKE",
 		"description": ""
 	},
+	"3849073717": {
+		"name": "PILOT'S BERTH",
+		"description": ""
+	},
+	"2098963156": {
+		"name": "PLETHORA",
+		"description": ""
+	},
+	"1428185423": {
+		"name": "ANTBOOT",
+		"description": ""
+	},
 	"3263317504": {
 		"name": "RESPITE",
+		"description": ""
+	},
+	"511490869": {
+		"name": "PORUGU",
+		"description": ""
+	},
+	"2491531357": {
+		"name": "PADOSAN",
 		"description": ""
 	},
 	"2541809256": {
@@ -437,6 +469,18 @@
 	},
 	"2190098981": {
 		"name": "HAKU CITY",
+		"description": ""
+	},
+	"3205582835": {
+		"name": "ACCOUNTANT GRAEBER",
+		"description": ""
+	},
+	"1201038992": {
+		"name": "BEACHVIEW",
+		"description": ""
+	},
+	"334066640": {
+		"name": "THE VILLAS",
 		"description": ""
 	},
 	"502504685": {
