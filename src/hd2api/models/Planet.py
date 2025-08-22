@@ -231,9 +231,7 @@ class Planet(BaseApiModel, HealthMixin):
 
     def format_estimated_time_string(self, change: float, esttime: datetime.datetime):
         change_str = f"{round(change, 5)}"
-        timeval_str = (
-            f"Est.Loss {fdt(esttime, 'R')}" if change > 0 else f"{fdt(esttime, 'R')}"
-        )
+        timeval_str = f"Est.Loss {fdt(esttime, 'R')}" if change > 0 else f"{fdt(esttime, 'R')}"
 
         return f"`[{change_str} dps]`, {timeval_str}"
 
@@ -277,8 +275,7 @@ class Planet(BaseApiModel, HealthMixin):
             return Planet()
 
         avg_health = (
-            sum(planet.health for planet in planets_list if planet.health is not None)
-            // count
+            sum(planet.health for planet in planets_list if planet.health is not None) // count
         )
 
         stats = []
@@ -343,6 +340,7 @@ class Planet(BaseApiModel, HealthMixin):
         prev: Optional["Planet"] = None,
         avg: Optional["Planet"] = None,
         show_hp_without_event: bool = True,
+        show_city: bool = True,
     ) -> Tuple[str, List[str]]:
         """Return a string containing the formated state of the planet.
 
@@ -360,7 +358,9 @@ class Planet(BaseApiModel, HealthMixin):
         faction = emj(self.currentOwner.lower())
 
         name = f"{faction}P#{self.index}: {self.name}"
-        players = f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
+        players = (
+            f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
+        )
         outlist = [f"{players}"]
         if (not self.event) or show_hp_without_event:
             outlist.append(
@@ -385,10 +385,8 @@ class Planet(BaseApiModel, HealthMixin):
             outlist.append(f"Deadline: [{timev}]")
             if avg:
                 if avg.event:
-                    outlist.append(
-                        f"{self.event.estimate_remaining_lib_time(avg.event)}"
-                    )
-        if self.regions:
+                    outlist.append(f"{self.event.estimate_remaining_lib_time(avg.event)}")
+        if self.regions and show_city:
             addme = "**REGIONS**\n" + "\n".join(
                 "* " + region.inline_view() for region in self.regions
             )
