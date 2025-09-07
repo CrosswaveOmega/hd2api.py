@@ -1,7 +1,9 @@
 import logging
 from typing import List, Optional, Type, TypeVar, Union
 
-from ..api_config import APIConfig
+from hd2api.models import DiveharderAll
+
+from ..api_config import APIConfig, HTTPException
 from ..models import (
     Assignment,
     Assignment2,
@@ -40,9 +42,7 @@ async def make_comm_v1_api_request(
         path += f"/{index}"
 
     if api_config.client_contact is None:
-        raise ValueError(
-            "Attempted to call community api without setting client_contact"
-        )
+        raise ValueError("Attempted to call community api without setting client_contact")
 
     data = await make_async_api_request(base_path, path, api_config)
 
@@ -54,6 +54,7 @@ async def make_comm_raw_api_request(
     model: Type[T],
     index: Optional[int] = None,
     api_config_override: Optional[APIConfig] = None,
+    params: Optional[dict] = None,  # Added parameters for GET requests
 ) -> Union[T, List[T]]:
     """
     Get a raw api object from the Community api.
@@ -65,11 +66,9 @@ async def make_comm_raw_api_request(
     if index is not None:
         path += f"/{index}"
     if api_config.client_contact is None:
-        raise ValueError(
-            "Attempted to call community api without setting client_contact"
-        )
+        raise ValueError("Attempted to call community api without setting client_contact")
 
-    data = await make_async_api_request(base_path, path, api_config)
+    data = await make_async_api_request(base_path, path, api_config, params)
     return make_output(data, model, index)
 
 
@@ -109,8 +108,15 @@ async def GetCommApiRawAssignment(
 
 
 async def GetCommApiRawNewsFeed(
-    api_config_override: Optional[APIConfig] = None,
+    api_config_override: Optional[APIConfig] = None, fromTimestamp=None
 ) -> List[NewsFeedItem]:
+    if fromTimestamp:
+        return await make_comm_raw_api_request(
+            "NewsFeed/801",
+            NewsFeedItem,
+            api_config_override=api_config_override,
+            params={"maxEntries": 1024, "fromTimestamp": fromTimestamp},
+        )
     return await make_comm_raw_api_request(
         "NewsFeed/801", NewsFeedItem, api_config_override=api_config_override
     )
@@ -135,9 +141,7 @@ async def GetCommApiRawSpaceStation(
 
 
 async def GetApiV1War(api_config_override: Optional[APIConfig] = None) -> War:
-    return await make_comm_v1_api_request(
-        "war", War, api_config_override=api_config_override
-    )
+    return await make_comm_v1_api_request("war", War, api_config_override=api_config_override)
 
 
 async def GetApiV1AssignmentsAll(
@@ -196,9 +200,7 @@ async def GetApiV1PlanetsAll(
     )
 
 
-async def GetApiV1Planets(
-    index: int, api_config_override: Optional[APIConfig] = None
-) -> Planet:
+async def GetApiV1Planets(index: int, api_config_override: Optional[APIConfig] = None) -> Planet:
     return await make_comm_v1_api_request(
         "planets", Planet, index, api_config_override=api_config_override
     )
@@ -226,3 +228,30 @@ async def GetApiV1Steam2(
     return await make_comm_v1_api_request(
         "steam", SteamNews, gid, api_config_override=api_config_override
     )
+
+
+# Get all
+
+
+async def GetCommApiRawAll(
+    api_config_override: Optional[APIConfig] = None,
+) -> DiveharderAll:
+    warstatus = await GetCommApiRawWarStatus(api_config_override)
+    warinfo = await GetCommApiRawWarInfo(api_config_override)
+    summary = await GetCommApiRawSummary(api_config_override)
+    assign = await GetCommApiRawAssignment(api_config_override)
+    try:
+        news = await GetCommApiRawNewsFeed(
+            api_config_override, fromTimestamp=warstatus.time - 10000000
+        )
+    except HTTPException as e:
+        hd2api_logger.error("Error raised when calling news feed: %s", e)
+        news = None
+    newdive = DiveharderAll(
+        status=warstatus,
+        war_info=warinfo,
+        planet_stats=summary,
+        major_order=assign,
+        news_feed=news,
+    )
+    return newdive

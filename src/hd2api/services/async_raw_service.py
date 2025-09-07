@@ -12,6 +12,7 @@ from ..models import (
 )
 from ..models.ABC.model import BaseApiModel
 from .async_comm_service import (
+    GetCommApiRawAll,
     GetCommApiRawAssignment,
     GetCommApiRawNewsFeed,
     GetCommApiRawSpaceStation,
@@ -108,7 +109,9 @@ async def GetApiRawSpaceStation(
 
 async def GetApiRawAll(api_config_override: APIConfig, direct=False) -> DiveharderAll:
     """Retrieve all raw data from the api, optionally using the direct method."""
-    if direct:
-        return await GetApiDirectAll(api_config_override)
-    else:
+    if api_config_override.use_raw == "community":
+        return await GetCommApiRawAll(api_config_override)
+    elif api_config_override.use_raw == "diveharder":
         return await GetDhApiRawAll(api_config_override)
+    elif api_config_override.use_raw == "direct":
+        return await GetApiDirectAll(api_config_override)
