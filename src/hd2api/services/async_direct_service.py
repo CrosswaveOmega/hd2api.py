@@ -34,6 +34,8 @@ async def make_direct_api_request(
 
     base_path = api_config.api_direct
     path = f"/api/{endpoint}"
+    if "/801/" in path:
+        path = path.replace("/801/", f"/{api_config.warID}/")
 
     data = await make_async_api_request(base_path, path, api_config, params)
 
