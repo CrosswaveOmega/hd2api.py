@@ -42,7 +42,9 @@ async def make_comm_v1_api_request(
         path += f"/{index}"
 
     if api_config.client_contact is None:
-        raise ValueError("Attempted to call community api without setting client_contact")
+        raise ValueError(
+            "Attempted to call community api without setting client_contact"
+        )
 
     data = await make_async_api_request(base_path, path, api_config)
 
@@ -65,8 +67,11 @@ async def make_comm_raw_api_request(
     path = f"/raw/api/{endpoint}"
     if index is not None:
         path += f"/{index}"
+
     if api_config.client_contact is None:
-        raise ValueError("Attempted to call community api without setting client_contact")
+        raise ValueError(
+            "Attempted to call community api without setting client_contact"
+        )
 
     data = await make_async_api_request(base_path, path, api_config, params)
     return make_output(data, model, index)
@@ -79,7 +84,7 @@ async def GetCommApiRawWarStatus(
     api_config_override: Optional[APIConfig] = None,
 ) -> WarStatus:
     return await make_comm_raw_api_request(
-        "WarSeason/801/Status", WarStatus, api_config_override=api_config_override
+        "WarSeason/WARID/Status", WarStatus, api_config_override=api_config_override
     )
 
 
@@ -87,7 +92,7 @@ async def GetCommApiRawWarInfo(
     api_config_override: Optional[APIConfig] = None,
 ) -> WarInfo:
     return await make_comm_raw_api_request(
-        "WarSeason/801/WarInfo", WarInfo, api_config_override=api_config_override
+        "WarSeason/WARID/WarInfo", WarInfo, api_config_override=api_config_override
     )
 
 
@@ -95,7 +100,7 @@ async def GetCommApiRawSummary(
     api_config_override: Optional[APIConfig] = None,
 ) -> WarSummary:
     return await make_comm_raw_api_request(
-        "Stats/War/801/Summary", WarSummary, api_config_override=api_config_override
+        "Stats/War/WARID/Summary", WarSummary, api_config_override=api_config_override
     )
 
 
@@ -103,7 +108,7 @@ async def GetCommApiRawAssignment(
     api_config_override: Optional[APIConfig] = None,
 ) -> Assignment:
     return await make_comm_raw_api_request(
-        "v2/Assignment/War/801", Assignment, api_config_override=api_config_override
+        "v2/Assignment/War/WARID", Assignment, api_config_override=api_config_override
     )
 
 
@@ -112,13 +117,13 @@ async def GetCommApiRawNewsFeed(
 ) -> List[NewsFeedItem]:
     if fromTimestamp:
         return await make_comm_raw_api_request(
-            "NewsFeed/801",
+            "NewsFeed/WARID",
             NewsFeedItem,
             api_config_override=api_config_override,
             params={"maxEntries": 1024, "fromTimestamp": fromTimestamp},
         )
     return await make_comm_raw_api_request(
-        "NewsFeed/801", NewsFeedItem, api_config_override=api_config_override
+        "NewsFeed/WARID", NewsFeedItem, api_config_override=api_config_override
     )
 
 
@@ -127,7 +132,7 @@ async def GetCommApiRawSpaceStation(
     api_config_override: Optional[APIConfig] = None,
 ) -> SpaceStation:
     result = await make_comm_raw_api_request(
-        f"SpaceStation/801/{station_id}",
+        f"SpaceStation/WARID/{station_id}",
         SpaceStation,
         api_config_override=api_config_override,
     )
@@ -141,7 +146,9 @@ async def GetCommApiRawSpaceStation(
 
 
 async def GetApiV1War(api_config_override: Optional[APIConfig] = None) -> War:
-    return await make_comm_v1_api_request("war", War, api_config_override=api_config_override)
+    return await make_comm_v1_api_request(
+        "war", War, api_config_override=api_config_override
+    )
 
 
 async def GetApiV1AssignmentsAll(
@@ -200,7 +207,9 @@ async def GetApiV1PlanetsAll(
     )
 
 
-async def GetApiV1Planets(index: int, api_config_override: Optional[APIConfig] = None) -> Planet:
+async def GetApiV1Planets(
+    index: int, api_config_override: Optional[APIConfig] = None
+) -> Planet:
     return await make_comm_v1_api_request(
         "planets", Planet, index, api_config_override=api_config_override
     )

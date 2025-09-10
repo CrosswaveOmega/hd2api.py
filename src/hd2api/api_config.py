@@ -29,19 +29,27 @@ class APIConfig(BaseModel):
         description="The source to use when calling raw endpoints, default is 'diveharder'",
     )
     verify: Union[bool, str] = Field(default=True, description="Unused")
-    client_name: str = Field(default="DefaultClientName", description="Name sent to the client")
+    client_name: str = Field(
+        default="DefaultClientName", description="Name sent to the client"
+    )
     client_contact: Optional[str] = Field(
         default=None, description="X-Super-Contact for the community API."
     )
-    language: str = Field(default="en-US", description="The accept-language sent to the client")
+    language: str = Field(
+        default="en-US", description="The accept-language sent to the client"
+    )
     warID: int = Field(default=801, description="The current warid.")
     static_path: str = Field(
         default="",
         description="Override path for the static json files used by this library's builders",
     )
     # __access_token: Optional[str] = None# Field(default=None, description="Unused")
-    timeout: float = Field(default=8, description="Request timeout value for the endpoints.")
-    statics: Optional[StaticAll] = Field(default=None, description="Cached static files")
+    timeout: float = Field(
+        default=8, description="Request timeout value for the endpoints."
+    )
+    statics: Optional[StaticAll] = Field(
+        default=None, description="Cached static files"
+    )
 
     def staticdata(self) -> StaticAll:
         """If not already present, build up the model of static data."""

@@ -40,9 +40,12 @@ class Campaign2(BaseApiModel):
     )
 
     def __sub__(self, other: "Campaign2") -> "Campaign2":
+        planet = None
+        if self.planet is not None and other.planet is not None:
+            planet = self.planet - other.planet
         camp = Campaign2(
             id=self.id,
-            planet=self.planet - other.planet,  # type: ignore
+            planet=planet,  # type: ignore
             type=self.type,
             count=self.count,
             faction=self.faction,

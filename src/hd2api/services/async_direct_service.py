@@ -34,8 +34,6 @@ async def make_direct_api_request(
 
     base_path = api_config.api_direct
     path = f"/api/{endpoint}"
-    if "/801/" in path:
-        path = path.replace("/801/", f"/{api_config.warID}/")
 
     data = await make_async_api_request(base_path, path, api_config, params)
 
@@ -46,7 +44,7 @@ async def GetApiDirectWarStatus(
     api_config_override: Optional[APIConfig] = None,
 ) -> Optional[WarStatus]:
     result = await make_direct_api_request(
-        "WarSeason/801/Status", WarStatus, api_config_override=api_config_override
+        "WarSeason/WARID/Status", WarStatus, api_config_override=api_config_override
     )
 
     # Check if result is a list or None, and raise an exception if needed
@@ -62,7 +60,7 @@ async def GetApiDirectWarInfo(
     api_config_override: Optional[APIConfig] = None,
 ) -> WarInfo:
     result = await make_direct_api_request(
-        "WarSeason/801/WarInfo", WarInfo, api_config_override=api_config_override
+        "WarSeason/WARID/WarInfo", WarInfo, api_config_override=api_config_override
     )
 
     if isinstance(result, list):
@@ -77,7 +75,7 @@ async def GetApiDirectSummary(
     api_config_override: Optional[APIConfig] = None,
 ) -> WarSummary:
     result = await make_direct_api_request(
-        "Stats/War/801/Summary", WarSummary, api_config_override=api_config_override
+        "Stats/War/WARID/Summary", WarSummary, api_config_override=api_config_override
     )
 
     if isinstance(result, list):
@@ -92,7 +90,7 @@ async def GetApiDirectAssignment(
     api_config_override: Optional[APIConfig] = None,
 ) -> List[Assignment]:
     result = await make_direct_api_request(
-        "v2/Assignment/War/801", Assignment, api_config_override=api_config_override
+        "v2/Assignment/War/WARID", Assignment, api_config_override=api_config_override
     )
 
     if result is None:
@@ -109,14 +107,14 @@ async def GetApiDirectNewsFeed(
 ) -> List[NewsFeedItem]:
     if fromTimestamp:
         result = await make_direct_api_request(
-            "NewsFeed/801",
+            "NewsFeed/WARID",
             NewsFeedItem,
             api_config_override=api_config_override,
             params={"maxEntries": 1024, "fromTimestamp": fromTimestamp},
         )
     else:
         result = await make_direct_api_request(
-            "NewsFeed/801",
+            "NewsFeed/WARID",
             NewsFeedItem,
             api_config_override=api_config_override,
             params={"maxEntries": 1024},
@@ -135,7 +133,7 @@ async def GetApiDirectSpaceStation(
     api_config_override: Optional[APIConfig] = None,
 ) -> SpaceStation:
     result = await make_direct_api_request(
-        f"SpaceStation/801/{station_id}",
+        f"SpaceStation/WARID/{station_id}",
         SpaceStation,
         api_config_override=api_config_override,
     )

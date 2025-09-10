@@ -27,7 +27,9 @@ async def make_async_api_request(
     }
     if api_config.client_contact:
         headers["X-Super-Contact"] = api_config.client_contact
-
+    # Replace WARID in path.
+    if "WARID" in path:
+        path = path.replace("WARID", f"{api_config.warID}")
     try:
         async with httpx.AsyncClient(
             base_url=base_path, verify=api_config.verify, timeout=api_config.timeout

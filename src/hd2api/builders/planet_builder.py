@@ -1,6 +1,6 @@
 import datetime as dt
 from typing import Dict, List, Optional, Any
-
+import random
 from hd2api.models import Region
 
 from ..constants import faction_names
@@ -18,11 +18,223 @@ from ..models import (
     WarInfo,
     WarStatus,
     WarSummary,
+    PlanetStatic,
 )
 from ..util import get_item
 from .effect_builder import build_planet_effect
 from .region_builder import build_all_regions
 from .statistics_builder import statistics_builder
+
+
+def generate_planet_name(seed) -> str:
+    """Novelty.  Make up a planet name if it doesn't exist."""
+    rng = random.Random(seed)
+
+    prefixes = [
+        "Aero",
+        "Astra",
+        "Aur",
+        "Bal",
+        "Bel",
+        "Cal",
+        "Cel",
+        "Cor",
+        "Cryo",
+        "Cyn",
+        "Dar",
+        "Dra",
+        "Eld",
+        "Elu",
+        "Ery",
+        "Fal",
+        "Fer",
+        "For",
+        "Gal",
+        "Gry",
+        "Hel",
+        "Hor",
+        "Hyper",
+        "Illu",
+        "Ira",
+        "Jar",
+        "Jun",
+        "Kal",
+        "Kar",
+        "Kel",
+        "Kor",
+        "Kry",
+        "Laz",
+        "Lum",
+        "Mal",
+        "Mor",
+        "Myth",
+        "Nex",
+        "Nor",
+        "Nyx",
+        "Obl",
+        "Oph",
+        "Or",
+        "Per",
+        "Qua",
+        "Quor",
+        "Ral",
+        "Ryn",
+        "Sol",
+        "Syn",
+    ]
+
+    roots = [
+        "anth",
+        "ara",
+        "ari",
+        "arn",
+        "bor",
+        "cas",
+        "cer",
+        "chor",
+        "cyl",
+        "dak",
+        "del",
+        "dor",
+        "dras",
+        "eth",
+        "gal",
+        "gath",
+        "gon",
+        "gorn",
+        "hal",
+        "hor",
+        "ian",
+        "ik",
+        "il",
+        "ith",
+        "kal",
+        "kor",
+        "lax",
+        "lek",
+        "lith",
+        "lok",
+        "mar",
+        "mir",
+        "nal",
+        "nex",
+        "nir",
+        "nok",
+        "nys",
+        "oth",
+        "phas",
+        "por",
+        "quar",
+        "qor",
+        "rak",
+        "ral",
+        "rax",
+        "ryn",
+        "ser",
+        "syl",
+        "tor",
+        "vex",
+    ]
+
+    suffixes = [
+        "a",
+        "ae",
+        "al",
+        "ara",
+        "aris",
+        "ar",
+        "as",
+        "ax",
+        "ean",
+        "el",
+        "en",
+        "es",
+        "eth",
+        "ia",
+        "ian",
+        "ias",
+        "iel",
+        "il",
+        "in",
+        "ion",
+        "ir",
+        "is",
+        "ius",
+        "ix",
+        "oa",
+        "on",
+        "or",
+        "os",
+        "oth",
+        "ra",
+        "ran",
+        "ras",
+        "reth",
+        "ros",
+        "ryn",
+        "rus",
+        "sa",
+        "sis",
+        "sol",
+        "sta",
+        "ta",
+        "tar",
+        "tas",
+        "th",
+        "the",
+        "tia",
+        "tis",
+        "tor",
+        "us",
+        "yn",
+    ]
+
+    connectors = ["-", "'", " "]
+    modifiers = [
+        "New ",
+        "Alpha ",
+        "Neo-",
+        "Great ",
+        "Lost ",
+        "Outer ",
+        "High ",
+        "Deep ",
+        "Lower ",
+        "Ancient ",
+        "Super",
+    ]
+    b0 = (seed >> 24) & 0xFF
+    b1 = (seed >> 16) & 0xFF
+    b2 = (seed >> 8) & 0xFF
+    b3 = seed & 0xFF
+    # s  # Structures as templates with placeholders
+    structures = {
+        "prefix+root+suffix": "{prefix}{root}{suffix}",
+        "prefix+connector+root+suffix": "{prefix}{connector}{root_cap}{suffix}",
+        "prefix+root+suffix": "{root_cap}{connector}{root_cap2}{suffix}",
+        "modifier+connector+prefix+root+suffix": "{modifier}{connector}{prefix}{root}{suffix}",
+    }
+
+    # Pick structure
+    keys = list(structures.keys())
+    structure = keys[b0 % len(keys)]
+    template = structures[structure]
+
+    # Pick values
+    vals = {
+        "prefix": prefixes[b1 % len(prefixes)],
+        "root": roots[b2 % len(roots)],
+        "root_cap": roots[b2 % len(roots)].capitalize(),
+        "root_cap2": roots[b3 % len(roots)].capitalize(),
+        "suffix": suffixes[b3 % len(suffixes)],
+        "connector": connectors[b2 % len(connectors)],
+        "modifier": modifiers[b1 % len(modifiers)],
+    }
+
+    # Fill using .replace()
+    result = template
+    for k, v in vals.items():
+        result = result.replace("{" + k + "}", v)
 
 
 def build_planet_basic(
@@ -50,8 +262,36 @@ def build_planet_basic(
     """
     planet_base = gstatic.planets.get(index, None)
     if not planet_base:
+        # Just in case one doesn't exist.
+        hash = planetInfo.settingsHash
+        name = f"{generate_planet_name(hash)}-{int(hash**0.5)}-TEMP"
+        planet_base = PlanetStatic(
+            name=name,
+            sector="MADEUP",
+            biome="unknown",
+            environmentals=["none"],
+            names={
+                "en-US": name,
+                "en-GB": name,
+                "pt-BR": name,
+                "de-DE": name,
+                "es-ES": name,
+                "fr-FR": name,
+                "it-IT": name,
+                "ja-JP": name,
+                "ko-KO": name,
+                "ms-MY": name,
+                "pl-PL": name,
+                "pt-PT": name,
+                "ru-RU": name,
+                "zh-Hans": name,
+                "zh-Hant": name,
+            },
+            weather_effects=["unknown_temp"],
+            type="none",
+        )
+
         return None
-    print(planet_base)
     biome = gstatic.biomes.get(planet_base.biome, None)  # type: ignore
     env = [gstatic.environmentals.get(e, None) for e in planet_base.environmentals]
     weather = [gstatic.environmentals.get(e, None) for e in planet_base.weather_effects]
