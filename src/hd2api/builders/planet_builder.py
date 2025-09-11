@@ -298,7 +298,9 @@ def build_planet_basic(
     weather = [gstatic.environmentals.get(e, None) for e in planet_base.weather_effects]
     env.extend(weather)
     # Build Statistics
-    stats_new = statistics_builder(stats, planetStatus.players, planetStatus.retrieved_at)
+    stats_new = statistics_builder(
+        stats, planetStatus.players, planetStatus.retrieved_at
+    )
     # Position can come from planetInfo OR planetStatus
     pos = planetInfo.position
     if planetStatus.position is not None:
@@ -334,7 +336,9 @@ def check_compare_value(key, value, target: List[Dict[str, Any]]):
     return None
 
 
-def check_compare_value_list(keys: List[str], values: List[Any], target: List[Dict[str, Any]]):
+def check_compare_value_list(
+    keys: List[str], values: List[Any], target: List[Dict[str, Any]]
+):
     values = []
     for s in target:
         if all(s[key] == value for key, value in zip(keys, values)):
@@ -347,12 +351,14 @@ def get_time(status: WarStatus, info: WarInfo) -> dt.datetime:
 
     # Get datetime diveharder object was retrieved at
     now = status.retrieved_at
-    gametime = dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + dt.timedelta(
-        seconds=status.time
-    )
+    gametime = dt.datetime.fromtimestamp(
+        info.startDate, tz=dt.timezone.utc
+    ) + dt.timedelta(seconds=status.time)
     deviation = now - gametime
     # print(deviation)
-    relative_game_start = dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + deviation
+    relative_game_start = (
+        dt.datetime.fromtimestamp(info.startDate, tz=dt.timezone.utc) + deviation
+    )
     return relative_game_start
 
 
@@ -478,7 +484,9 @@ def build_planet_2(planetIndex: int, warall: DiveharderAll, statics: StaticAll):
     summary: Optional[WarSummary] = warall.planet_stats
 
     regions = build_all_regions(warall, statics)
-    planet = build_planet_full(planetIndex, status, info, summary, statics, regions=regions)
+    planet = build_planet_full(
+        planetIndex, status, info, summary, statics, regions=regions
+    )
     return planet
 
 
@@ -495,11 +503,13 @@ def build_all_planets(warall: DiveharderAll, statics: StaticAll) -> Dict[int, Pl
         dict: A dictionary mapping planet indices to Planet objects.
     """
     planet_data = {}
+    status: WarStatus = warall.status  # type: ignore
+    info: WarInfo = warall.war_info  # type: ignore
+    summary: Optional[WarSummary] = warall.planet_stats
     regions = build_all_regions(warall, statics)
-    for i, v in statics.galaxystatic.planets.items():
-        status: WarStatus = warall.status  # type: ignore
-        info: WarInfo = warall.war_info  # type: ignore
-        summary: Optional[WarSummary] = warall.planet_stats
+    for infov in warall.war_info.planetInfos:
+        i = infov.index
         planet = build_planet_full(i, status, info, summary, statics, regions=regions)
         planet_data[i] = planet
+
     return planet_data
