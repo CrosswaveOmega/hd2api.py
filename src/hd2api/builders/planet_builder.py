@@ -219,7 +219,6 @@ def generate_planet_name(seed) -> str:
     keys = list(structures.keys())
     structure = keys[b0 % len(keys)]
     template = structures[structure]
-
     # Pick values
     vals = {
         "prefix": prefixes[b1 % len(prefixes)],
@@ -235,6 +234,7 @@ def generate_planet_name(seed) -> str:
     result = template
     for k, v in vals.items():
         result = result.replace("{" + k + "}", v)
+    return result
 
 
 def build_planet_basic(
@@ -264,8 +264,9 @@ def build_planet_basic(
     if not planet_base:
         # If a planet doesn't exist for whatever reason, generate
         # a temporary name for it.
-        hash = planetInfo.settingsHash
-        name = f"{generate_planet_name(hash)}-{int(hash**0.5)}-TEMP"
+        thishash = int(planetInfo.settingsHash)
+        name = f"{generate_planet_name(thishash)}-{int(thishash**0.5)}-TEMP"
+
         planet_base = PlanetStatic(
             name=name,
             sector="MADEUP",
@@ -292,7 +293,6 @@ def build_planet_basic(
             type="none",
         )
 
-        return None
     biome = gstatic.biomes.get(planet_base.biome, None)  # type: ignore
     env = [gstatic.environmentals.get(e, None) for e in planet_base.environmentals]
     weather = [gstatic.environmentals.get(e, None) for e in planet_base.weather_effects]
