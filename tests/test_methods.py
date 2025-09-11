@@ -60,6 +60,35 @@ async def test_planet(apiconfig):
     assert planet.name.upper() == "MERIDIA"
 
 
+async def test_fake_planet(apiconfig):
+    allval = await GetApiRawAll(apiconfig)
+    hd2api_logger.info(allval.status)
+    allval.war_info.planetInfos.append(
+        PlanetInfo(
+            index=501,
+            settingsHash=123456789,
+            position=PlanetCoordinates(x=1.0, y=0.0),
+            waypoints=[],
+            sector=394,
+            maxHealth=200,
+            initialOwner=0,
+        )
+    )
+    allval.status.planetStatus.append(
+        PlanetStatus(
+            index=501,
+            owner=0,
+            health=50,
+            regenPerSecond=0.1,
+            players=29,
+            position=PlanetCoordinates(x=1.0, y=0.0),
+        )
+    )
+    planet = build_planet_2(501, allval, apiconfig.staticdata())
+    hd2api_logger.info(planet)
+    assert planet.name.upper() == "GREAT 'OPHCASIS-11111-TEMP"
+
+
 async def test_get_event_avg(apiconfig):
     """Test averaging for planet"""
     warall = await GetApiRawAll(apiconfig)
