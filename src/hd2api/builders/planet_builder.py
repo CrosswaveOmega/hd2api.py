@@ -289,7 +289,7 @@ def build_planet_basic(
                 "zh-Hans": name,
                 "zh-Hant": name,
             },
-            weather_effects=["unknown_temp"],
+            weather_effects=["normal_temp"],
             type="none",
         )
 
