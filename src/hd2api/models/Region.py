@@ -212,6 +212,13 @@ class Region(BaseApiModel, HealthMixin):
             return f"[{self.size} {self.name}-{fact}]"
 
     def calculate_timeval(self, change: float, is_positive: bool) -> datetime.datetime:
+        return self.retrieved_at + self.calculate_timedelta_to_liberate(
+            change, is_positive
+        )
+
+    def calculate_timedelta_to_liberate(
+        self, change: float, is_positive: bool
+    ) -> datetime.timedelta:
         if self.health is None or self.maxHealth is None:
             return self.retrieved_at
 
@@ -219,7 +226,7 @@ class Region(BaseApiModel, HealthMixin):
             seconds = abs((self.maxHealth - self.health) / change)
         else:
             seconds = abs(self.health / change)
-        return self.retrieved_at + datetime.timedelta(seconds=seconds)
+        return datetime.timedelta(seconds=seconds)
 
     def format_estimated_time_string(
         self, change: float, esttime: datetime.datetime
@@ -240,6 +247,17 @@ class Region(BaseApiModel, HealthMixin):
 
         timeval = self.calculate_timeval(change, change > 0)
         return self.format_estimated_time_string(change, timeval)
+
+    def calculate_lib_seconds(self, diff: "Region"):
+        if not diff.time_delta or diff.time_delta.total_seconds() == 0:
+            return 0
+
+        change = self.calculate_change(diff)
+        if change == 0:
+            return 0
+
+        timeval = self.calculate_timedelta_to_liberate(change, change > 0)
+        return timeval
 
     @staticmethod
     def average(regions: List["Region"]) -> "Region":

@@ -212,22 +212,45 @@ class Planet(BaseApiModel, HealthMixin):
             return 0.0
         return diff.health / time_elapsed.total_seconds()
 
-    def calculate_timeval(self, change: float, is_positive: bool) -> datetime.datetime:
+    def calculate_timedelta_to_liberate(
+        self, change: float, is_positive: bool, offset: float = 0.0
+    ) -> datetime.timedelta:
+        """
+        Calculate the future timedelta when the planet's health will reach the maxHealth or zero.
+
+        Args:
+            change (float): The rate of change in health per second.
+            is_positive (bool): A boolean indicating if the change is positive or negative.
+            offset (float): Optional Health offset
+
+        Returns:
+            timedelta: The estimated future timedelta
+        """
+        if self.health is None or self.maxHealth is None:
+            return datetime.timedelta(seconds=0)
+
+        if is_positive:
+            seconds = abs((self.maxHealth - (self.health + offset)) / change)
+        else:
+            seconds = abs((self.health - offset) / change)
+        return datetime.timedelta(seconds=seconds)
+
+    def calculate_timeval(
+        self, change: float, is_positive: bool, offset: float = 0.0
+    ) -> datetime.datetime:
         """
         Calculate the future datetime when the planet's health will reach the maxHealth or zero.
 
         Args:
             change (float): The rate of change in health per second.
             is_positive (bool): A boolean indicating if the change is positive or negative.
-
+            offset (float): Optional Health offset
         Returns:
             datetime: The estimated future datetime.
         """
-        if is_positive:
-            estimated_seconds = abs((self.maxHealth - self.health) / change)  # type: ignore
-        else:
-            estimated_seconds = abs(self.health / change)
-        return self.retrieved_at + datetime.timedelta(seconds=estimated_seconds)
+        return self.retrieved_at + self.calculate_timedelta_to_liberate(
+            change, is_positive, offset
+        )
 
     def format_estimated_time_string(self, change: float, esttime: datetime.datetime):
         change_str = f"{round(change, 5)}"
@@ -257,8 +280,24 @@ class Planet(BaseApiModel, HealthMixin):
                 return "Stalemate."
             return ""
 
-        timeval = self.calculate_timeval(change, change > 0)
+        regions_dict = {}
+        total_offset = 0
+        timeoffset = datetime.timedelta(seconds=0)
+        if self.regions is not None:
+            for e, region in enumerate(self.regions):
+                rdiff = diff.regions[e]
+                timeval = region.calculate_lib_seconds(rdiff)
+                if timeval:
+                    total_offset += (region.maxHealth) * 1.5
+                    timeoffset += timeval
 
+        timeval = (
+            self.retrieved_at
+            + timeoffset
+            + self.calculate_timedelta_to_liberate(
+                change, change > 0, offset=total_offset
+            )
+        )
         return self.format_estimated_time_string(change, timeval)
 
     def get_name(self, faction=True) -> str:
