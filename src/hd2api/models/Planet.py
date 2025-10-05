@@ -248,15 +248,11 @@ class Planet(BaseApiModel, HealthMixin):
         Returns:
             datetime: The estimated future datetime.
         """
-        return self.retrieved_at + self.calculate_timedelta_to_liberate(
-            change, is_positive, offset
-        )
+        return self.retrieved_at + self.calculate_timedelta_to_liberate(change, is_positive, offset)
 
     def format_estimated_time_string(self, change: float, esttime: datetime.datetime):
         change_str = f"{round(change, 5)}"
-        timeval_str = (
-            f"Est.Loss {fdt(esttime, 'R')}" if change > 0 else f"{fdt(esttime, 'R')}"
-        )
+        timeval_str = f"Est.Loss {fdt(esttime, 'R')}" if change > 0 else f"{fdt(esttime, 'R')}"
 
         return f"`[{change_str} dps]`, {timeval_str}"
 
@@ -279,7 +275,7 @@ class Planet(BaseApiModel, HealthMixin):
             if self.currentOwner.lower() != "humans":
                 return "Stalemate."
             return ""
-
+        timeval_base = self.calculate_timedelta_to_liberate(change, change > 0, offset=0)
         regions_dict = {}
         total_offset = 0
         timeoffset = datetime.timedelta(seconds=0)
@@ -288,15 +284,16 @@ class Planet(BaseApiModel, HealthMixin):
                 rdiff = diff.regions[e]
                 timeval = region.calculate_lib_seconds(rdiff)
                 if timeval:
-                    total_offset += (region.maxHealth) * 1.5
-                    timeoffset += timeval
-
+                    rchange = region.calculate_change(diff)
+                    if rchange > 0:
+                        total_offset += (region.maxHealth) * 1.5
+                        timeoffset += timeval
+        if timeval_base.total_seconds() < timeoffset.total_seconds():
+            return self.format_estimated_time_string(change, self.retrieved_at + timeval_base)
         timeval = (
             self.retrieved_at
             + timeoffset
-            + self.calculate_timedelta_to_liberate(
-                change, change > 0, offset=total_offset
-            )
+            + self.calculate_timedelta_to_liberate(change, change > 0, offset=total_offset)
         )
         return self.format_estimated_time_string(change, timeval)
 
@@ -316,8 +313,7 @@ class Planet(BaseApiModel, HealthMixin):
             return Planet()
 
         avg_health = (
-            sum(planet.health for planet in planets_list if planet.health is not None)
-            // count
+            sum(planet.health for planet in planets_list if planet.health is not None) // count
         )
 
         stats = []
@@ -400,7 +396,9 @@ class Planet(BaseApiModel, HealthMixin):
         faction = emj(self.currentOwner.lower())
 
         name = f"{faction}P#{self.index}: {self.name}"
-        players = f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
+        players = (
+            f"{emj('hdi')}: `{self.statistics.playerCount} {cfi(diff.statistics.playerCount)}`"
+        )
         outlist = [f"{players}"]
         if (not self.event) or show_hp_without_event:
             outlist.append(
@@ -425,9 +423,7 @@ class Planet(BaseApiModel, HealthMixin):
             outlist.append(f"Deadline: [{timev}]")
             if avg:
                 if avg.event:
-                    outlist.append(
-                        f"{self.event.estimate_remaining_lib_time(avg.event)}"
-                    )
+                    outlist.append(f"{self.event.estimate_remaining_lib_time(avg.event)}")
         if self.regions and show_city:
             addme = "**REGIONS**\n" + "\n".join(
                 "* " + region.inline_view() for region in self.regions
