@@ -292,11 +292,12 @@ class Planet(BaseApiModel, HealthMixin):
                 timeval = region.calculate_lib_seconds(rdiff)
                 if timeval:
                     rchange = region.calculate_change(rdiff)
+                    st = region.estimate_remaining_lib_time(rdiff)
+                    if st and "Stalemate" not in st:
+                        wo += "\n" + st
                     if rchange < 0:
                         timeoffset += timeval
-                        st = region.estimate_remaining_lib_time(rdiff)
-                        if st and "Stalemate" not in st:
-                            wo += "\n" + st
+
                         offsets.append(
                             (
                                 timeval,
