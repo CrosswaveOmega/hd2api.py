@@ -270,6 +270,7 @@ class Region(BaseApiModel, HealthMixin):
             maxHealth=regions[0].maxHealth,
             regionSize=regions[0].regionSize,
             owner=regions[0].owner,
+            id=regions[0].id,
             health=avg_health,
             players=avg_players,
             regenPerSecond=regions[0].regenPerSecond,

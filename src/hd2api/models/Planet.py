@@ -284,10 +284,11 @@ class Planet(BaseApiModel, HealthMixin):
         if self.regions is not None:
             regions_dict = {}
             for diffregion in diff.regions:
-                regions_dict[diffregion.id] = diffregion
+                regions_dict[diffregion.regionIndex] = diffregion
             for e, region in enumerate(self.regions):
-                rdiff = regions_dict.get(region.id, None)
+                rdiff = regions_dict.get(region.regionIndex, None)
                 if not rdiff:
+                    print("reg")
                     continue
                 timeval = region.calculate_lib_seconds(rdiff)
                 if timeval:
@@ -305,7 +306,7 @@ class Planet(BaseApiModel, HealthMixin):
                                 region.estimate_remaining_lib_time(rdiff),
                             )
                         )
-        if timeval_base.total_seconds() < timeoffset.total_seconds():
+        if timeval_base.total_seconds() <= timeoffset.total_seconds():
             # Case 1, it will take less time to do a normal liberation
             # At the current rate.
             return wo
@@ -327,19 +328,19 @@ class Planet(BaseApiModel, HealthMixin):
                     # Estimate fractional time to hit zero during this interval
                     extra_time = hp_now / change if change != 0 else 0
                     timeval = self.retrieved_at + datetime.timedelta(seconds=ty_s + extra_time)
-                    return wo + "\n r:" + self.format_estimated_time_string(change, timeval)
+                    return wo  # + "\n r:" + self.format_estimated_time_string(change, timeval)
             if hp_now > 0 and change < 0:
                 remaining_time = abs(hp_now / change)
                 timeval = self.retrieved_at + datetime.timedelta(
                     seconds=time_elapsed + remaining_time
                 )
-                return wo + "\n r:" + self.format_estimated_time_string(change, timeval)
+                return wo  # + "\n r:" + self.format_estimated_time_string(change, timeval)
             elif hp_now > 0 and change > 0:
                 remaining_time = abs((self.maxHealth - hp_now) / change)  # type: ignore
                 timeval = self.retrieved_at + datetime.timedelta(
                     seconds=time_elapsed + remaining_time
                 )
-                return wo + "\n r:" + self.format_estimated_time_string(change, timeval)
+                return wo  # + "\n r:" + self.format_estimated_time_string(change, timeval)
         timeval = self.retrieved_at + self.calculate_timedelta_to_liberate(change, change > 0)
         return wo
 
