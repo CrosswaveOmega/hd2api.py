@@ -284,9 +284,7 @@ class Planet(BaseApiModel, HealthMixin):
         if self.regions is not None:
             regions_dict = {}
             for region in diff.regions:
-                if region.id not in regions_dict:
-                    regions_dict[region.id] = []
-                regions_dict[region.id].append(region)
+                regions_dict[region.id] = region
             for e, region in enumerate(self.regions):
                 rdiff = regions_dict.get(region.id, None)
                 if not rdiff:
