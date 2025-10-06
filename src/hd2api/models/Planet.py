@@ -276,24 +276,55 @@ class Planet(BaseApiModel, HealthMixin):
                 return "Stalemate."
             return ""
         timeval_base = self.calculate_timedelta_to_liberate(change, change > 0, offset=0)
-        regions_dict = {}
         total_offset = 0
         timeoffset = datetime.timedelta(seconds=0)
+        offsets: List[Tuple[datetime.timedelta, float]] = []
         if self.regions is not None:
             for e, region in enumerate(self.regions):
                 rdiff = diff.regions[e]
                 timeval = region.calculate_lib_seconds(rdiff)
                 if timeval:
-                    rchange = region.calculate_change(diff)
-                    if rchange > 0:
+                    rchange = region.calculate_change(rdiff)
+                    if rchange < 0:
                         total_offset += (region.maxHealth) * 1.5
                         timeoffset += timeval
+                        offsets.append((timeval, (region.maxHealth) * 1.5))
         if timeval_base.total_seconds() < timeoffset.total_seconds():
+            # Case 1, it will take less time to do a normal liberation
+            # At the current rate.
             return self.format_estimated_time_string(change, self.retrieved_at + timeval_base)
-        timeval = (
-            self.retrieved_at
-            + timeoffset
-            + self.calculate_timedelta_to_liberate(change, change > 0, offset=total_offset)
+        else:
+            hp_now = self.health
+            time_elapsed = 0.0
+            for ty, off in sorted(offsets, key=lambda x: x[0]):
+                ty_s = ty.total_seconds()
+
+                # continuous rate up to this point
+                hp_now += change * (ty_s - time_elapsed)  # type: ignore
+                time_elapsed = ty_s
+
+                # fixed subtraction at this event
+                hp_now -= off
+
+                if hp_now <= 0:
+                    # Estimate fractional time to hit zero during this interval
+                    extra_time = hp_now / change if change != 0 else 0
+                    timeval = self.retrieved_at + datetime.timedelta(seconds=ty_s + extra_time)
+                    return self.format_estimated_time_string(change, timeval)
+            if hp_now > 0 and change < 0:
+                remaining_time = abs(hp_now / change)
+                timeval = self.retrieved_at + datetime.timedelta(
+                    seconds=time_elapsed + remaining_time
+                )
+                return self.format_estimated_time_string(change, timeval)
+            elif hp_now > 0 and change > 0:
+                remaining_time = abs((self.maxHealth - hp_now) / change)  # type: ignore
+                timeval = self.retrieved_at + datetime.timedelta(
+                    seconds=time_elapsed + remaining_time
+                )
+                return self.format_estimated_time_string(change, timeval)
+        timeval = self.retrieved_at + self.calculate_timedelta_to_liberate(
+            change, change > 0, offset=total_offset
         )
         return self.format_estimated_time_string(change, timeval)
 

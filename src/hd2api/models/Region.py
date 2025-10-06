@@ -57,9 +57,7 @@ class Region(BaseApiModel, HealthMixin):
         description="Hash for the internal region settings.",
     )
 
-    name: Optional[str] = Field(
-        alias="name", default=None, description="The name of the region."
-    )
+    name: Optional[str] = Field(alias="name", default=None, description="The name of the region.")
 
     description: Optional[str] = Field(
         alias="description",
@@ -212,15 +210,13 @@ class Region(BaseApiModel, HealthMixin):
             return f"[{self.size} {self.name}-{fact}]"
 
     def calculate_timeval(self, change: float, is_positive: bool) -> datetime.datetime:
-        return self.retrieved_at + self.calculate_timedelta_to_liberate(
-            change, is_positive
-        )
+        return self.retrieved_at + self.calculate_timedelta_to_liberate(change, is_positive)
 
     def calculate_timedelta_to_liberate(
         self, change: float, is_positive: bool
     ) -> datetime.timedelta:
         if self.health is None or self.maxHealth is None:
-            return self.retrieved_at
+            return datetime.timedelta(seconds=0)
 
         if is_positive:
             seconds = abs((self.maxHealth - self.health) / change)
@@ -228,13 +224,9 @@ class Region(BaseApiModel, HealthMixin):
             seconds = abs(self.health / change)
         return datetime.timedelta(seconds=seconds)
 
-    def format_estimated_time_string(
-        self, change: float, esttime: datetime.datetime
-    ) -> str:
+    def format_estimated_time_string(self, change: float, esttime: datetime.datetime) -> str:
         change_str = f"{round(change, 5)}"
-        timeval_str = (
-            f"Est.Loss {fdt(esttime, 'R')}" if change > 0 else f"{fdt(esttime, 'R')}"
-        )
+        timeval_str = f"Est.Loss {fdt(esttime, 'R')}" if change > 0 else f"{fdt(esttime, 'R')}"
         return f"`[{change_str} dps]`, {timeval_str}"
 
     def estimate_remaining_lib_time(self, diff: "Region") -> str:
@@ -267,9 +259,7 @@ class Region(BaseApiModel, HealthMixin):
 
         avg_health = sum(r.health for r in regions if r.health is not None) // count
         avg_players = sum(r.players for r in regions if r.players is not None) // count
-        avg_time = (
-            sum(r.time_delta.total_seconds() for r in regions if r.time_delta) // count
-        )
+        avg_time = sum(r.time_delta.total_seconds() for r in regions if r.time_delta) // count
 
         return Region(
             planetIndex=regions[0].planetIndex,
