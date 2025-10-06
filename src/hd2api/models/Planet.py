@@ -288,7 +288,9 @@ class Planet(BaseApiModel, HealthMixin):
                     regions_dict[region.id] = []
                 regions_dict[region.id].append(region)
             for e, region in enumerate(self.regions):
-                rdiff = regions_dict[region.id]
+                rdiff = regions_dict.get(region.id, None)
+                if not rdiff:
+                    continue
                 timeval = region.calculate_lib_seconds(rdiff)
                 if timeval:
                     rchange = region.calculate_change(rdiff)
