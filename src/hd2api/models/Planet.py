@@ -282,8 +282,13 @@ class Planet(BaseApiModel, HealthMixin):
         wo = self.format_estimated_time_string(change, self.retrieved_at + timeval_base)
 
         if self.regions is not None:
+            regions_dict = {}
+            for region in diff.regions:
+                if region.id not in regions_dict:
+                    regions_dict[region.id] = []
+                regions_dict[region.id].append(region)
             for e, region in enumerate(self.regions):
-                rdiff = diff.regions[e]
+                rdiff = regions_dict[region.id]
                 timeval = region.calculate_lib_seconds(rdiff)
                 if timeval:
                     rchange = region.calculate_change(rdiff)
