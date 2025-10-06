@@ -279,6 +279,8 @@ class Planet(BaseApiModel, HealthMixin):
         total_offset = 0
         timeoffset = datetime.timedelta(seconds=0)
         offsets: List[Tuple[datetime.timedelta, float]] = []
+        wo = self.format_estimated_time_string(change, self.retrieved_at + timeval_base)
+
         if self.regions is not None:
             for e, region in enumerate(self.regions):
                 rdiff = diff.regions[e]
@@ -292,7 +294,7 @@ class Planet(BaseApiModel, HealthMixin):
         if timeval_base.total_seconds() < timeoffset.total_seconds():
             # Case 1, it will take less time to do a normal liberation
             # At the current rate.
-            return self.format_estimated_time_string(change, self.retrieved_at + timeval_base)
+            return wo
         else:
             hp_now = self.health
             time_elapsed = 0.0
@@ -310,23 +312,21 @@ class Planet(BaseApiModel, HealthMixin):
                     # Estimate fractional time to hit zero during this interval
                     extra_time = hp_now / change if change != 0 else 0
                     timeval = self.retrieved_at + datetime.timedelta(seconds=ty_s + extra_time)
-                    return self.format_estimated_time_string(change, timeval)
+                    return wo + "\n r:" + self.format_estimated_time_string(change, timeval)
             if hp_now > 0 and change < 0:
                 remaining_time = abs(hp_now / change)
                 timeval = self.retrieved_at + datetime.timedelta(
                     seconds=time_elapsed + remaining_time
                 )
-                return self.format_estimated_time_string(change, timeval)
+                return wo + "\n r:" + self.format_estimated_time_string(change, timeval)
             elif hp_now > 0 and change > 0:
                 remaining_time = abs((self.maxHealth - hp_now) / change)  # type: ignore
                 timeval = self.retrieved_at + datetime.timedelta(
                     seconds=time_elapsed + remaining_time
                 )
-                return self.format_estimated_time_string(change, timeval)
-        timeval = self.retrieved_at + self.calculate_timedelta_to_liberate(
-            change, change > 0, offset=total_offset
-        )
-        return self.format_estimated_time_string(change, timeval)
+                return wo + "\n r:" + self.format_estimated_time_string(change, timeval)
+        timeval = self.retrieved_at + self.calculate_timedelta_to_liberate(change, change > 0)
+        return wo
 
     def get_name(self, faction=True) -> str:
         """Get the name of the planet, along with occupying faction
