@@ -278,7 +278,7 @@ class Planet(BaseApiModel, HealthMixin):
         timeval_base = self.calculate_timedelta_to_liberate(change, change > 0, offset=0)
         total_offset = 0
         timeoffset = datetime.timedelta(seconds=0)
-        offsets: List[Tuple[datetime.timedelta, float]] = []
+        offsets: List[Tuple[datetime.timedelta, float, str]] = []
         wo = self.format_estimated_time_string(change, self.retrieved_at + timeval_base)
 
         if self.regions is not None:
@@ -290,7 +290,13 @@ class Planet(BaseApiModel, HealthMixin):
                     if rchange < 0:
                         total_offset += (region.maxHealth) * 1.5
                         timeoffset += timeval
-                        offsets.append((timeval, (region.maxHealth) * 1.5))
+                        offsets.append(
+                            (
+                                timeval,
+                                (region.maxHealth) * 1.5,
+                                region.estimate_remaining_lib_time(rdiff),
+                            )
+                        )
         if timeval_base.total_seconds() < timeoffset.total_seconds():
             # Case 1, it will take less time to do a normal liberation
             # At the current rate.
@@ -298,12 +304,13 @@ class Planet(BaseApiModel, HealthMixin):
         else:
             hp_now = self.health
             time_elapsed = 0.0
-            for ty, off in sorted(offsets, key=lambda x: x[0]):
+            for ty, off, st in sorted(offsets, key=lambda x: x[0]):
                 ty_s = ty.total_seconds()
 
                 # continuous rate up to this point
                 hp_now += change * (ty_s - time_elapsed)  # type: ignore
                 time_elapsed = ty_s
+                wo = wo + st
 
                 # fixed subtraction at this event
                 hp_now -= off
