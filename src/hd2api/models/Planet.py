@@ -164,10 +164,10 @@ class Planet(BaseApiModel, HealthMixin):
         new_regions = None
         if self.regions is not None and other.regions is not None:
             new_regions = []
-            other_regions_dict = {region.id: region for region in other.regions}
+            other_regions_dict = {region.regionIndex: region for region in other.regions}
             for region in self.regions:
-                if region.id in other_regions_dict:
-                    new_regions.append(region - other_regions_dict[region.id])
+                if region.regionIndex in other_regions_dict:
+                    new_regions.append(region - other_regions_dict[region.regionIndex])
                 else:
                     new_regions.append(region)
         elif self.regions is not None:
@@ -294,8 +294,10 @@ class Planet(BaseApiModel, HealthMixin):
                 if timeval:
                     rchange = region.calculate_change(rdiff)
                     st = region.estimate_remaining_lib_time(rdiff)
-                    if st and "Stalemate" not in st:
-                        wo += "\n" + st
+                    if "Stalemate" in st:
+                        st = st.replace("Stalemate", ".")
+                    if st:
+                        wo += "\n *" + st
                     if rchange < 0:
                         timeoffset += timeval
 
@@ -387,9 +389,9 @@ class Planet(BaseApiModel, HealthMixin):
         for planet in planets_list:
             if planet.regions is not None:
                 for region in planet.regions:
-                    if region.id not in regions_dict:
-                        regions_dict[region.id] = []
-                    regions_dict[region.id].append(region)
+                    if region.regionIndex not in regions_dict:
+                        regions_dict[region.regionIndex] = []
+                    regions_dict[region.regionIndex].append(region)
 
         avg_regions = [Region.average(regions) for regions in regions_dict.values()]
 
