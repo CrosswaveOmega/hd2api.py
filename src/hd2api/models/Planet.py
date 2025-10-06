@@ -286,6 +286,8 @@ class Planet(BaseApiModel, HealthMixin):
             for diffregion in diff.regions:
                 regions_dict[diffregion.regionIndex] = diffregion
             for e, region in enumerate(self.regions):
+                if not region.isAvailable:
+                    continue
                 rdiff = regions_dict.get(region.regionIndex, None)
                 if not rdiff:
                     print("reg")
@@ -297,7 +299,7 @@ class Planet(BaseApiModel, HealthMixin):
                     if "Stalemate" in st:
                         st = st.replace("Stalemate", ".")
                     if st:
-                        wo += "\n *" + st
+                        wo += f"\n * {region.regionIndex}" + st
                     if rchange < 0:
                         timeoffset += timeval
 
