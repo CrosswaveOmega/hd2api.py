@@ -283,8 +283,8 @@ class Planet(BaseApiModel, HealthMixin):
 
         if self.regions is not None:
             regions_dict = {}
-            for region in diff.regions:
-                regions_dict[region.id] = region
+            for diffregion in diff.regions:
+                regions_dict[diffregion.id] = diffregion
             for e, region in enumerate(self.regions):
                 rdiff = regions_dict.get(region.id, None)
                 if not rdiff:
@@ -293,8 +293,10 @@ class Planet(BaseApiModel, HealthMixin):
                 if timeval:
                     rchange = region.calculate_change(rdiff)
                     if rchange < 0:
-                        total_offset += (region.maxHealth) * 1.5
                         timeoffset += timeval
+                        st = region.estimate_remaining_lib_time(rdiff)
+                        if st and "Stalemate" not in st:
+                            wo += "\n" + st
                         offsets.append(
                             (
                                 timeval,
@@ -315,7 +317,7 @@ class Planet(BaseApiModel, HealthMixin):
                 # continuous rate up to this point
                 hp_now += change * (ty_s - time_elapsed)  # type: ignore
                 time_elapsed = ty_s
-                wo = wo + st
+                wo = wo
 
                 # fixed subtraction at this event
                 hp_now -= off
