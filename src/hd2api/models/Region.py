@@ -50,6 +50,16 @@ class Region(BaseApiModel, HealthMixin):
         default=None,
         description="Hash for the internal region settings.",
     )
+    flags: Optional[int] = Field(
+        alias="flags",
+        default=None,
+        description="Flags from the region.",
+    )
+    damageMultiplier: Optional[float] = Field(
+        alias="damageMultiplier",
+        default=None,
+        description="damage multiplier for the region.",
+    )
 
     hash: Optional[int] = Field(
         alias="hash",
@@ -145,6 +155,8 @@ class Region(BaseApiModel, HealthMixin):
             regionSize=self.regionSize,
             size=self.size,
             owner=self.owner,
+            damageMultiplier=self.damageMultiplier,
+            flags=self.flags,
             health=health_diff,
             regenPerSecond=self.regenPerSecond,
             availabilityFactor=self.availabilityFactor,
@@ -270,6 +282,8 @@ class Region(BaseApiModel, HealthMixin):
             maxHealth=regions[0].maxHealth,
             regionSize=regions[0].regionSize,
             owner=regions[0].owner,
+            damageMultiplier=regions[0].damageMultiplier,
+            flags=regions[0].flags,
             id=regions[0].id,
             health=avg_health,
             players=avg_players,

@@ -14,6 +14,9 @@
     "python.formatting.provider": "black",
     "python.testing.unittestEnabled": false,
     "python.testing.pytestEnabled": true,
+    "python.testing.pytestArgs": [
+        "-s"
+    ],
     "pylint.args": [
         "--rcfile=pyproject.toml"
     ],
@@ -25,5 +28,5 @@
     ],
     "isort.args": [
         "--settings-path=pyproject.toml"
-    ]
+    ],
 }

@@ -40,3 +40,14 @@ class PlanetRegionInfo(BaseApiModel):
         default=None,
         description="The size of this region.",
     )
+
+    flags: Optional[int] = Field(
+        alias="flags",
+        default=None,
+        description="Flags from the region.",
+    )
+    damageMultiplier: Optional[float] = Field(
+        alias="damageMultiplier",
+        default=None,
+        description="damage multiplier for the region.",
+    )
