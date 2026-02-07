@@ -10,9 +10,7 @@ class GlobalResource(BaseApiModel):
     Raw object which represents a global resource.
     """
 
-    id32: Optional[int] = Field(
-        alias="id32", default=None, description="The 32-bit ID."
-    )
+    id32: Optional[int] = Field(alias="id32", default=None, description="The 32-bit ID.")
     currentValue: Optional[Union[int, float]] = Field(
         alias="currentValue",
         default=None,
@@ -28,6 +26,11 @@ class GlobalResource(BaseApiModel):
         default=None,
         description="Flags that indicate something about this resource.",
     )
+    changePerSecond: Optional[Union[int, float]] = Field(
+        alias="changePerSecond",
+        default=None,
+        description="The change per second of this global resource.",
+    )
 
     def __sub__(self, other: "GlobalResource") -> "GlobalResource":
         camp = GlobalResource(
@@ -35,6 +38,7 @@ class GlobalResource(BaseApiModel):
             currentValue=self.currentValue - other.currentValue,  # type: ignore
             maxValue=self.maxValue,
             flags=self.flags,
+            changePerSecond=self.changePerSecond,
         )
         # camp.retrieved_at = self.retrieved_at - other.retrieved_at
         return camp
