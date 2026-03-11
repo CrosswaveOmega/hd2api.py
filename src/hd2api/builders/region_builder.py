@@ -77,6 +77,9 @@ def build_region(
         # From Static Region Metadata
         name=static_region.name,
         description=static_region.description,
+        region_faction=static_region.region_faction,
+        region_type=static_region.region_type,
+        region_links=static_region.regions_connected_to,
         # From PlanetRegion (dynamic)
         owner=region.owner,
         health=region.health,

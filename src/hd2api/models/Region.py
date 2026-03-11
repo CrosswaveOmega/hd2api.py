@@ -74,6 +74,21 @@ class Region(BaseApiModel, HealthMixin):
         default=None,
         description="A brief description of the region.",
     )
+    region_faction: Optional[str] = Field(
+        alias="region_faction",
+        default=None,
+        description="Faction that alters what this region is displayed as on the UI.",
+    )
+    region_type: Optional[str] = Field(
+        alias="region_type",
+        default=None,
+        description="The template used to generate missions for this region.",
+    )
+    region_links: Optional[List[str]] = Field(
+        alias="region_links",
+        default=None,
+        description="Size or scale factor for the region.",
+    )
 
     maxHealth: Optional[int] = Field(
         alias="maxHealth",

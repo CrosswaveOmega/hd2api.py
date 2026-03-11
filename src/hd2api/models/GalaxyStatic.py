@@ -78,6 +78,21 @@ class PlanetRegionStatic(BaseApiModel):
         default=None,
         description="The Description for this region.",
     )
+    region_faction: Optional[str] = Field(
+        alias="region_faction",
+        default=None,
+        description="Faction that alters what this region is displayed as on the UI.",
+    )
+    region_type: Optional[str] = Field(
+        alias="region_type",
+        default=None,
+        description="The template used to generate missions for this region.",
+    )
+    regions_connected_to: Optional[List[str]] = Field(
+        alias="regions_connected_to",
+        default=None,
+        description="Regions connected to this one.",
+    )
 
 
 class GalaxyStatic(BaseApiModel):
