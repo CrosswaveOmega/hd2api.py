@@ -66,18 +66,17 @@ class EpisodePhase(BaseApiModel):
         alias="rewards", default=None, description="Rewards granted for completing the phase."
     )
 
+    def to_str(self) -> Tuple[str, str]:
 
-def to_str(self) -> Tuple[str, str]:
+        converted_ititle = hdml_parse(self.intro_title if self.intro_title else "NO TITLE")
+        converted_idesc = hdml_parse(self.intro_message if self.intro_message else "No description")
+        converted_otitle = hdml_parse(self.outro_title if self.outro_title else "No outro_title")
+        converted_odesc = hdml_parse(self.outro_message if self.outro_message else "No outro")
 
-    converted_ititle = hdml_parse(self.intro_title if self.intro_title else "NO TITLE")
-    converted_idesc = hdml_parse(self.intro_message if self.intro_message else "No description")
-    converted_otitle = hdml_parse(self.outro_title if self.outro_title else "No outro_title")
-    converted_odesc = hdml_parse(self.outro_message if self.outro_message else "No outro")
-
-    return (
-        f"ID {self.id32}.",
-        f"{converted_ititle}\n{converted_idesc}\n\n {converted_otitle}\n {converted_odesc}",
-    )
+        return (
+            f"ID {self.id32}.",
+            f"{converted_ititle}\n{converted_idesc}\n\n {converted_otitle}\n {converted_odesc}",
+        )
 
 
 class Episode(BaseApiModel):
