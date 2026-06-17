@@ -68,10 +68,10 @@ class EpisodePhase(BaseApiModel):
 
     def to_str(self) -> Tuple[str, str]:
 
-        converted_ititle = hdml_parse(self.intro_title if self.intro_title else "NO TITLE")
-        converted_idesc = hdml_parse(self.intro_message if self.intro_message else "No description")
-        converted_otitle = hdml_parse(self.outro_title if self.outro_title else "No outro_title")
-        converted_odesc = hdml_parse(self.outro_message if self.outro_message else "No outro")
+        converted_ititle = hdml_parse(self.intro_title if self.intro_title else "")
+        converted_idesc = hdml_parse(self.intro_message if self.intro_message else "")
+        converted_otitle = hdml_parse(self.outro_title if self.outro_title else "")
+        converted_odesc = hdml_parse(self.outro_message if self.outro_message else "")
 
         return (
             f"ID {self.id32}.",
@@ -128,10 +128,10 @@ class Episode(BaseApiModel):
 
     def to_str(self) -> Tuple[str, str]:
 
-        converted_title = hdml_parse(self.title if self.title else "NO TITLE")
-        converted_desc = hdml_parse(self.description if self.description else "No description")
-        converted_intro = hdml_parse(self.intro_message if self.description else "No intro")
-        converted_outro = hdml_parse(self.outro_message if self.description else "No outro")
+        converted_title = hdml_parse(self.title if self.title else "")
+        converted_desc = hdml_parse(self.description if self.description else "")
+        converted_intro = hdml_parse(self.intro_message if self.intro_message else "")
+        converted_outro = hdml_parse(self.outro_message if self.outro_message else "")
 
         return (
             f"Episode {self.id32}. {converted_title}",
