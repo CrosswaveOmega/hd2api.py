@@ -7,6 +7,7 @@ from ..models import (
     DiveharderAll,
     NewsFeedItem,
     SpaceStation,
+    Episodes,
     WarInfo,
     WarStatus,
     WarSummary,
@@ -143,6 +144,20 @@ async def GetApiDirectSpaceStation(
     return result
 
 
+async def GetApiDirectEpisode(
+    api_config_override: Optional[APIConfig] = None,
+) -> SpaceStation:
+    result = await make_direct_api_request(
+        f"Episode/WARID/",
+        Episodes,
+        api_config_override=api_config_override,
+    )
+    if result is None:
+        raise ValueError("Failed to retrieve Space Station.")
+
+    return result
+
+
 async def GetApiDirectAll(
     api_config_override: Optional[APIConfig] = None,
 ) -> DiveharderAll:
@@ -157,11 +172,13 @@ async def GetApiDirectAll(
     except HTTPException as e:
         hd2api_logger.error("Error raised when calling news feed: %s", e)
         news = None
+    episodes = await GetApiDirectEpisode(api_config_override)
     newdive = DiveharderAll(
         status=warstatus,
         war_info=warinfo,
         planet_stats=summary,
         major_order=assign,
         news_feed=news,
+        episodes=episodes,
     )
     return newdive

@@ -2,6 +2,7 @@ from .Assignment import Assignment
 from .Campaign import Campaign
 from .Cost import Cost
 from .Effects import PlanetActiveEffects
+from .Episode import Episode, Episodes, EpisodePhase, EpisodeReward
 from .GalaxyStats import GalaxyStats
 from .GlobalEvent import GlobalEvent
 from .GlobalResource import GlobalResource
@@ -19,6 +20,7 @@ from .PlanetRegionInfo import PlanetRegionInfo
 from .Reward import Reward
 from .Setting import Setting
 from .SpaceStation import SpaceStation, SpaceStationStatus
+
 from .SteamNewsRaw import SteamNewsRaw
 from .TacticalActions import TacticalAction
 from .Task import Task
@@ -27,11 +29,14 @@ from .WarInfo import WarInfo
 from .WarStatus import WarStatus
 from .WarSummary import WarSummary
 
-
 __all__ = [
     "Assignment",
     "Campaign",
     "Cost",
+    "Episode",
+    "Episodes",
+    "EpisodePhase",
+    "EpisodeReward",
     "PlanetActiveEffects",
     "GalaxyStats",
     "GlobalEvent",

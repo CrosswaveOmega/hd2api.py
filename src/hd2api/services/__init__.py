@@ -26,6 +26,7 @@ from .async_direct_service import (
     GetApiDirectAssignment,
     GetApiDirectNewsFeed,
     GetApiDirectSpaceStation,
+    GetApiDirectEpisode,
     GetApiDirectAll,
 )
 from .async_diveh_service import (
@@ -71,6 +72,7 @@ __all__ = [
     "GetApiDirectWarInfo",
     "GetApiDirectSummary",
     "GetApiDirectAssignment",
+    "GetApiDirectEpisode",
     "GetApiDirectNewsFeed",
     "GetApiDirectSpaceStation",
     "GetApiDirectAll",

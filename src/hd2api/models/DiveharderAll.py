@@ -2,6 +2,7 @@ from typing import List, Optional
 
 from pydantic import Field
 
+
 from .ABC.model import BaseApiModel
 from .Base.Assignment import Assignment
 from .Base.NewsFeedItem import NewsFeedItem
@@ -10,6 +11,7 @@ from .Base.WarId import WarId
 from .Base.WarInfo import WarInfo
 from .Base.WarStatus import WarStatus
 from .Base.WarSummary import WarSummary
+from .Base.Episode import Episodes
 
 
 class DiveharderAll(BaseApiModel):
@@ -58,4 +60,10 @@ class DiveharderAll(BaseApiModel):
         alias="updates",
         default=None,
         description="List of news articles from a new article from Steam's news feed.",
+    )
+
+    episodes: Optional[Episodes] = Field(
+        alias="episodes",
+        default=None,
+        description="List of all episodes.",
     )
