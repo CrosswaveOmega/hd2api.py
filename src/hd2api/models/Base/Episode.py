@@ -1,4 +1,4 @@
-from typing import List, Optional, Tuple, Union
+from typing import Any, List, Optional, Tuple, Union
 
 from pydantic import Field
 
@@ -27,7 +27,9 @@ class EpisodePhase(BaseApiModel):
     id32: Optional[int] = Field(
         alias="id32", default=None, description="The identifier of this phase."
     )
-
+    episode_id32: Optional[int] = Field(
+        alias="episode_id", default=None, description="The identifier of this phase's episode."
+    )
     intro_title: Optional[str] = Field(
         alias="introTitle", default=None, description="The title displayed when the phase begins."
     )
@@ -56,12 +58,25 @@ class EpisodePhase(BaseApiModel):
         alias="outroMediaId32", default=None, description="Media shown at the end of the phase."
     )
 
-    entries: Optional[list] = Field(
+    entries: Optional[List[Any]] = Field(
         alias="entries", default=None, description="Phase entries/objectives."
     )
 
     rewards: Optional[List[EpisodeReward]] = Field(
         alias="rewards", default=None, description="Rewards granted for completing the phase."
+    )
+
+
+def to_str(self) -> Tuple[str, str]:
+
+    converted_ititle = hdml_parse(self.intro_title if self.intro_title else "NO TITLE")
+    converted_idesc = hdml_parse(self.intro_message if self.intro_message else "No description")
+    converted_otitle = hdml_parse(self.outro_title if self.outro_title else "No outro_title")
+    converted_odesc = hdml_parse(self.outro_message if self.outro_message else "No outro")
+
+    return (
+        f"ID {self.id32}.",
+        f"{converted_ititle}\n{converted_idesc}\n\n {converted_otitle}\n {converted_odesc}",
     )
 
 
@@ -111,6 +126,18 @@ class Episode(BaseApiModel):
     rewards: Optional[List[EpisodeReward]] = Field(
         alias="rewards", default=None, description="Rewards granted for completing the episode."
     )
+
+    def to_str(self) -> Tuple[str, str]:
+
+        converted_title = hdml_parse(self.title if self.title else "NO TITLE")
+        converted_desc = hdml_parse(self.description if self.description else "No description")
+        converted_intro = hdml_parse(self.intro_message if self.description else "No intro")
+        converted_outro = hdml_parse(self.outro_message if self.description else "No outro")
+
+        return (
+            f"Episode {self.id32}. {converted_title}",
+            f"{converted_desc}\n {converted_intro}\n {converted_outro}",
+        )
 
 
 class Episodes(BaseApiModel):
