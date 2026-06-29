@@ -18,7 +18,9 @@ class EpisodeReward(BaseApiModel):
     mix_id: Optional[int] = Field(
         alias="mixId", default=None, description="The reward mix identifier."
     )
-    amount: Optional[int] = Field(alias="amount", default=None, description="The amount awarded.")
+    amount: Optional[int] = Field(
+        alias="amount", default=None, description="The amount awarded."
+    )
 
 
 class EpisodePhase(BaseApiModel):
@@ -28,18 +30,26 @@ class EpisodePhase(BaseApiModel):
         alias="id32", default=None, description="The identifier of this phase."
     )
     episode_id32: Optional[int] = Field(
-        alias="episode_id", default=None, description="The identifier of this phase's episode."
+        alias="episode_id",
+        default=None,
+        description="The identifier of this phase's episode.",
     )
     intro_title: Optional[str] = Field(
-        alias="introTitle", default=None, description="The title displayed when the phase begins."
+        alias="introTitle",
+        default=None,
+        description="The title displayed when the phase begins.",
     )
 
     intro_message: Optional[str] = Field(
-        alias="introMessage", default=None, description="The phase introduction message."
+        alias="introMessage",
+        default=None,
+        description="The phase introduction message.",
     )
 
     outro_title: Optional[str] = Field(
-        alias="outroTitle", default=None, description="The title displayed when the phase ends."
+        alias="outroTitle",
+        default=None,
+        description="The title displayed when the phase ends.",
     )
 
     outro_message: Optional[str] = Field(
@@ -51,11 +61,15 @@ class EpisodePhase(BaseApiModel):
     )
 
     intro_media_id32: Optional[int] = Field(
-        alias="introMediaId32", default=None, description="Media shown at the start of the phase."
+        alias="introMediaId32",
+        default=None,
+        description="Media shown at the start of the phase.",
     )
 
     outro_media_id32: Optional[int] = Field(
-        alias="outroMediaId32", default=None, description="Media shown at the end of the phase."
+        alias="outroMediaId32",
+        default=None,
+        description="Media shown at the end of the phase.",
     )
 
     entries: Optional[List[Any]] = Field(
@@ -63,11 +77,12 @@ class EpisodePhase(BaseApiModel):
     )
 
     rewards: Optional[List[EpisodeReward]] = Field(
-        alias="rewards", default=None, description="Rewards granted for completing the phase."
+        alias="rewards",
+        default=None,
+        description="Rewards granted for completing the phase.",
     )
 
     def to_str(self) -> Tuple[str, str]:
-
         converted_ititle = hdml_parse(self.intro_title if self.intro_title else "")
         converted_idesc = hdml_parse(self.intro_message if self.intro_message else "")
         converted_otitle = hdml_parse(self.outro_title if self.outro_title else "")
@@ -103,13 +118,22 @@ class Episode(BaseApiModel):
     )
 
     race: Optional[int] = Field(
-        alias="race", default=None, description="The faction/race associated with the episode."
+        alias="race",
+        default=None,
+        description="The faction/race associated with the episode.",
     )
 
     start_war_time: Optional[int] = Field(
-        alias="startWarTime", default=None, description="The war time at which the episode begins."
+        alias="startWarTime",
+        default=None,
+        description="The war time at which the episode begins.",
     )
 
+    end_war_time: Optional[int] = Field(
+        alias="endWarTime",
+        default=None,
+        description="The war time at which the episode begins.",
+    )
     banner_image_id32: Optional[int] = Field(
         alias="bannerImageId32", default=None, description="Banner image identifier."
     )
@@ -119,15 +143,18 @@ class Episode(BaseApiModel):
     )
 
     phases: Optional[List[EpisodePhase]] = Field(
-        alias="phases", default=None, description="The phases that make up this episode."
+        alias="phases",
+        default=None,
+        description="The phases that make up this episode.",
     )
 
     rewards: Optional[List[EpisodeReward]] = Field(
-        alias="rewards", default=None, description="Rewards granted for completing the episode."
+        alias="rewards",
+        default=None,
+        description="Rewards granted for completing the episode.",
     )
 
     def to_str(self) -> Tuple[str, str]:
-
         converted_title = hdml_parse(self.title if self.title else "")
         converted_desc = hdml_parse(self.description if self.description else "")
         converted_intro = hdml_parse(self.intro_message if self.intro_message else "")

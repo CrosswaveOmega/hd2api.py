@@ -2,12 +2,15 @@ from datetime import datetime, timedelta, timezone
 from typing import Optional, Set
 
 # pylint: disable=no-name-in-module
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, ConfigDict, Field
 
 
 class BaseApiModel(BaseModel, extra="allow"):
     """Base model class for everything returend by the api.  Features the retrieved_at and time_delta fields."""
 
+    model_config = ConfigDict(
+        populate_by_name=True,
+    )
     retrieved_at: Optional[datetime] = Field(alias="retrieved_at", default=None)
     time_delta: Optional[timedelta] = Field(alias="time_delta", default=None)
 
