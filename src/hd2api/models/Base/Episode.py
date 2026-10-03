@@ -18,9 +18,7 @@ class EpisodeReward(BaseApiModel):
     mix_id: Optional[int] = Field(
         alias="mixId", default=None, description="The reward mix identifier."
     )
-    amount: Optional[int] = Field(
-        alias="amount", default=None, description="The amount awarded."
-    )
+    amount: Optional[int] = Field(alias="amount", default=None, description="The amount awarded.")
 
 
 class EpisodePhase(BaseApiModel):
@@ -174,3 +172,14 @@ class Episodes(BaseApiModel):
     episodes: Optional[List[Episode]] = Field(
         alias="episodes", default=None, description="The list of episodes."
     )
+
+    def lookup_episode(self, id32: int) -> Tuple[Episode, EpisodePhase]:
+        """Lookup what episode/phase has this id32"""
+
+        for episode in self.episodes:
+            if int(episode.id32) == id32:
+                return episode, episode.phases[-1]
+            for phase in episode.phases:
+                if int(phase.id32) == id32:
+                    return episode, phase
+        return None, None
